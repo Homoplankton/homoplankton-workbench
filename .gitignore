@@ -23,3 +23,7 @@ _tmp_frames/
 # 本地环境
 .env
 .env.*
+
+# 脱敏原件备份（含签名，绝不入库）
+.redact-backup/
+*-redact-backup/
