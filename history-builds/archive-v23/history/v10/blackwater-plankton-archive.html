@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Homoplankton — Blackwater Archive</title>
+<script src="assets/data.js"></script>
+<style>
+/* SECTION: base */
+*{margin:0;padding:0;box-sizing:border-box}
+html{background:#000}
+body{background:#000;overflow-x:hidden;overscroll-behavior:none}
+#snow{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:1;opacity:.5}
+#field{position:relative;z-index:2;opacity:0;transition:opacity 1s ease;
+  animation:settle 2.4s cubic-bezier(.16,.84,.44,1) both}
+#field.revealed{opacity:1}
+/* 开场向下落位：一次性滚动暗示，不产生持续运动 */
+@keyframes settle{from{transform:translateY(-42px)}to{transform:translateY(0)}}
+@media (prefers-reduced-motion: reduce){#field{animation:none}}
+/* SECTION: tiles — 常驻显示；羽化边缘让矩形图框消隐进纯黑 */
+.tile{position:absolute;left:0;top:0;will-change:transform;cursor:pointer}
+.tile .body{position:relative;width:100%;height:100%;overflow:hidden;
+  transition:transform .5s cubic-bezier(.2,.9,.25,1);
+  -webkit-mask-image:radial-gradient(128% 128% at 50% 50%, #000 76%, transparent 100%);
+  mask-image:radial-gradient(128% 128% at 50% 50%, #000 76%, transparent 100%)}
+.tile img{display:block;width:100%;height:100%;object-fit:fill}  /* 原始比例，无裁切 */
+.tile .body.dead{background:radial-gradient(circle at 50% 50%, #0a141c 0%, transparent 72%)}
+.tile:hover{z-index:60}
+.tile:hover .body{transform:scale(1.1)}
+/* SECTION: lightbox */
+#lb{position:fixed;inset:0;z-index:70;display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.92);opacity:0;pointer-events:none;transition:opacity .4s ease}
+#lb.open{opacity:1;pointer-events:auto}
+#lb .frame{max-width:min(96vw,1400px);text-align:center}
+#lb img{max-width:100%;max-height:92vh;width:auto;
+  box-shadow:0 30px 90px rgba(0,0,0,.9)}
+#lb .spin{position:absolute;top:50%;left:50%;width:26px;height:26px;margin:-13px;
+  border:2px solid rgba(130,210,255,.25);border-top-color:#8fd8ff;border-radius:50%;
+  opacity:0;transition:opacity .2s}
+#lb.loading .spin{opacity:1}
+</style>
+</head>
+<body>
+<canvas id="snow"></canvas>
+<div id="field" aria-hidden="true"></div>
+<div id="lb" role="dialog" aria-modal="true">
+  <div class="spin"></div>
+  <div class="frame"><img id="lb-img" alt=""></div>
+</div>
+<script>
+"use strict";
+/* SECTION: free scatter engine — 泊松式自由放置：随机落点 + 间距拒收，
+   数学上保证矩形永不相交；聚集与留白自然涌现，无网格无行列 */
+const DATA = window.BW_DATA || [];
+const FIELD = document.getElementById("field");
+const MOBILE = innerWidth < 720;
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const rnd = (a,b)=>a+Math.random()*(b-a);
+/* hero 锚点已移除：全卷统一尺度，大小参差只由主体校正决定 */
+/* 视觉尺寸多样化：主体占画面比例小的图放大更多 */
+function screenScale(d){
+  if(!d.box) return 0.62;
+  const f = Math.max(d.box[2]-d.box[0], (d.box[3]-d.box[1])*0.75);
+  return Math.min(1.15, Math.max(0.55, 0.6 / Math.max(f, 0.18)));
+}
+const tiles = DATA.map((d,i)=>{
+  const el = document.createElement("figure");
+  el.className = "tile";
+  el.innerHTML = `<div class="body"><img data-image="${d.u}" alt="${d.id}"></div>`;
+  const img = el.querySelector("img");
+  img.addEventListener("load", () => settleIn(d.id));
+  img.addEventListener("error", () => { img.remove(); el.querySelector(".body").classList.add("dead"); settleIn(d.id); });
+  img.src = img.dataset.image;                          // 全部立即加载
+  el.addEventListener("click", () => openLB(d));
+  FIELD.appendChild(el);
+  const hash = Math.abs(Math.sin(i * 12.9898) % 1);
+  return { el, d, i, hash,
+    ax: 0, ay: 0,
+    wx: rnd(0.005, 0.011), wy: rnd(0.004, 0.010),
+    phx: rnd(0, 6.28), phy: rnd(0, 6.28),
+    rot: rnd(-3, 3), rw: rnd(0.002, 0.005), rph: rnd(0, 6.28),
+    w: 0, h: 0, x: 0, y: 0 };
+});
+function layout(){
+  const W = innerWidth, VH = innerHeight;
+  /* 1. 定尺寸：随机落在固定带宽内（桌面 7.3%–14.3% 视口宽 ≈ 105–205px；
+     手机等比放大为 19%–31%），主体校正只做带内微调，两端硬性钳制 */
+  const loF = MOBILE ? 0.17 : 0.073, hiF = MOBILE ? 0.28 : 0.143;
+  for (const t of tiles) {
+    const ratio = (t.d.h || 3) / (t.d.w || 4);
+    let w = Math.round(W * (loF + (hiF - loF) * t.hash) * (0.82 + 0.36 * (screenScale(t.d) - 0.55)));
+    w = Math.min(Math.max(w, Math.round(W * loF)), Math.round(W * hiF));   // 带宽钳制
+    let h = Math.round(w * ratio);
+    const hCap = Math.round(VH * 0.34);
+    if (h > hCap) { h = hCap; w = Math.max(1, Math.round(h / ratio)); }
+    t.w = w; t.h = h;
+    t.ax = 5; t.ay = 5;
+    t.gap = 8 + Math.round(t.hash * 8);                 // 呼吸间距收紧：8–16px
+    t.el.style.width = w + "px"; t.el.style.height = h + "px";
+  }
+  /* 2. 画布高度 = 面积 × 1.55 空隙率（密度提升）；放不下再延长 */
+  let area = 0;
+  for (const t of tiles) area += (t.w + t.gap) * (t.h + t.gap);
+  let H = Math.max(VH * 1.2, Math.min(VH * 10, area * 1.55 / W));
+  const placed = [];
+  const fits = (x, y, t) => {
+    if (x < t.ax || y < t.ax || x + t.w > W - t.ax || y + t.h > H - t.ax) return false;
+    for (const p of placed)
+      if (x < p.x + p.w + Math.max(t.gap, p.gap) && p.x < x + t.w + Math.max(t.gap, p.gap) &&
+          y < p.y + p.h + Math.max(t.gap, p.gap) && p.y < y + t.h + Math.max(t.gap, p.gap)) return false;
+    return true;
+  };
+  /* 3. 大 → 小放置；横向带轮转分配目标带，消除"上大下小"梯度；60% 贴邻聚簇 */
+  const order = tiles.slice().sort((a, b) => (b.w * b.h) - (a.w * a.h));
+  const BANDS = Math.max(8, Math.round(H / VH * 3));
+  order.forEach((t, oi) => {
+    let ok = false;
+    const band = oi % BANDS;                            // 最大的 B 张各占一带，逐级轮转
+    for (let round = 0; round < 6 && !ok; round++) {
+      const pad = t.gap / 2 + t.ax;
+      const bandH = H / BANDS;
+      let yA = Math.max(pad, band * bandH - bandH * 0.45);
+      let yB = Math.min(H - t.h - pad, (band + 1) * bandH + bandH * 0.45);
+      if (yA > yB) { const s = yA; yA = yB; yB = s; }
+      for (let k = 0; k < 420 && !ok; k++) {
+        let x, y;
+        if (placed.length && Math.random() < 0.6) {
+          const p = placed[(Math.random() * placed.length) | 0];
+          x = p.x + p.w / 2 + rnd(-1.4, 1.4) * (p.w / 2 + t.w / 2 + p.gap) - t.w / 2 + rnd(-40, 40);
+          y = p.y + p.h / 2 + rnd(-1.2, 1.2) * (p.h / 2 + t.h / 2 + p.gap) - t.h / 2 + rnd(-40, 40);
+        } else {
+          x = rnd(pad, W - t.w - pad);
+          y = rnd(yA, Math.max(yA + 1, yB));
+        }
+        if (fits(x, y, t)) {
+          t.x = Math.round(x); t.y = Math.round(y);
+          placed.push(t); ok = true;
+        }
+      }
+      if (!ok) H = Math.min(H + VH * 0.5, VH * 22);    // 延长画布再试
+    }
+    if (!ok) {                                          // 理论不会走到：兜底行尾追加
+      t.x = Math.round(rnd(t.gap, Math.max(t.gap, W - t.w - t.gap)));
+      t.y = Math.round(H - t.h - t.gap); H += t.h + t.gap; placed.push(t);
+    }
+  });
+  let maxY = 0;
+  for (const t of tiles) maxY = Math.max(maxY, t.y + t.h);
+  FIELD.style.height = Math.round(maxY + Math.min(130, VH * 0.12)) + "px";  // 底部死区收紧
+  /* 大图为背景层，小图浮前 */
+  for (const t of tiles) t.el.style.zIndex = String(1000 - t.w);
+  foldIds = tiles.filter(t => t.y < VH * 1.25).map(t => t.d.id);
+  return placed;
+}
+let foldIds = [];
+layout();
+/* SECTION: one-shot reveal — 首屏集齐后整层一次浮现，之后常驻 */
+let revealed = false;
+const need = { s: null };
+function settleIn(id){
+  if (!need.s || revealed) return;
+  need.s.delete(id);
+  if (need.s.size === 0) reveal();
+}
+function reveal(){ if (revealed) return; revealed = true; FIELD.classList.add("revealed"); }
+function armReveal(){ need.s = new Set(foldIds); settleIn("__probe__"); }
+armReveal();
+setTimeout(reveal, 5000);                                // 兜底：5秒必显
+/* SECTION: marine snow */
+const cv = document.getElementById("snow"), ctx = cv.getContext("2d");
+let flakes = [];
+function seedSnow(){ cv.width = innerWidth; cv.height = innerHeight;
+  const N = MOBILE ? 110 : 280;
+  flakes = Array.from({length: N}, () => ({x: rnd(0, cv.width), y: rnd(0, cv.height),
+    r: rnd(.4, 1.9), vy: rnd(2, 8), vx: rnd(-2, 2), o: rnd(.05, .4)})); }
+seedSnow();
+function drawSnow(dt){ ctx.clearRect(0, 0, cv.width, cv.height);
+  for (const f of flakes) { f.y -= f.vy * dt; f.x += Math.sin(f.y * 0.003) * 0.12 + f.vx * dt * 0.08;
+    if (f.y < -4) { f.y = cv.height + 4; f.x = rnd(0, cv.width); }
+    ctx.beginPath(); ctx.arc(f.x, f.y, f.r, 0, 6.283);
+    ctx.fillStyle = `rgba(190,225,255,${f.o})`; ctx.fill(); } }
+/* SECTION: micro-drift loop — 常驻显示，位置微动 */
+let last = 0, raf = null;
+function tick(ts){ const dt = Math.min(.05, (ts - last) / 1000) || 0.016; last = ts;
+  const s = ts / 1000;
+  for (const t of tiles) {
+    const x = t.x + Math.sin(s * t.wx + t.phx) * t.ax;
+    const y = t.y + Math.sin(s * t.wy + t.phy) * t.ay;
+    const r = t.rot + Math.sin(s * t.rw + t.rph) * 1.0;
+    t.el.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0) rotate(${r.toFixed(2)}deg)`; }
+  drawSnow(dt);
+  raf = requestAnimationFrame(tick); }
+if (reduced) { for (const t of tiles)
+    t.el.style.transform = `translate3d(${t.x}px,${t.y}px,0) rotate(${t.rot}deg)`;
+} else { raf = requestAnimationFrame(t => { last = t; tick(t); }); }
+let rzT = null;
+addEventListener("resize", () => { clearTimeout(rzT); rzT = setTimeout(() => { layout(); seedSnow(); }, 150); });
+/* SECTION: lightbox — 点击加载完整原图 */
+const lb = document.getElementById("lb"), lbImg = document.getElementById("lb-img");
+function openLB(d){
+  lbImg.alt = d.id;
+  lbImg.src = d.u;
+  if (d.fu) { lb.classList.add("open", "loading");
+    const hi = new Image();
+    hi.onload = () => { lbImg.src = d.fu; lb.classList.remove("loading"); };
+    hi.onerror = () => lb.classList.remove("loading");
+    hi.src = d.fu; }
+  else lb.classList.add("open"); }
+lb.addEventListener("click", () => { lb.classList.remove("open", "loading"); });
+addEventListener("keydown", e => { if (e.key === "Escape") lb.classList.remove("open", "loading"); });
+</script>
+</body>
+</html>

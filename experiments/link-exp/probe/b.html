@@ -1,0 +1,12 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>PROBE-B</title></head>
+<body style="background:#111;color:#0f0;font:16px monospace;padding:40px">
+<h1>B（模拟工作台）</h1>
+<div id="out">尚未读取 hash</div>
+<script>
+  var h = location.hash || "";
+  var p = new URLSearchParams(h.replace(/^#/, ""));
+  document.getElementById("out").textContent =
+    "hash=" + h + " | img=" + (p.get("img") || "NULL") + " | mode=" + (p.get("mode") || "NULL");
+  window.__PROBE__ = { hash: h, img: p.get("img"), mode: p.get("mode") };
+</script>
+</body></html>

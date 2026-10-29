@@ -1,0 +1,306 @@
+[
+ {
+  "status": "OK",
+  "id": "DSC_0361",
+  "verify_level": "opened",
+  "url": "https://archive.org/stream/cbarchive_49447_larvaparalarvaandsubadultincep1962/larvaparalarvaandsubadultincep1962_djvu.txt",
+  "detail": "HTTP 200, 命中 ['Young']",
+  "text": "Young R.E. & Harman R.F. 1988. “Larva”, “Paralarva” and"
+ },
+ {
+  "status": "FAIL",
+  "id": "DSC_0361",
+  "verify_level": "bibliographic",
+  "url": "https://repository.si.edu/bitstream/handle/10088/5414/SCtZ-0513-Lo_res.pdf",
+  "detail": "HTTPError: HTTP Error 403: Forbidden",
+  "text": "Sweeney M.J., Roper C.F.E., Mangold K.M., Clarke M.R. &"
+ },
+ {
+  "status": "NOKEYWORD",
+  "id": "DSC_1062",
+  "verify_level": "link_only",
+  "url": "https://seagrant.uconn.edu/wp-content/uploads/sites/1985/2017/08/Weiss-Decapod-Crustacean-larvae-book_Web.pdf",
+  "detail": "HTTP 200, 未匹配 ['Weiss']",
+  "text": "Weiss H.M. Decapod Crustacean Larvae (Connecticut Sea G"
+ },
+ {
+  "status": "NOKEYWORD",
+  "id": "DSC_1062",
+  "verify_level": "link_only",
+  "url": "https://www.vliz.be/imisdocs/publications/385049.pdf",
+  "detail": "HTTP 200, 未匹配 ['Wear']",
+  "text": "Wear R.G. Larvae of the Brachyura (Crustacea: Decapoda)"
+ },
+ {
+  "status": "FAIL",
+  "id": "DSC_1062",
+  "verify_level": "link_only",
+  "url": "https://www.researchgate.net/figure/Larval-morphology-and-organogenesis-from-the-Zoea-I-to-the-Megalopa-based-on-micro-CT_fig2_326232934",
+  "detail": "HTTPError: HTTP Error 403: Forbidden",
+  "text": "micro-CT 研究（ResearchGate fig.2, 2018）— “pleopod anlagen"
+ },
+ {
+  "status": "FAIL",
+  "id": "DSC_1062",
+  "verify_level": "link_only",
+  "url": "https://xuewen.cnki.net/CJFD-RDHY201004022.html#offline_html_corpas",
+  "detail": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certif",
+  "text": "廖永岩、黄惠良、王能钦 2010. 室内锈斑蟳幼体发育的形态观察. 热带海洋学报 — zoea I–VI 第1"
+ },
+ {
+  "status": "FAIL",
+  "id": "DSC_1062",
+  "verify_level": "link_only",
+  "url": "https://www.mdpi.com/2673-6500-6-1/15",
+  "detail": "HTTPError: HTTP Error 403: Forbidden",
+  "text": "Marco-Herrero E. et al. 2026. The Megalopa Stage in Gra"
+ },
+ {
+  "status": "OK",
+  "id": "_Y3A0257",
+  "verify_level": "link_only",
+  "url": "https://www.coastalwiki.org/wiki/Traits:Nectochaeta",
+  "detail": "HTTP 200, 命中 ['Traits']",
+  "text": "Traits: Nectochaeta, Coastal Wiki — “A polychaete larva"
+ },
+ {
+  "status": "OK",
+  "id": "_Y3A0257",
+  "verify_level": "link_only",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7835201/",
+  "detail": "HTTP 200, 命中 ['Azmi']",
+  "text": "Azmi S.S. et al. 2021. Epitokous metamorphosis, reprodu"
+ },
+ {
+  "status": "FAIL",
+  "id": "_Y3A0257",
+  "verify_level": "link_only",
+  "url": "https://cdnsciencepub.com/doi/abs/10.1139/z85-156",
+  "detail": "HTTPError: HTTP Error 403: Forbidden",
+  "text": "Larval development and metamorphosis of Sabellaria ceme"
+ },
+ {
+  "status": "OK",
+  "id": "_Y3A0257",
+  "verify_level": "link_only",
+  "url": "https://www.cambridge.org/core/journals/journal-of-the-marine-biological-association-of-the-united-kingdom/article/larval-development-of-polychaeta-from-the-northern-california-coast-fourteen-additional-species-together-with-seasonality-of-planktic-larvae-over-a-5year-period/4EB83629775FE0C1BB7D08775A718D91",
+  "detail": "HTTP 200, 命中 ['Blake', '202017']",
+  "text": "Blake J.A. 2017. Larval development of Polychaeta from "
+ },
+ {
+  "status": "OK",
+  "id": "_Y3A0153",
+  "verify_level": "link_only",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11551415/",
+  "detail": "HTTP 200, 命中 ['Soto-']",
+  "text": "Soto-Angel J.J. et al. 2024. Reverse development in the"
+ },
+ {
+  "status": "FAIL",
+  "id": "_Y3A0153",
+  "verify_level": "link_only",
+  "url": "https://www.pnas.org/doi/10.1073/pnas.2122052119",
+  "detail": "HTTPError: HTTP Error 403: Forbidden",
+  "text": "Edgar A. et al. 2022. Ctenophores are direct developers"
+ },
+ {
+  "status": "OK",
+  "id": "_Y3A0153",
+  "verify_level": "link_only",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4415277/",
+  "detail": "HTTP 200, 命中 ['Comparative']",
+  "text": "Comparative muscle development of scyphozoan jellyfish "
+ },
+ {
+  "status": "OK",
+  "id": "DSC_0933",
+  "verify_level": "link_only",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC23483/",
+  "detail": "HTTP 200, 命中 ['Zettler']",
+  "text": "Zettler L.A. et al. 1997. A molecular perspective on Ha"
+ },
+ {
+  "status": "OK",
+  "id": "DSC_0933",
+  "verify_level": "link_only",
+  "url": "https://digitalcommons.usf.edu/usf_summer_urs/2026/marine_science/5/",
+  "detail": "HTTP 200, 命中 ['Nguyen']",
+  "text": "Nguyen A. Molecular Identification of an Acantharian (U"
+ },
+ {
+  "status": "FAIL",
+  "id": "DSC_0933",
+  "verify_level": "link_only",
+  "url": "https://www.pnas.org/doi/10.1073/pnas.1212303109",
+  "detail": "HTTPError: HTTP Error 403: Forbidden",
+  "text": "Decelle J. et al. 2012. An original mode of symbiosis i"
+ },
+ {
+  "status": "OK",
+  "id": "DSC_0933",
+  "verify_level": "link_only",
+  "url": "https://photosymbiosis.com/about-the-acantharia/",
+  "detail": "HTTP 200, 命中 ['About']",
+  "text": "About the Acantharia, photosymbiosis.com — “unicellular"
+ },
+ {
+  "status": "FAIL",
+  "id": "DSC_2430",
+  "verify_level": "link_only",
+  "url": "https://www.sciencedirect.com/science/article/abs/pii/S1055790313003448",
+  "detail": "HTTPError: HTTP Error 403: Forbidden",
+  "text": "Chen J.N. et al. 2014. Phylogeny of the Elopomorpha (Te"
+ },
+ {
+  "status": "NOKEYWORD",
+  "id": "DSC_2430",
+  "verify_level": "link_only",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/15186813/",
+  "detail": "HTTP 203, 未匹配 ['Inoue', '202004']",
+  "text": "Inoue J.G. et al. 2004. Mitogenomic evidence for the mo"
+ },
+ {
+  "status": "FAIL",
+  "id": "DSC_2430",
+  "verify_level": "link_only",
+  "url": "https://www.sciencedirect.com/topics/agricultural-and-biological-sciences/leptocephalus",
+  "detail": "HTTPError: HTTP Error 403: Forbidden",
+  "text": "Leptocephalus overview, ScienceDirect Topics — “separat"
+ },
+ {
+  "status": "FAIL",
+  "id": "DSC_2430",
+  "verify_level": "link_only",
+  "url": "https://repository.library.noaa.gov/view/noaa/4540/noaa_4540_DS1.pdf",
+  "detail": "HTTPError: HTTP Error 403: Forbidden",
+  "text": "NOAA Technical Report: Guide to the Leptocephali (Elopi"
+ },
+ {
+  "status": "FAIL",
+  "id": "DSC_2430",
+  "verify_level": "link_only",
+  "url": "https://www.researchgate.net/profile/Michael-Miller-70/publication/267271814_An_Introduction_to_Leptocephali_Biology_and_Identification/links/5449e7af0cf2ea6541341cc8/An-Introduction-to-Leptocephali-Biology-and-Identification.pdf",
+  "detail": "HTTPError: HTTP Error 403: Forbidden",
+  "text": "Miller M.J. 2009. An Introduction to Leptocephali: Biol"
+ },
+ {
+  "status": "OK",
+  "id": "DSC_26982020",
+  "verify_level": "opened",
+  "url": "https://archive.org/stream/cbarchive_49447_larvaparalarvaandsubadultincep1962/larvaparalarvaandsubadultincep1962_djvu.txt",
+  "detail": "HTTP 200, 命中 ['Young']",
+  "text": "Young R.E. & Harman R.F. 1988. “Larva”, “Paralarva” and"
+ },
+ {
+  "status": "FAIL",
+  "id": "DSC_26982020",
+  "verify_level": "bibliographic",
+  "url": "https://repository.si.edu/bitstream/handle/10088/5414/SCtZ-0513-Lo_res.pdf",
+  "detail": "HTTPError: HTTP Error 403: Forbidden",
+  "text": "Sweeney M.J., Roper C.F.E., Mangold K.M., Clarke M.R. &"
+ },
+ {
+  "status": "FAIL",
+  "id": "DSC_25802020",
+  "verify_level": "link_only",
+  "url": "https://doi.org/10.1080/13235818.2013.824854",
+  "detail": "HTTPError: HTTP Error 403: Forbidden",
+  "text": "Finn J.K. 2013. Taxonomy and Biology of the Argonauts ("
+ },
+ {
+  "status": "FAIL",
+  "id": "DSC_25802020",
+  "verify_level": "opened",
+  "url": "https://www.mdpi.com/1424-2818-17-5/361",
+  "detail": "HTTPError: HTTP Error 403: Forbidden",
+  "text": "Kamatsos E. et al. 2025. Rare Observation of a Female A"
+ },
+ {
+  "status": "FAIL",
+  "id": "DSC_25802020",
+  "verify_level": "opened",
+  "url": "https://www.mdpi.com/1424-2818-16-6/320",
+  "detail": "HTTPError: HTTP Error 403: Forbidden",
+  "text": "Orosco X. et al. 2024. Species Delimitation of Argonaut"
+ },
+ {
+  "status": "FAIL",
+  "id": "DSC_3058",
+  "verify_level": "link_only",
+  "url": "https://www.pnas.org/doi/10.1073/pnas.2122052119",
+  "detail": "HTTPError: HTTP Error 403: Forbidden",
+  "text": "Edgar A. et al. 2022. Ctenophores are direct developers"
+ },
+ {
+  "status": "OK",
+  "id": "DSC_3058",
+  "verify_level": "link_only",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11551415/",
+  "detail": "HTTP 200, 命中 ['Soto-']",
+  "text": "Soto-Angel J.J. et al. 2024. Reverse development in the"
+ },
+ {
+  "status": "FAIL",
+  "id": "DSC_3058",
+  "verify_level": "link_only",
+  "url": "https://www.cell.com/current-biology/fulltext/S0960-9822(08)01291-8",
+  "detail": "HTTPError: HTTP Error 403: Forbidden",
+  "text": "Pang K. et al. 2008. Ctenophores. Current Biology 18(14"
+ },
+ {
+  "status": "OK",
+  "id": "DSC_3058",
+  "verify_level": "link_only",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4021642/",
+  "detail": "HTTP 200, 命中 ['Schnitzler']",
+  "text": "Schnitzler C.E. et al. 2014. Sox gene expression throug"
+ },
+ {
+  "status": "FAIL",
+  "id": "DSC_2999",
+  "verify_level": "opened",
+  "url": "https://onlinelibrary.wiley.com/doi/10.1111/pala.12104",
+  "detail": "HTTPError: HTTP Error 403: Forbidden",
+  "text": "Nützel A. 2014. Larval ecology and morphology in fossil"
+ },
+ {
+  "status": "FAIL",
+  "id": "DSC_2999",
+  "verify_level": "bibliographic",
+  "url": "https://academic.oup.com/plankt/article/36/2/299/1506651",
+  "detail": "HTTPError: HTTP Error 403: Forbidden",
+  "text": "Howes E.L., Bednaršek N., Büdenbender J. et al. 2014. S"
+ },
+ {
+  "status": "FAIL",
+  "id": "DSC_2999",
+  "verify_level": "opened",
+  "url": "https://www.sciencedirect.com/science/article/pii/S1055790324001751",
+  "detail": "HTTPError: HTTP Error 403: Forbidden",
+  "text": "Vidal-Miralles J., Kohnert P., Monte M., Salvador X., S"
+ },
+ {
+  "status": "OK",
+  "id": "DSC_2999",
+  "verify_level": "bibliographic",
+  "url": "https://myweb.fsu.edu/mstukel/Manuscripts/Fender_et_al-2023.pdf",
+  "detail": "HTTP 200, 命中 ['Fender']",
+  "text": "Fender C.K. et al. 2023. Prey size spectra and predator"
+ },
+ {
+  "status": "FAIL",
+  "id": "DSC_2999",
+  "verify_level": "link_only",
+  "url": "https://www.researchgate.net/figure/Salp-Morphology-a-Solitary-form-oozooid-and-b-aggregate-form-blastozooid-of-Thalia_fig1_276535293",
+  "detail": "HTTPError: HTTP Error 403: Forbidden",
+  "text": "Salp Morphology fig.1（ResearchGate）: “Solitary form (oo"
+ },
+ {
+  "status": "OK",
+  "id": "DSC_2999",
+  "verify_level": "link_only",
+  "url": "https://www.kepuchina.cn/article/articleinfo?ar_id=685480&business_type=100&classify=0",
+  "detail": "HTTP 200, 命中 []",
+  "text": "科普中国：冰海天使 — “幼年期为有壳无翼，成熟过程中外壳退化、足部特化成翼” [已核验存在；科普层级，仅作线"
+ }
+]

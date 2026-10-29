@@ -1,0 +1,25 @@
+# 系统产物
+.DS_Store
+Thumbs.db
+
+# Python 中间产物
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# 编辑器
+.vscode/
+.idea/
+*.swp
+
+# 临时帧与中间渲染（体积大、可再生）
+_tmp_frames/
+*/preview/*.png
+*.log
+
+# 工作台数据备份（历史快照，非交付内容）
+*.bak-*
+
+# 本地环境
+.env
+.env.*

@@ -1,0 +1,135 @@
+{
+  "schema": "plankton-workbench/kinship/v1",
+  "created": "2026-10-27",
+  "scope_rule": "同一生物 = 同性别 + 同发育期 + 形态相似。跨性别（船蛸雌雄异形）、跨发育期（无壳幼体 vs 有壳雌体）、近缘种一律不归组。用户 2026-10-27 明确划定。",
+  "method": {
+    "recall": "v2 形态特征（轮廓半径频谱 0.52 / Hu 标准化 0.22 / 拓扑 0.14 / 颜色 0.12）两两距离，每图取前 8-20 近邻成宽网候选",
+    "verdict": "人工逐组目视核验（18 张接触表，已核 4 张覆盖全部高频组）。算法只召回，不下结论。",
+    "time_signal": "同潜次内 DateTimeOriginal ≤10 秒记为 burst，作为独立并列证据，不与视觉混算",
+    "ground_truth_note": "6 个连拍簇（8 对）作地面真值：v2 修复后紧阈值召回 50%、宽网 K=20 召回 88%；但任意阈值下地面真值同簇率仅 2/8，故不用聚类下结论。",
+    "known_limit": "三维姿态剧变（八腕幼体三帧）与变焦差异（樽海鞘两帧）会让轮廓谱失效，spec=0.44-0.76；此类靠人眼或 burst 证据补。"
+  },
+  "groups": [
+    {
+      "group_id": "K1",
+      "label": "透明八腕幼体（同型同态，多角度）",
+      "status": "confirmed_by_visual",
+      "members": ["DSC_0214", "DSC_0242", "DSC_0361", "DSC_1540", "DSC_26982020"],
+      "likely_members": ["DSC_2052"],
+      "evidence": "接触表 review_01/03：球形外套膜、长细腕、橙色眼点一致；各帧姿态/角度不同（腕展开度、朝向）",
+      "note": "DSC_0361 的生长序列标注为 Octopoda paralarva，与此组形态一致"
+    },
+    {
+      "group_id": "K2",
+      "label": "橙金色乌贼幼体",
+      "status": "confirmed_by_visual",
+      "members": ["DSC_0878-Edit", "DSC_0880", "DSC_1853", "_Y3A0272", "DSC_27172020"],
+      "likely_members": ["DSC_2795"],
+      "evidence": "接触表 review_02：橙红外套膜+金色虹彩+大眼一致；d=0.185-0.267；各帧角度不同",
+      "note": "DSC_2795 为淡粉带斑点型，同型把握较低，列 likely"
+    },
+    {
+      "group_id": "K3",
+      "label": "红胸糠虾/樱虾类幼体",
+      "status": "confirmed_by_visual_and_time",
+      "members": ["DSC_1010", "DSC_1011", "DSC_1060", "DSC_1062"],
+      "likely_members": [],
+      "evidence": "burst: 1010↔1011（4 秒）；视觉：红色胸甲+蓝纹螯足+长触角一致（review_02/03）",
+      "note": "1010/1011 同潜次连拍，另两帧跨潜次同型"
+    },
+    {
+      "group_id": "K4",
+      "label": "白点红鳃乌贼幼体",
+      "status": "confirmed_by_visual",
+      "members": ["DSC_1278_2019-September-Cephalopoda", "DSC_1296", "_Y3A0445-Edit", "DSC_2355"],
+      "likely_members": [],
+      "evidence": "接触表 review_03/04：外套膜白点列+橙红鳃团+蓝调一致；d=0.22-0.27",
+      "note": "跨航次（2019-09 与 2019-12）同型，正是跨时间同生物的实例"
+    },
+    {
+      "group_id": "K5",
+      "label": "红扇臂樱虾幼体",
+      "status": "confirmed_by_visual",
+      "members": ["DSC_1268", "DSC_1273"],
+      "likely_members": [],
+      "evidence": "接触表 review_04：红色分节体+扇状前附肢一致；d=0.317"
+    },
+    {
+      "group_id": "K6",
+      "label": "船蛸有壳雌体（Argonauta）",
+      "status": "confirmed_by_taxonomy_and_visual",
+      "members": ["DSC_0077", "DSC_2102", "DSC_25802020"],
+      "likely_members": [],
+      "evidence": "生长序列标注 DSC_0077/DSC_25802020 为 Argonautidae/Argonauta；视觉：白点螺壳+大眼一致",
+      "note": "与 K1 的无壳幼体（DSC_0361 等）按 scope_rule 不归组：发育期不同"
+    },
+    {
+      "group_id": "K7a",
+      "label": "连拍对：细长乌贼幼体",
+      "status": "confirmed_by_time",
+      "members": ["_Y3A0408", "_Y3A0409"],
+      "likely_members": [],
+      "evidence": "burst ≤10 秒；视觉 d=0.210（排名 1/5778 双向）"
+    },
+    {
+      "group_id": "K7b",
+      "label": "连拍对：橙心被囊/卵",
+      "status": "confirmed_by_time",
+      "members": ["_Y3A0034", "_Y3A0037"],
+      "likely_members": [],
+      "evidence": "burst ≤10 秒；视觉 d=0.573 偏弱，靠时间证据成立",
+      "note": "视觉特征在变焦/光晕下失效的实例，时间信号补位"
+    },
+    {
+      "group_id": "K7c",
+      "label": "连拍三帧：浅色八腕幼体",
+      "status": "confirmed_by_time",
+      "members": ["_Y3A0097", "_Y3A0098", "_Y3A0102"],
+      "likely_members": [],
+      "evidence": "burst 三帧 ≤10 秒；视觉 d=0.56-0.77 偏弱（姿态剧变），靠时间证据成立"
+    },
+    {
+      "group_id": "K7d",
+      "label": "连拍对：蓝囊棘壳虫",
+      "status": "confirmed_by_time",
+      "members": ["DSC_2511", "DSC_25112020"],
+      "likely_members": [],
+      "evidence": "burst ≤10 秒；视觉 d=0.113（排名 1/5778 双向）"
+    },
+    {
+      "group_id": "K8",
+      "label": "蓝囊金点棘壳虫（acantharian）",
+      "status": "confirmed_by_visual_and_time",
+      "members": ["DSC_0933", "DSC_1342_2019-December-Spincula", "DSC_1343-Edit"],
+      "likely_members": [],
+      "evidence": "burst: 1342↔1343-Edit；视觉：蓝色胶囊+内部金色共生体一致（review_03/04）",
+      "note": "DSC_0933 生长序列标注为 Radiolaria/Acantharia（单细胞），同型同态可归组；与发育序列资格（无后生动物序列）不冲突"
+    },
+    {
+      "group_id": "L1",
+      "label": "细长栉水母（红纹型）",
+      "status": "similar_uncertain",
+      "members": ["_Y3A0193", "DSC_3058"],
+      "likely_members": [],
+      "evidence": "钟形+双红纹一致，但仅两帧且目视把握中等",
+      "note": "与 DSC_1202（叶状红肠型）形态不同，不归入；栉水母分期本身在文献中有争议（见工作台争议断言）"
+    },
+    {
+      "group_id": "L2",
+      "label": "透明斑点乌贼（大鳍型）",
+      "status": "similar_uncertain",
+      "members": ["DSC_34192020", "DSC_1332"],
+      "likely_members": ["DSC_1722"],
+      "evidence": "透明外套膜+橙色斑点+大鳍一致；d=0.248-0.272",
+      "note": "与 K2 橙金型、K4 白点型均不同，单独成组"
+    }
+  ],
+  "rejected_pairs_of_note": [
+    {"a": "DSC_27172020", "b": "DSC_2846_2020-January-Polychaeta", "d": 0.157,
+     "why": "特征距离很近但目视为橙金乌贼 vs 粉色多毛类，完全无关"},
+    {"a": "DSC_0361", "b": "DSC_25802020", "d": null,
+     "why": "生长序列假设同种（船蛸幼体↔有壳雌体），但按 scope_rule 发育期不同，不归组"},
+    {"a": "DSC_1278_2019-September-Cephalopoda", "b": "_Y3A0037", "d": 0.167,
+     "why": "特征距离很近但目视为白点乌贼 vs 橙心被囊，无关"}
+  ]
+}

@@ -1,0 +1,1811 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>浮游生物研究工作台 · Homoplankton</title>
+<style>
+/* ============================================================
+   配色纪律：4 个色相 + 实色/虚线两种处理法表达状态
+   ------------------------------------------------------------
+   slate  = 机器事实（exif ⌁ / auto ∿，用字形区分而非再加色相）
+   amber  = AI 推断，未确认
+   green  = 人工确认
+   rust   = 告警：争议 / 已废 / 未解决 / 缺口
+   黑底上饱和色会泛光晕、相邻色相难辨（Tool 1「海洋雪像脏点」同因），
+   故深色外框 + 中性工作面，色相数受控，并提供浅色模式。
+   ============================================================ */
+:root{
+  --bg:#0b0b0d; --frame:#101115; --panel:#15161b; --work:#1b1c22;
+  --line:#26282f; --line2:#33363f; --line3:#43474f;
+  --ink:#e9eaec; --ink2:#a7abb3; --ink3:#767a83; --ink4:#565a62;
+  --slate:#7f93a8; --slate-bg:#1a2028; --slate-bd:#2f3d4c;
+  --amber:#d8a94a; --amber-bg:#241e11; --amber-bd:#4d3f1f;
+  --green:#63b98a; --green-bg:#12211a; --green-bd:#274b39;
+  --rust:#d0705a;  --rust-bg:#241512;  --rust-bd:#54302a;
+  --sel:#2b3a4d;
+}
+html[data-theme="light"]{
+  --bg:#f4f4f2; --frame:#fff; --panel:#fbfbfa; --work:#fff;
+  --line:#dcdcd8; --line2:#c8c8c3; --line3:#aeaea8;
+  --ink:#1d1e21; --ink2:#54565c; --ink3:#7c7f86; --ink4:#a2a5ab;
+  --slate:#3d6285; --slate-bg:#eaf0f6; --slate-bd:#c2d3e2;
+  --amber:#8a6414; --amber-bg:#fbf3e0; --amber-bd:#e3d0a4;
+  --green:#1f7a4d; --green-bg:#e7f4ec; --green-bd:#b9dcc7;
+  --rust:#a8402a;  --rust-bg:#fbeae6;  --rust-bd:#e8c2b8;
+  --sel:#dce8f5;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);line-height:1.55;overflow:hidden;
+     font:13px/1.55 -apple-system,"PingFang SC","Helvetica Neue",Arial,sans-serif}
+button,input,select,textarea{font:inherit;color:inherit}
+code{font:12px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--work);
+     border:1px solid var(--line);border-radius:4px;padding:0 5px;color:var(--ink2)}
+a{color:var(--slate)}
+
+/* ---------- 外壳 ---------- */
+#app{display:grid;height:100vh;grid-template-rows:auto 1fr auto}
+header{display:flex;align-items:center;gap:14px;padding:0 14px;min-height:52px;
+       background:var(--frame);border-bottom:1px solid var(--line);flex-wrap:wrap}
+.brand{font-size:14.5px;font-weight:650;letter-spacing:.02em;white-space:nowrap}
+.brand span{color:var(--ink3);font-weight:400;font-size:12px;margin-left:7px}
+#q{flex:1;min-width:120px;max-width:420px;background:var(--work);border:1px solid var(--line2);
+   border-radius:7px;padding:6px 10px;outline:none}
+#q:focus{border-color:var(--slate)}
+.modes{display:flex;gap:3px;background:var(--work);border:1px solid var(--line);
+       border-radius:8px;padding:3px}
+.modes button{background:none;border:0;border-radius:6px;padding:4px 11px;cursor:pointer;
+              color:var(--ink3);font-size:12.5px;white-space:nowrap}
+.modes button[aria-selected="true"]{background:var(--panel);color:var(--ink);
+              box-shadow:0 1px 2px rgba(0,0,0,.25);border:1px solid var(--line2)}
+.modes button[disabled]{opacity:.42;cursor:not-allowed}
+.hbtn{background:var(--work);border:1px solid var(--line2);border-radius:7px;
+      padding:5px 11px;cursor:pointer;font-size:12.5px;color:var(--ink2);white-space:nowrap}
+.hbtn:hover{border-color:var(--line3);color:var(--ink)}
+.hbtn.ok{border-color:var(--green-bd);color:var(--green);background:var(--green-bg)}
+.hbtn.dirty{border-color:var(--amber-bd);color:var(--amber);background:var(--amber-bg)}
+#main{display:grid;grid-template-columns:238px 1fr 372px;min-height:0}
+#main.nav-closed{grid-template-columns:44px 1fr 372px}
+#main.insp-closed{grid-template-columns:238px 1fr 40px}
+#main.nav-closed.insp-closed{grid-template-columns:44px 1fr 40px}
+
+/* ---------- 左栏导航 ---------- */
+nav{background:var(--frame);border-right:1px solid var(--line);overflow-y:auto;min-height:0}
+.nsec{border-bottom:1px solid var(--line)}
+.nhead{display:flex;align-items:center;gap:6px;padding:9px 11px;cursor:pointer;
+       font-size:11.5px;font-weight:650;letter-spacing:.06em;color:var(--ink2);
+       user-select:none;position:sticky;top:0;background:var(--frame);z-index:2}
+.nhead:hover{color:var(--ink)}
+.nhead .car{transition:transform .15s;font-size:9px;color:var(--ink4)}
+.nsec[data-open="0"] .nhead .car{transform:rotate(-90deg)}
+.nsec[data-open="0"] .nbody{display:none}
+.nhead .n{margin-left:auto;font-size:10.5px;color:var(--ink4);font-weight:400;
+          font-variant-numeric:tabular-nums}
+.nbody{padding:0 0 7px}
+.nitem{display:flex;align-items:center;gap:7px;padding:4px 11px 4px 15px;cursor:pointer;
+       font-size:12.5px;color:var(--ink2);border-left:2px solid transparent}
+.nitem:hover{background:var(--work);color:var(--ink)}
+.nitem[aria-current="true"]{background:var(--sel);color:var(--ink);
+       border-left-color:var(--slate);font-weight:550}
+.nitem .c{margin-left:auto;font-size:11px;color:var(--ink3);font-variant-numeric:tabular-nums}
+.nitem .dot{width:7px;height:7px;border-radius:50%;flex:0 0 7px}
+.nitem.lvl2{padding-left:26px;font-size:12px}
+.nitem.lvl3{padding-left:38px;font-size:11.5px;color:var(--ink3)}
+.nitem.tent{font-style:italic;color:var(--ink4)}
+.nitem .warn{color:var(--rust)}
+
+/* ---------- 中栏图库 ---------- */
+#stage{overflow-y:auto;min-height:0;background:var(--bg);padding:18px 16px}
+/* 深色画布用纯黑：与黑水照片内部等亮度，瓦片才真正「溶」进画布。
+   若画布比照片亮一档，瓦片会显成一块更暗的圆角矩形 */
+html:not([data-theme="light"]) #stage{background:#000}
+/* 星尘：仅深色模式。浅色模式加斑点会重演「海洋雪像脏点」的事故 */
+html:not([data-theme="light"]) #stage{
+  background-image:radial-gradient(rgba(255,255,255,.15) 1px,transparent 1.4px),
+                   radial-gradient(rgba(255,255,255,.08) 1px,transparent 1.4px);
+  background-size:337px 291px,219px 403px;
+  background-position:41px 67px,133px 209px}
+#stagehead{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;
+           padding:2px 2px 11px;color:var(--ink3);font-size:12px}
+#stagehead b{color:var(--ink);font-size:13.5px;font-weight:600}
+#stagehead .hint{margin-left:auto;font-size:11.5px}
+#grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:26px 20px}
+/* 关键修复：作者规则 #grid{display:grid} 的特异性(1,0,0)高于 UA 的 [hidden]{display:none}，
+   导致切到文献库/修正链时网格不隐藏、内容被埋在网格下方 3000px 处。
+   必须显式让 hidden 生效。 */
+#grid[hidden]{display:none}
+#empty[hidden]{display:none}
+/* 瓦片无框：黑水照片本就黑底，卡片边框是「方框感」的第一来源。
+   羽化遮罩让照片四角渐隐进画布——与 Tool 1 同法，避免矩形边缘暴露。
+   防裁切：瓦片保持统一 1:1（网格排版整齐、J/K 顺序导航不受影响），
+   图片一律 object-fit:contain —— **任何情况下都不裁像素**。
+   旧版 cover 把竖构图切掉 34%、横构图切掉 33%（实测 57 竖 / 51 横 / 0 方），
+   主体常被切在框外，就是用户说的 overcrop。contain 留下的黑边与纯黑画布同色，不可见。 */
+.tile{position:relative;background:transparent;border:none;
+      overflow:visible;cursor:pointer;aspect-ratio:1/1;
+      display:flex;align-items:center;justify-content:center}
+.tile .frame{position:absolute;inset:0;overflow:hidden;border-radius:14px;
+  -webkit-mask-image:radial-gradient(ellipse 78% 78% at 50% 50%,#000 55%,transparent 100%);
+          mask-image:radial-gradient(ellipse 78% 78% at 50% 50%,#000 55%,transparent 100%);
+  transition:transform .3s ease}
+html[data-theme="light"] .tile .frame{background:#0c0c0e}
+.tile img{width:100%;height:100%;object-fit:contain;display:block;
+          transition:transform .22s ease,opacity .22s}
+.tile:hover .frame{transform:scale(1.045)}
+/* 选中/当前：柔光晕而非硬边框——光沿着生物轮廓散开，不画方框 */
+.tile[aria-selected="true"] .frame{box-shadow:0 0 34px 4px var(--slate-bd),0 0 90px 10px rgba(120,160,210,.10)}
+.tile[aria-current="true"] .frame{box-shadow:0 0 34px 4px var(--green-bd),0 0 90px 10px rgba(90,190,140,.10)}
+.tile[aria-selected="true"] .frame,.tile[aria-current="true"] .frame{
+  -webkit-mask-image:radial-gradient(ellipse 86% 86% at 50% 50%,#000 68%,transparent 100%);
+          mask-image:radial-gradient(ellipse 86% 86% at 50% 50%,#000 68%,transparent 100%)}
+/* 文件名：无底浮动文字，靠文字描边影保证在照片上的可读性 */
+.tile .id{position:absolute;left:4px;right:4px;bottom:2px;font-size:10.5px;
+          color:#c8cdd4;background:none;
+          text-shadow:0 0 7px #000,0 0 2px #000,0 1px 3px #000;
+          font-family:ui-monospace,Menlo,monospace;letter-spacing:-.02em;
+          white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+html[data-theme="light"] .tile .id{color:#8b939c;text-shadow:0 0 7px #0c0c0e,0 0 2px #0c0c0e}
+.tile .st{position:absolute;top:7px;left:7px;width:8px;height:8px;border-radius:50%;
+          border:1.5px solid rgba(0,0,0,.55);box-shadow:0 0 6px rgba(0,0,0,.8)}
+/* 溯源/状态角标：无底浮动小字，不再用实心圆角矩形 */
+.tile .prov{position:absolute;top:5px;right:6px;font-size:9.5px;padding:0;
+          border-radius:0;background:none;color:#aeb4bb;
+          text-shadow:0 0 7px #000,0 0 2px #000;
+          font-family:ui-monospace,Menlo,monospace}
+.tile .flag{position:absolute;top:22px;left:6px;font-size:9.5px;padding:0;
+          border-radius:0;background:none;color:var(--rust);
+          text-shadow:0 0 7px #000,0 0 2px #000}
+html[data-theme="light"] .tile .prov{color:#7d858e;text-shadow:0 0 7px #0c0c0e}
+html[data-theme="light"] .tile .flag{text-shadow:0 0 7px #0c0c0e}
+.tile.decided::after{content:"";position:absolute;top:7px;right:7px;width:8px;height:8px;
+          border-radius:50%;background:var(--green);border:1.5px solid rgba(0,0,0,.5);
+          box-shadow:0 0 8px rgba(90,190,140,.55)}
+.s-dot-draft{background:var(--amber)}.s-dot-confirmed{background:var(--green)}
+.s-dot-machine_read{background:var(--slate)}
+.s-dot-contested{background:var(--rust);box-shadow:0 0 0 2px rgba(208,112,90,.28)}
+/* 「未鉴定」不再用三个字：实心红点即提醒。此前是虚线空心圈，太弱且与旗标重复 */
+.s-dot-unresolved{background:var(--rust);border:none;box-shadow:0 0 7px rgba(208,112,90,.75)}
+.s-dot-refuted{background:var(--ink4)}
+/* 已分诊跳过：暗色空心点。刻意不用红/琥珀——它不是待办，是按规则有意排除的 */
+.s-dot-skipped{background:transparent;border:1px solid var(--line3);box-shadow:none;opacity:.85}
+#empty{padding:52px 20px;text-align:center;color:var(--ink3);font-size:13px}
+#empty[hidden]{display:none}
+
+/* ---------- 表格视图（claim 纪律的表格形态） ---------- */
+#tblwrap{overflow:auto;max-height:100%;border:1px solid var(--line);border-radius:10px;
+         background:var(--frame)}
+table.wb{border-collapse:separate;border-spacing:0;width:100%;font-size:12px}
+table.wb th{position:sticky;top:0;z-index:2;background:var(--panel);color:var(--ink2);
+            font-size:11px;font-weight:650;letter-spacing:.04em;text-align:left;
+            padding:8px 10px;border-bottom:1px solid var(--line2);white-space:nowrap}
+table.wb td{padding:6px 10px;border-bottom:1px solid var(--line);vertical-align:top;
+            color:var(--ink);max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+table.wb tr{cursor:pointer}
+table.wb tr:hover td{background:var(--work)}
+table.wb tr[aria-current="true"] td{background:var(--sel)}
+table.wb td.mono{font-family:ui-monospace,Menlo,monospace;font-size:11.5px}
+table.wb .mini{width:44px;height:44px;object-fit:contain;border-radius:5px;display:block;
+               background:#000;border:1px solid var(--line)}
+/* 单元格左边条 = 溯源（与字段行同一套语言） */
+table.wb td[data-prov]{border-left:2.5px solid transparent}
+table.wb td[data-prov="exif"]{border-left-color:var(--slate)}
+table.wb td[data-prov="auto"]{border-left-color:var(--slate);border-left-style:dotted}
+table.wb td[data-prov="ai"]{border-left-color:var(--amber)}
+table.wb td[data-prov="human"]{border-left-color:var(--green)}
+table.wb td[data-prov="none"]{border-left-color:var(--rust);border-left-style:dashed}
+table.wb .rdot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--rust);
+               box-shadow:0 0 6px rgba(208,112,90,.7);vertical-align:0}
+table.wb .miss{color:var(--rust);font-style:italic}
+table.wb .conf{font-variant-numeric:tabular-nums}
+#tblfoot{padding:8px 4px 2px;color:var(--ink4);font-size:11px}
+
+/* ---------- 关系树视图 ---------- */
+#treeWrap{padding:6px 4px 30px;max-width:900px}
+.tnode{margin:2px 0}
+.trow{display:flex;align-items:center;gap:8px;padding:4px 8px;border-radius:7px;cursor:pointer;
+      font-size:12.5px;color:var(--ink2)}
+.trow:hover{background:var(--work);color:var(--ink)}
+.trow[aria-current="true"]{background:var(--sel);color:var(--ink)}
+.trow .tcar{width:12px;font-size:9px;color:var(--ink4);flex:0 0 12px;transition:transform .15s}
+.tnode[data-open="0"]>.trow .tcar{transform:rotate(-90deg)}
+.tnode[data-open="0"]>.tkids{display:none}
+.trow .tname{font-weight:550}
+.trow .tbar{height:5px;border-radius:3px;background:var(--slate);opacity:.75}
+.trow .tc{font-size:11px;color:var(--ink3);font-variant-numeric:tabular-nums}
+.trow .tq{font-size:10.5px;color:var(--rust)}
+.trow.tent .tname{font-style:italic;color:var(--ink4)}
+.trow.tent .tbar{background:var(--rust);opacity:.5;border:1px dashed var(--rust-bd);height:3px}
+.tkids{margin-left:18px;border-left:1px dotted var(--line2);padding-left:8px}
+.tleaf{display:flex;align-items:center;gap:8px;padding:3px 8px 3px 26px;font-size:11.5px;
+       color:var(--ink3);cursor:pointer;border-radius:6px}
+.tleaf:hover{background:var(--work);color:var(--ink)}
+.tleaf img{width:30px;height:30px;object-fit:contain;border-radius:4px;background:#000}
+.tleaf .lid{font-family:ui-monospace,Menlo,monospace}
+.tleaf .lst{width:7px;height:7px;border-radius:50%;flex:0 0 7px}
+
+/* ---------- 左栏设置（列可编辑） ---------- */
+/* 筛选提示（常驻页脚）：旧版只是纯文本，点分类筛选后若把左栏「分类树」分区折叠，
+   唯一的「全部图像」入口就随之隐藏，顶栏 tab 又只切视图不清筛选，Esc 只失焦搜索框
+   ——用户实测只能刷新页面才能回全部。现在：有筛选时它本身变成可点击的清除按钮，
+   位置固定在页脚、永不随左栏折叠消失。 */
+#filterTxt{cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+#filterTxt .clr{display:none;border:1px solid var(--line2);border-radius:6px;padding:1px 7px;
+                font-size:10.5px;color:var(--ink2);background:var(--work)}
+#filterTxt .clr:hover{color:var(--ink);border-color:var(--line3)}
+#filterTxt.active .clr{display:inline-block}
+#filterTxt.active:hover{color:var(--ink)}
+#filterTxt.active:hover .clr{border-color:var(--slate-bd);color:var(--slate)}
+#navCfg{position:absolute;left:8px;top:56px;z-index:40;width:250px;display:none;
+        background:var(--panel);border:1px solid var(--line2);border-radius:11px;
+        box-shadow:0 14px 44px rgba(0,0,0,.5);padding:11px 13px;
+        font-size:12px;color:var(--ink2)}
+#navCfg.on{display:block}
+#navCfg h4{margin:0 0 8px;font-size:11.5px;font-weight:650;letter-spacing:.06em;color:var(--ink3)}
+#navCfg label{display:flex;align-items:center;gap:8px;padding:4px 2px;cursor:pointer}
+#navCfg label:hover{color:var(--ink)}
+#navCfg input[type=checkbox]{width:14px;height:14px;accent-color:var(--slate)}
+#navCfg .row{display:flex;gap:8px;margin-top:10px}
+#navCfg button{flex:1;background:var(--work);border:1px solid var(--line2);border-radius:7px;
+               padding:5px 8px;cursor:pointer;font-size:11.5px;color:var(--ink2)}
+#navCfg button:hover{color:var(--ink);border-color:var(--line3)}
+
+/* ---------- 导入面板 ---------- */
+#importPanel{position:absolute;right:8px;top:56px;z-index:40;width:330px;max-height:calc(100vh - 80px);
+             overflow:auto;display:none;background:var(--panel);border:1px solid var(--line2);
+             border-radius:11px;box-shadow:0 14px 44px rgba(0,0,0,.5);padding:13px 14px;
+             font-size:12px;color:var(--ink2)}
+#importPanel.on{display:block}
+#importPanel h4{margin:0 0 8px;font-size:11.5px;font-weight:650;letter-spacing:.06em;color:var(--ink3)}
+#impDrop{border:1.5px dashed var(--line3);border-radius:10px;padding:18px 10px;text-align:center;
+         cursor:pointer;color:var(--ink3);transition:border-color .15s,background .15s}
+#impDrop:hover,#impDrop.over{border-color:var(--slate-bd);background:var(--work);color:var(--ink2)}
+#impDrop b{color:var(--ink)}
+#impList{margin-top:10px;display:flex;flex-direction:column;gap:6px;max-height:230px;overflow:auto}
+#impList .it{display:flex;gap:8px;align-items:center;background:var(--work);border:1px solid var(--line);
+             border-radius:8px;padding:5px 7px}
+#impList .it img{width:34px;height:34px;object-fit:contain;border-radius:4px;background:#000;flex:none}
+#impList .it .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px}
+#impList .it .st{flex:none;font-size:10.5px;color:var(--ink3)}
+#impList .it.done .st{color:var(--green)}
+#impList .it.err .st{color:var(--rust)}
+#impNote{margin-top:10px;font-size:11px;line-height:1.55;color:var(--ink3)}
+#impNote b{color:var(--amber)}
+#impMeta{margin-top:6px;font-size:10.5px;color:var(--ink3)}
+
+/* ---------- 右栏检查器 ---------- */
+aside{background:var(--frame);border-left:1px solid var(--line);overflow-y:auto;min-height:0}
+.ihead{position:sticky;top:0;background:var(--frame);z-index:3;padding:11px 13px;
+       border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px}
+.ihead h2{font-size:14px;font-weight:650;font-family:ui-monospace,Menlo,monospace;
+          overflow:hidden;text-overflow:ellipsis}
+.ihead .pos{margin-left:auto;font-size:11px;color:var(--ink3);font-variant-numeric:tabular-nums}
+#shot{background:#000;position:relative;display:flex;align-items:center;justify-content:center;
+      min-height:190px;max-height:340px;overflow:hidden;cursor:zoom-in}
+#shot img{max-width:100%;max-height:340px;display:block;object-fit:contain}
+#shot .cap{position:absolute;left:8px;bottom:6px;font-size:10px;color:#9aa3ad;
+           background:rgba(0,0,0,.6);padding:1px 6px;border-radius:4px}
+.sect{border-bottom:1px solid var(--line);padding:10px 13px}
+.sect>h3{font-size:10.5px;font-weight:700;letter-spacing:.08em;color:var(--ink3);
+         margin-bottom:8px;display:flex;align-items:center;gap:7px}
+.sect>h3 .rt{margin-left:auto;font-weight:400;letter-spacing:0;font-size:10.5px}
+
+/* 字段行：左边条 = 溯源，虚线 = 缺数据 */
+.f{display:grid;grid-template-columns:78px 1fr;gap:9px;padding:3.5px 0 3.5px 8px;
+   font-size:12px;border-left:2.5px solid transparent;border-bottom:1px solid var(--line)}
+.f:last-child{border-bottom:0}
+.f .k{color:var(--ink3)}
+.f .v{color:var(--ink);word-break:break-word;min-width:0}
+.f .v.mono{font-family:ui-monospace,Menlo,monospace;font-size:11.5px}
+.f .v .u{color:var(--ink4);font-size:11px;margin-left:3px}
+.f[data-prov="exif"]{border-left-color:var(--slate)}
+.f[data-prov="auto"]{border-left-color:var(--slate);border-left-style:dotted}
+.f[data-prov="ai"]{border-left-color:var(--amber)}
+.f[data-prov="human"]{border-left-color:var(--green)}
+.f[data-prov="none"]{border-left-color:var(--rust);border-left-style:dashed}
+.f .v.miss{color:var(--rust);font-style:italic}
+.glyph{font-size:10px;color:var(--ink4);margin-right:3px}
+
+/* 断言卡 */
+.claim{border:1px solid var(--line);border-left:3px solid var(--slate);border-radius:7px;
+       padding:8px 10px;margin-bottom:8px;background:var(--panel)}
+.claim[data-prov="ai"]{border-left-color:var(--amber)}
+.claim[data-prov="human"]{border-left-color:var(--green)}
+.claim[data-status="contested"]{border-left-color:var(--rust);background:var(--rust-bg)}
+.claim[data-status="unresolved"]{border-left-color:var(--rust);border-left-style:dashed}
+.claim[data-status="refuted"]{opacity:.6}
+.chd{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:5px}
+.cp{font-size:10.5px;font-weight:700;letter-spacing:.04em;color:var(--ink3);
+    font-family:ui-monospace,Menlo,monospace}
+.badge{font-size:10px;padding:1px 6px;border-radius:20px;border:1px solid;white-space:nowrap}
+.b-machine_read{color:var(--slate);border-color:var(--slate-bd);background:var(--slate-bg)}
+.b-draft{color:var(--amber);border-color:var(--amber-bd);background:var(--amber-bg)}
+.b-confirmed{color:var(--green);border-color:var(--green-bd);background:var(--green-bg)}
+.b-contested{color:var(--rust);border-color:var(--rust-bd);background:var(--rust-bg);font-weight:700}
+.b-unresolved{color:var(--rust);border-color:var(--rust-bd);border-style:dashed}
+.b-refuted{color:var(--ink4);border-color:var(--line2);text-decoration:line-through}
+.b-prov{color:var(--ink3);border-color:var(--line2);background:var(--work)}
+.conf{margin-left:auto;font-size:11px;color:var(--ink2);font-variant-numeric:tabular-nums}
+.conf .bar{display:inline-block;width:44px;height:5px;background:var(--line);border-radius:3px;
+           overflow:hidden;vertical-align:1px;margin-right:5px}
+.conf .bar i{display:block;height:100%;background:var(--amber)}
+.conf.hi .bar i{background:var(--green)}.conf.lo .bar i{background:var(--rust)}
+.cbody{font-size:12px;color:var(--ink2)}
+.cbody b{color:var(--ink);font-weight:600}
+.path{display:flex;flex-wrap:wrap;gap:3px;margin:3px 0}
+.lvl{background:var(--work);color:var(--ink2);border:1px solid var(--line2);border-radius:4px;
+     padding:0 6px;font-size:11px;font-family:ui-monospace,Menlo,monospace}
+.lvl.last{background:var(--sel);color:var(--ink);border-color:var(--slate-bd);font-weight:650}
+.stop{font-size:11px;color:var(--ink3);font-style:italic;margin-top:3px}
+ul.diag{margin:4px 0 0 15px;font-size:11.5px;color:var(--ink2)}
+ul.diag li{margin-bottom:2px}
+.note{font-size:11px;color:var(--ink3);margin-top:5px;padding-top:5px;border-top:1px dotted var(--line)}
+.litnote{font-size:11.5px;color:var(--ink2);background:var(--work);border:1px solid var(--line);
+         border-left:2px solid var(--slate);border-radius:5px;padding:6px 8px;margin-top:6px}
+
+/* 文献 */
+ul.refs{margin:0;padding:0;list-style:none}
+ul.refs li{font-size:11.5px;color:var(--ink2);margin-bottom:7px;padding-left:0;
+           border-bottom:1px dotted var(--line);padding-bottom:6px}
+ul.refs li:last-child{border-bottom:0;margin-bottom:0}
+.tier{display:inline-block;font-size:9.5px;font-weight:700;padding:0 5px;border:1px solid;
+      border-radius:3px;margin-right:5px;white-space:nowrap}
+.t-opened{color:var(--green);border-color:var(--green-bd);background:var(--green-bg)}
+.t-bibliographic{color:var(--slate);border-color:var(--slate-bd);background:var(--slate-bg)}
+.t-link_only{color:var(--amber);border-color:var(--amber-bd);background:var(--amber-bg)}
+.lstat{font-size:9.5px;margin-right:5px;white-space:nowrap}
+.ls-opens_now{color:var(--green)}.ls-bot_walled{color:var(--amber)}.ls-unreachable{color:var(--rust)}
+ul.refs a{color:var(--slate);text-decoration:none;border-bottom:1px dotted var(--slate-bd)}
+ul.refs a:hover{color:var(--ink);border-bottom-color:var(--ink3)}
+.lnote{display:block;color:var(--ink4);font-size:10.5px;margin-top:2px;line-height:1.45}
+
+/* 修正链 */
+.rev{border:1px solid var(--line);border-left:3px solid var(--rust);border-radius:7px;
+     padding:8px 10px;margin-bottom:8px;background:var(--panel)}
+.rev .rh{font-size:11px;color:var(--ink3);margin-bottom:5px;display:flex;gap:7px;align-items:center}
+.rev .rh b{color:var(--rust);font-family:ui-monospace,Menlo,monospace}
+.rev .old{font-size:11.5px;color:var(--ink4);text-decoration:line-through;margin-bottom:3px}
+.rev .new{font-size:11.5px;color:var(--ink);margin-bottom:5px}
+.rev .why{font-size:11px;color:var(--ink2);background:var(--work);border-radius:5px;padding:5px 7px}
+.rev .why b{color:var(--amber);font-weight:650}
+.rev .fix{font-size:11px;color:var(--green);margin-top:5px}
+.rev .fix b{font-weight:650}
+
+/* 裁决 */
+.review{padding:11px 13px;background:var(--work);border-top:1px solid var(--line2);
+        position:sticky;bottom:0}
+.rrow{display:flex;align-items:center;gap:7px;margin-bottom:7px;flex-wrap:wrap}
+.rrow:last-child{margin-bottom:0}
+.rrow label{font-size:11px;color:var(--ink3);min-width:56px}
+.rrow select,.rrow input[type=text]{background:var(--panel);border:1px solid var(--line2);
+      border-radius:6px;padding:4px 8px;font-size:12px;outline:none}
+.rrow select:focus,.rrow input:focus{border-color:var(--slate)}
+.rrow input[type=text]{flex:1;min-width:130px}
+.rrow input[type=checkbox]{width:15px;height:15px;accent-color:var(--rust)}
+.kbtn{background:var(--panel);border:1px solid var(--line2);border-radius:6px;
+      padding:4px 9px;cursor:pointer;font-size:11.5px;color:var(--ink2)}
+.kbtn:hover{border-color:var(--line3);color:var(--ink)}
+.kbtn[aria-pressed="true"]{background:var(--green-bg);border-color:var(--green-bd);color:var(--green)}
+.kbtn kbd{font:10px ui-monospace,Menlo,monospace;color:var(--ink4);margin-left:4px}
+
+/* ---------- 状态栏 ---------- */
+footer{height:30px;display:flex;align-items:center;gap:14px;padding:0 14px;font-size:11.5px;
+       color:var(--ink3);background:var(--frame);border-top:1px solid var(--line)}
+footer .prog{display:flex;align-items:center;gap:7px}
+footer .bar{width:110px;height:5px;background:var(--line);border-radius:3px;overflow:hidden}
+footer .bar i{display:block;height:100%;background:var(--green);transition:width .2s}
+footer .keys{margin-left:auto;display:flex;gap:10px;flex-wrap:nowrap;overflow:hidden}
+footer kbd{font:10px ui-monospace,Menlo,monospace;background:var(--work);border:1px solid var(--line2);
+           border-radius:3px;padding:0 4px;color:var(--ink2)}
+#toast{position:fixed;left:50%;bottom:52px;transform:translateX(-50%) translateY(14px);
+       background:var(--panel);border:1px solid var(--line3);border-radius:8px;padding:9px 15px;
+       font-size:12.5px;color:var(--ink);opacity:0;pointer-events:none;transition:.22s;z-index:99;
+       box-shadow:0 6px 22px rgba(0,0,0,.45);max-width:70vw}
+#toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+#toast.err{border-color:var(--rust-bd);color:var(--rust)}
+#toast.ok{border-color:var(--green-bd);color:var(--green)}
+
+/* 占位视图 */
+.placeholder{padding:56px 26px;text-align:center;color:var(--ink3);max-width:560px;margin:0 auto}
+.placeholder h2{font-size:16px;color:var(--ink2);margin-bottom:9px;font-weight:600}
+.placeholder p{font-size:12.5px;margin-bottom:7px}
+.placeholder .soon{display:inline-block;margin-top:14px;padding:4px 12px;border:1px dashed var(--line3);
+      border-radius:20px;font-size:11.5px;color:var(--ink4)}
+.placeholder .clrbtn{margin-top:16px;padding:7px 15px;border:1px solid var(--line3);border-radius:20px;
+      background:var(--work);color:var(--ink2);font-size:12px;cursor:pointer}
+.placeholder .clrbtn:hover{color:var(--ink);border-color:var(--slate-bd);background:var(--panel)}
+
+/* 图例 */
+.legend{display:flex;gap:11px;flex-wrap:wrap;font-size:10.5px;color:var(--ink3);
+        padding:8px 13px;border-bottom:1px solid var(--line);background:var(--panel)}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:4px;vertical-align:-1px}
+@media(max-width:1180px){#main{grid-template-columns:200px 1fr 320px}}
+</style>
+</head>
+<body>
+<div id="app">
+
+<header>
+  <button class="hbtn" id="navToggle" title="折叠/展开左栏">☰</button>
+  <button class="hbtn" id="navCfgBtn" title="编辑左栏：显隐各分区并调整顺序">⚙</button>
+  <div class="brand">浮游生物研究工作台<span id="brandCount"></span></div>
+  <input id="q" type="search" placeholder="搜索 ID / 分类 / 分期 / 备注 …（/ 聚焦）" autocomplete="off">
+  <div class="modes" role="tablist">
+    <button role="tab" data-mode="gallery" aria-selected="true">图库</button>
+    <button role="tab" data-mode="table">表格</button>
+    <button role="tab" data-mode="tree">关系树</button>
+    <button role="tab" data-mode="refs">文献库</button>
+    <button role="tab" data-mode="revisions">修正链</button>
+  </div>
+  <button class="hbtn" id="themeBtn" title="切换浅色/深色">◐</button>
+  <button class="hbtn" id="saveBtn" title="保存到本地 JSON（⌘S）">保存</button>
+  <button class="hbtn" id="openBtn" title="打开已有批注文件">打开</button>
+  <button class="hbtn" id="inspToggle" title="折叠/展开检查器">⧉</button>
+  <button class="hbtn" id="importBtn" title="导入新图：自动填 EXIF/派生字段并入待鉴定队列">+ 导入</button>
+</header>
+
+<div id="navCfg" role="dialog" aria-label="左栏设置"></div>
+<div id="importPanel" role="dialog" aria-label="导入新图">
+  <h4>导入新图</h4>
+  <div id="impDrop">把图片拖到这里，或 <b>点击选择</b><br>支持多张 · jpg/png · 只读你的选择，不上传任何地方</div>
+  <input id="impFile" type="file" accept="image/jpeg,image/png" multiple hidden>
+  <div id="impList"></div>
+  <div id="impMeta"></div>
+  <div id="impNote"><b>浏览器内即时完成</b>：EXIF（机型/镜头/日期/曝光）、主体框、色彩三分类、缩略/整帧图层、入待鉴定队列并持久化（IndexedDB）。<br><b>分类 · 幼体分期 · 文献</b> 由我离线跑 larval-taxonomy SOP 后产出批注文件，你在顶栏「打开」合并；静态页面内不运行分类模型。</div>
+</div>
+
+<div id="main">
+  <nav id="nav"></nav>
+
+  <section id="stage">
+    <div id="stagehead"></div>
+    <div id="grid"></div>
+    <div id="empty" hidden></div>
+  </section>
+
+  <aside id="insp"></aside>
+</div>
+
+<footer>
+  <div class="prog"><span id="progTxt">—</span><div class="bar"><i id="progBar" style="width:0"></i></div></div>
+  <span id="filterTxt"><span id="filterTxtMain"></span><span class="clr" role="button" tabindex="0">✕ 清除筛选</span></span>
+  <span id="saveTxt"></span>
+  <div class="keys">
+    <span><kbd>J</kbd><kbd>K</kbd> 移动</span>
+    <span><kbd>1</kbd> 认可 <kbd>2</kbd> 修改 <kbd>3</kbd> 否决</span>
+    <span><kbd>␣</kbd> 放大</span>
+    <span><kbd>⏎</kbd> 确认下一条</span>
+    <span><kbd>⌘S</kbd> 保存</span>
+  </div>
+</footer>
+</div>
+
+<div id="toast"></div>
+
+<script id="payload" type="application/json">/*@PAYLOAD@*/</script>
+<script>
+"use strict";
+/* ============================================================
+   数据层：claim-centric。一行一条断言，不是一图一堆字段。
+   每条断言带 asserted_by（谁说的）/ status（可信到什么程度）/
+   evidence（凭什么）/ superseded_by（被谁推翻）。
+   ============================================================ */
+const DB = JSON.parse(document.getElementById("payload").textContent);
+const IMG = DB.images, REFS = DB.references, REVS = DB.revision_log || [];
+const DIVES = DB.dive_groups || {}, CNT = DB.counts || {};
+const byId = Object.fromEntries(IMG.map(im => [im.image_id, im]));
+
+/* 用户批注覆盖层：不改动原始断言，叠加在上层，保留 superseded_by 链 */
+const LS_KEY = "plankton_workbench_overlay_v1";
+let OVERLAY = {};
+try { OVERLAY = JSON.parse(localStorage.getItem(LS_KEY) || "{}"); } catch (e) { OVERLAY = {}; }
+
+/* 导出说明：用 + 拼接。注意 JS 不支持 Python 式相邻字符串隐式拼接，
+   写成 "a" "b" 会抛 SyntaxError: Unexpected string 并让整个脚本失效。 */
+const EXPORT_NOTE =
+  "覆盖层：不改动原始断言。verdict=confirm 的记录可写入 confirmed 库；" +
+  "no_sequence=true 的记录排除出序列装配；taxonomy_path/stage_label 为人工修订值，" +
+  "写入时应生成新的 human 断言并把被替换的 ai 断言标 superseded_by。";
+
+const PROV_LABEL = { exif: "相机直读", auto: "自动派生", ai: "AI 推断", ai_draft: "AI 草案",
+                     human: "人工确认", literature: "文献陈述" };
+const ST_LABEL = { machine_read: "机器事实", draft: "待确认", confirmed: "已确认",
+                   contested: "有争议", refuted: "已推翻", unresolved: "未解决",
+                   skipped: "已分诊跳过" };
+const TIER_LABEL = { opened: "已打开核验", bibliographic: "书目已互证",
+                     link_only: "仅有链接·待你核验" };
+const LS_LABEL = { opens_now: "现在可打开", bot_walled: "反爬墙挡住·未确认",
+                   unreachable: "当前不可达", untested: "本轮未测可达性" };
+const esc = s => String(s ?? "").replace(/[&<>"']/g,
+  c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+/* ---------- 派生：每张图的有效状态 ---------- */
+function claimOf(im, pred) {
+  const cs = im.claims.filter(c => c.predicate === pred);
+  // 人工覆盖优先，其次取最新未被推翻的
+  const ov = OVERLAY[im.image_id];
+  if (ov && ov[pred] !== undefined && ov[pred] !== null) {
+    const base = cs[cs.length - 1] || {};
+    return Object.assign({}, base, { predicate: pred, value: ov[pred],
+      asserted_by: "human", status: "confirmed", reviewed_at: ov._at || null });
+  }
+  return cs.find(c => c.status !== "refuted") || cs[cs.length - 1] || null;
+}
+function taxonLabel(im) {
+  const c = claimOf(im, "taxon_is");
+  if (!c || !c.value) return null;
+  const p = Array.isArray(c.value.path) ? c.value.path : [c.value];
+  return p[p.length - 1];
+}
+function taxonPath(im) {
+  const c = claimOf(im, "taxon_is");
+  if (!c || !c.value) return [];
+  return Array.isArray(c.value.path) ? c.value.path : [c.value];
+}
+function stageLabel(im) {
+  const c = claimOf(im, "stage_is");
+  if (!c || !c.value) return null;
+  return c.value.discrete_label || null;
+}
+function sortKeyOf(im) {
+  const c = claimOf(im, "stage_is");
+  return (c && c.value && c.value.sort_key) || null;
+}
+function confidenceOf(im) {
+  const t = claimOf(im, "taxon_is"), s = claimOf(im, "stage_is");
+  const v = [t && t.confidence, s && s.confidence].filter(x => typeof x === "number");
+  return v.length ? Math.min(...v) : null;
+}
+/* 一张图的聚合状态：告警优先级高于一切 */
+function statusOf(im) {
+  const cs = im.claims.filter(c => ["taxon_is", "stage_is", "series_member_of"].includes(c.predicate));
+  const ov = OVERLAY[im.image_id];
+  if (ov && ov.verdict) return ov.verdict === "confirm" ? "confirmed"
+    : ov.verdict === "reject" ? "refuted" : "draft";
+  if (cs.some(c => c.status === "contested")) return "contested";
+  if (cs.some(c => c.status === "refuted")) return "refuted";
+  if (cs.some(c => c.status === "confirmed")) return "confirmed";
+  /* 「已分诊跳过」排在 draft 之前、人工裁决之后：
+     5 张图同时带早先会话的 AI 草案分类 + 本轮 skip 处置。skip 是用户当前规则的有意排除，
+     应压过 AI 草案（否则跳过的图会显示幻影「待确认」分类）；但人工 confirm/refute/contested
+     仍最高优先。旧的草案断言不删除，仍保留在数据里可在检查器查看。 */
+  const tn = claimOf(im, "triage_note");
+  if (tn && tn.value && tn.value.triage === "skip") return "skipped";
+  if (cs.some(c => c.status === "draft")) return "draft";
+  if (cs.some(c => c.status === "unresolved")) return "unresolved";
+  return "machine_read";
+}
+function provOf(im) {
+  const cs = im.claims.filter(c => ["taxon_is", "stage_is"].includes(c.predicate) && c.value);
+  if (cs.some(c => c.asserted_by === "human")) return "human";
+  if (cs.some(c => c.asserted_by === "ai")) return "ai";
+  /* AI 草案排在 none 之前：草案是有内容的推断，不是空缺 */
+  if (cs.some(c => c.asserted_by === "ai_draft")) return "ai_draft";
+  if (cs.some(c => c.status === "unresolved")) return "none";
+  return "auto";
+}
+const decided = im => {
+  const o = OVERLAY[im.image_id];
+  return !!(o && o.verdict);
+};
+
+/* ---------- 待办队列：分诊引擎 ---------- */
+/* 研究工具的核心不是「浏览全部」，而是「今天该处理什么」。
+   3108 张靠滚动找不可行，故按可操作的缺口分诊。 */
+function buildQueues() {
+  const q = { contested: [], lowconf: [], nostage: [], unidentified: [],
+              no_pigment: [], to_decide: [], series: [], decided: [], skipped: [] };
+  for (const im of IMG) {
+    const st = statusOf(im), cf = confidenceOf(im);
+    const skipped = st === "skipped";
+    if (skipped) q.skipped.push(im);
+    if (st === "contested") q.contested.push(im);
+    /* 已分诊跳过的图不进任何待办队列：它不是缺口，是按规则有意排除。
+       否则 65 张头足/栉水母等会把「未鉴定」「待我裁决」灌满噪声。 */
+    if (!skipped) {
+      if (cf !== null && cf < 0.6) q.lowconf.push(im);
+      if (!stageLabel(im)) q.nostage.push(im);
+      if (!taxonLabel(im)) q.unidentified.push(im);
+      if (decided(im)) q.decided.push(im); else q.to_decide.push(im);
+    }
+    const ad = claimOf(im, "auto_derived");
+    if (ad && ad.value && ad.value.pigment_detected === false) q.no_pigment.push(im);
+    if (im.claims.some(c => c.predicate === "series_member_of")) q.series.push(im);
+  }
+  // 低置信优先审「该类群张数多」的：审一张带动一片
+  const perTaxon = {};
+  for (const im of q.lowconf) {
+    const t = taxonPath(im); const k = t.length >= 2 ? t[1] : "?";
+    perTaxon[k] = (perTaxon[k] || 0) + 1;
+  }
+  q.lowconf.sort((a, b) => {
+    const ka = taxonPath(a)[1] || "?", kb = taxonPath(b)[1] || "?";
+    return (perTaxon[kb] || 0) - (perTaxon[ka] || 0);
+  });
+  return q;
+}
+const QUEUES = {
+  contested:    { label: "有争议", desc: "正反证据并存，结论未定", hue: "rust" },
+  lowconf:      { label: "低置信", desc: "置信度 < 0.60，按类群张数排序", hue: "rust" },
+  unidentified: { label: "未鉴定", desc: "无任何分类断言", hue: "rust" },
+  nostage:      { label: "缺分期", desc: "无离散分期标签", hue: "amber" },
+  series:       { label: "序列假说", desc: "同系性未经确认", hue: "amber" },
+  no_pigment:   { label: "未检出色素", desc: "色素占比不显著（如实标注）", hue: "slate" },
+  skipped:      { label: "已分诊跳过", desc: "按跳过规则排除：无剧烈变态/非幼体/原生生物（非待办）", hue: "slate" },
+  to_decide:    { label: "待我裁决", desc: "尚未给出 verdict", hue: "amber" },
+  decided:      { label: "已裁决", desc: "已确认/修改/否决", hue: "green" },
+};
+
+/* ---------- 分类树（嵌套，带不确定性可视化）---------- */
+/* n     = 该分支下全部图数（含子孙），用于节点计数与条宽
+   term  = **路径恰好终止于此节点**的图（含因停层/无法归类而停在此的），
+           只有这些才作为叶子渲染，否则根节点会把 108 张全列成叶子 */
+function buildTaxTree() {
+  const root = { name: "全部", n: 0, kids: {}, uncertain: 0, term: [] };
+  for (const im of IMG) {
+    const p = taxonPath(im);
+    let node = root; node.n++;
+    if (!p.length) { node.uncertain++; node.term.push(im.image_id); continue; }
+    for (let i = 0; i < p.length; i++) {
+      const k = p[i];
+      node.kids[k] = node.kids[k] || { name: k, n: 0, kids: {}, uncertain: 0, depth: i, term: [] };
+      node = node.kids[k]; node.n++;
+      if (i === p.length - 1) {
+        node.term.push(im.image_id);
+        const c = claimOf(im, "taxon_is");
+        // 停层：该图未能继续下探 → 在此节点记为未定
+        if (c && c.value && c.value.stop_reason) node.uncertain++;
+      }
+    }
+  }
+  return root;
+}
+
+/* ---------- 状态 ---------- */
+let STATE = { mode: "gallery", filter: null, filterKind: null, q: "",
+              cur: null, sel: new Set(), zoom: false, expanded: {} };
+
+function currentList() {
+  let list = IMG.slice();
+  const f = STATE.filter;
+  if (STATE.filterKind === "queue" && f) list = buildQueues()[f] || [];
+  else if (STATE.filterKind === "taxon" && f) {
+    list = list.filter(im => taxonPath(im).includes(f));
+  } else if (STATE.filterKind === "dive" && f) {
+    list = list.filter(im => im.dive_id === f);
+  } else if (STATE.filterKind === "trip" && f) {
+    list = list.filter(im => im.trip === f);
+  } else if (STATE.filterKind === "all") { /* 全量 */ }
+  if (STATE.q) {
+    const s = STATE.q.toLowerCase();
+    list = list.filter(im => {
+      const hay = [im.image_id, taxonPath(im).join(" "), stageLabel(im) || "",
+        im.color_label || "", im.dive_id || "",
+        im.claims.map(c => (c.note || "") + " " + JSON.stringify(c.value || "")).join(" ")]
+        .join(" ").toLowerCase();
+      return hay.includes(s);
+    });
+  }
+  return list;
+}
+
+/* ============================================================
+   渲染：左栏
+   左栏分区可配置（显隐 + 顺序），持久化在 localStorage。
+   用户 2026-10-27 提出「左栏太挤/可编辑」：默认隐藏低使用率分区，
+   并提供 ⚙ 面板自助调整。
+   ============================================================ */
+var NAV_LS = "plankton_wb_navcfg_v1";
+var NAV_SECS = { queue: "待办队列", taxon: "分类树", dive: "潜次 / 航次",
+                 refs: "文献库", revs: "修正链" };
+var NAVCFG = loadNavCfg();
+function loadNavCfg() {
+  try {
+    var o = JSON.parse(localStorage.getItem(NAV_LS) || "null");
+    if (o && Array.isArray(o.order)) return o;
+  } catch (e) {}
+  /* 默认：文献库/修正链有独立标签页，左栏不必重复占位（用户嫌挤的直接原因）。
+     想留在左栏的用户可在 ⚙ 里勾回。 */
+  return { order: ["queue", "taxon", "dive", "refs", "revs"],
+           hidden: { refs: true, revs: true } };
+}
+function saveNavCfg() { try { localStorage.setItem(NAV_LS, JSON.stringify(NAVCFG)); } catch (e) {} }
+
+function renderNav() {
+  const qs = buildQueues(), tree = buildTaxTree();
+  const sec = (id, title, count, body, open) => `
+    <div class="nsec" data-sec="${id}" data-open="${open ? 1 : 0}">
+      <div class="nhead" data-toggle="${id}"><span class="car">▼</span>${esc(title)}
+        ${count != null ? `<span class="n">${count}</span>` : ""}</div>
+      <div class="nbody">${body}</div>
+    </div>`;
+  const qItems = Object.entries(QUEUES).map(([k, m]) => {
+    const n = (qs[k] || []).length;
+    if (!n && k !== "to_decide" && k !== "decided") return "";
+    const dot = m.hue === "rust" ? "var(--rust)" : m.hue === "amber" ? "var(--amber)"
+      : m.hue === "green" ? "var(--green)" : "var(--slate)";
+    return `<div class="nitem" data-fkind="queue" data-f="${k}" title="${esc(m.desc)}"
+      ${STATE.filterKind === "queue" && STATE.filter === k ? 'aria-current="true"' : ""}>
+      <span class="dot" style="background:${dot}"></span>${esc(m.label)}<span class="c">${n}</span></div>`;
+  }).join("");
+
+  const taxItems = (node, depth) => {
+    let h = "";
+    const kids = Object.values(node.kids).sort((a, b) => b.n - a.n);
+    for (const k of kids) {
+      const cur = STATE.filterKind === "taxon" && STATE.filter === k.name;
+      h += `<div class="nitem lvl${Math.min(depth, 3)}" data-fkind="taxon" data-f="${esc(k.name)}"
+        ${cur ? 'aria-current="true"' : ""}>${esc(k.name)}<span class="c">${k.n}${k.uncertain ? `<span class="warn" title="${k.uncertain} 张停在此层"> ·${k.uncertain}?</span>` : ""}</span></div>`;
+      if (depth < 3) h += taxItems(k, depth + 1);
+    }
+    return h;
+  };
+  const taxBody = `<div class="nitem ${STATE.filterKind === "all" ? "" : ""}" data-fkind="all" data-f="all"
+      ${STATE.filterKind === "all" ? 'aria-current="true"' : ""}>全部图像<span class="c">${IMG.length}</span></div>`
+    + (tree.uncertain ? `<div class="nitem tent" data-fkind="queue" data-f="unidentified">
+      <span class="dot" style="background:transparent;border:1.5px dashed var(--rust)"></span>
+      未定（无法归类）<span class="c">${tree.uncertain}</span></div>` : "")
+    + taxItems(tree, 2);
+
+  // 潜次：按航次分组，航次内按日期
+  const trips = {};
+  for (const [gid, ids] of Object.entries(DIVES)) {
+    const t = gid.slice(0, 7);
+    (trips[t] = trips[t] || []).push([gid, ids.length]);
+  }
+  let diveBody = "";
+  for (const t of Object.keys(trips).sort()) {
+    const tot = trips[t].reduce((s, x) => s + x[1], 0);
+    diveBody += `<div class="nitem lvl2" data-fkind="trip" data-f="${t}"
+      ${STATE.filterKind === "trip" && STATE.filter === t ? 'aria-current="true"' : ""}
+      style="font-weight:600">航次 ${esc(t)}<span class="c">${trips[t].length}潜·${tot}张</span></div>`;
+    for (const [gid, n] of trips[t].sort()) {
+      diveBody += `<div class="nitem lvl3" data-fkind="dive" data-f="${esc(gid)}"
+        ${STATE.filterKind === "dive" && STATE.filter === gid ? 'aria-current="true"' : ""}>
+        ${esc(gid.slice(11))}<span class="c">${n}</span></div>`;
+    }
+  }
+
+  const lv = {}, ls = {};
+  for (const r of REFS) { lv[r.verify_level] = (lv[r.verify_level] || 0) + 1;
+                           ls[r.link_status] = (ls[r.link_status] || 0) + 1; }
+  const refBody = `<div class="nitem" data-mode-jump="refs">查看文献库<span class="c">${REFS.length}</span></div>
+    <div class="nitem lvl3" style="cursor:default">已打开核验<span class="c">${lv.opened || 0}</span></div>
+    <div class="nitem lvl3" style="cursor:default">书目已互证<span class="c">${lv.bibliographic || 0}</span></div>
+    <div class="nitem lvl3" style="cursor:default"><span class="warn">仅有链接待核</span><span class="c">${lv.link_only || 0}</span></div>
+    <div class="nitem lvl3" style="cursor:default">现在可打开<span class="c">${ls.opens_now || 0}</span></div>
+    <div class="nitem lvl3" style="cursor:default">反爬墙未确认<span class="c">${ls.bot_walled || 0}</span></div>
+    <div class="nitem lvl3" style="cursor:default"><span class="warn">当前不可达</span><span class="c">${ls.unreachable || 0}</span></div>`;
+
+  const revBody = `<div class="nitem" data-mode-jump="revisions">查看修正链<span class="c">${REVS.length}</span></div>
+    <div class="nitem lvl3" style="cursor:default;white-space:normal;line-height:1.45;padding-right:11px">
+    被推翻的判断留痕。研究工具的价值在于三个月后仍能知道哪些结论被推翻过、为什么。</div>`;
+
+  const BODIES = {
+    queue: () => sec("queue", "待办队列", null, qItems, true),
+    taxon: () => sec("taxon", "分类树", IMG.length, taxBody, STATE.expanded.taxon !== false),
+    dive:  () => sec("dive", "潜次 / 航次", Object.keys(DIVES).length, diveBody, false),
+    refs:  () => sec("refs", "文献库", REFS.length, refBody, false),
+    revs:  () => sec("revs", "修正链", REVS.length, revBody, false),
+  };
+  /* 按用户配置的顺序渲染，跳过被隐藏的分区；配置里缺的分区兜底追加，保证不丢功能 */
+  const order = (NAVCFG.order || []).filter(k => BODIES[k]);
+  for (const k of Object.keys(BODIES)) if (!order.includes(k)) order.push(k);
+  document.getElementById("nav").innerHTML =
+    order.filter(k => !NAVCFG.hidden[k]).map(k => BODIES[k]()).join("");
+}
+
+/* ============================================================
+   渲染：图库模式（方案B 的 claim 纪律 + 网格作为第一视图）
+   ============================================================ */
+function renderStage() {
+  const list = currentList();
+  const head = document.getElementById("stagehead");
+  const fname = STATE.filterKind === "queue" ? (QUEUES[STATE.filter] || {}).label
+    : STATE.filterKind === "all" ? "全部图像" : STATE.filter;
+  head.innerHTML = `<b>${esc(STATE.mode === "gallery" ? (fname || "全部图像") : fname || "")}</b>
+    <span>${list.length} 张</span>
+    ${STATE.q ? `<span>· 含「${esc(STATE.q)}」</span>` : ""}
+    <span class="hint">点击选中 → 右栏检查器；J/K 逐个移动</span>`;
+  document.getElementById("brandCount").textContent =
+    `${IMG.length} 张 · ${CNT.references || REFS.length} 条文献 · ${Object.keys(DIVES).length} 个潜次`;
+
+  if (STATE.mode === "refs") { head.innerHTML = `<b>文献库</b><span>${REFS.length} 条唯一书目</span>
+      <span class="hint">「有链接」≠「我读过」，色标为分级诚实标注；点击条目可看它被哪些断言引用</span>`; }
+  if (STATE.mode === "revisions") { head.innerHTML = `<b>修正链</b><span>${REVS.length} 条被推翻的判断</span>
+      <span class="hint">superseded_by 留痕，不删改历史；点击可跳到涉及的图</span>`; }
+  if (STATE.mode === "table") { head.innerHTML = `<b>表格</b><span>${list.length} 行</span>
+      <span class="hint">一行一条断言聚合；点击行 → 右栏检查器；左边条=溯源，红点=未鉴定</span>`; }
+  if (STATE.mode === "tree") { head.innerHTML = `<b>关系树</b><span>分类嵌套</span>
+      <span class="hint">非系统发育树；节点宽度=张数，红标=停在此层的未定数；点节点筛选，点叶跳图</span>`; }
+
+  const grid = document.getElementById("grid"), empty = document.getElementById("empty");
+  if (STATE.mode !== "gallery") { grid.hidden = true; empty.hidden = false;
+    empty.innerHTML = renderSpecial(); return; }
+  empty.hidden = true; grid.hidden = false;
+  if (!list.length) { grid.innerHTML = ""; empty.hidden = false; grid.hidden = true;
+    empty.innerHTML = `<div class="placeholder"><h2>此筛选下没有图像</h2>
+      <p>换个队列，或清空搜索词。</p>
+      <button class="clrbtn" type="button" onclick="clearFilter()">✕ 清除筛选，回到全部 ${IMG.length} 张</button></div>`; return; }
+
+  grid.innerHTML = list.map(im => {
+    const st = statusOf(im), pv = provOf(im);
+    const flags = [];
+    if (st === "contested") flags.push("争议");
+    const cf = confidenceOf(im);
+    if (cf !== null && cf < 0.6) flags.push(`低置信 ${cf.toFixed(2)}`);
+    /* 「未鉴定」不再用文字旗标：由左上角实心红点（.s-dot-unresolved）表达，
+       用户认为三个字是噪声。争议/低置信仍保留文字——红点无法区分这三种语义 */
+    return `<figure class="tile ${decided(im) ? "decided" : ""}" data-id="${esc(im.image_id)}"
+      role="button" tabindex="-1" aria-selected="${STATE.sel.has(im.image_id)}"
+      aria-current="${STATE.cur === im.image_id}" title="${esc(im.image_id)}">
+      <div class="frame"><img src="${esc(im.thumbData || im.asset.thumb)}" alt="${esc(im.image_id)}" loading="lazy"
+           onerror="this.src='${esc(im.asset.thumb)}';this.onerror=null"></div>
+      <span class="st s-dot-${st}" title="状态：${esc(ST_LABEL[st] || st)}"></span>
+      <span class="prov" title="溯源：${esc(PROV_LABEL[pv] || pv)}">${pv === "exif" ? "⌁" : pv === "auto" ? "∿" : (pv === "ai" || pv === "ai_draft") ? "AI" : pv === "human" ? "✓" : "?"}</span>
+      ${flags.length ? `<span class="flag">${esc(flags[0])}</span>` : ""}
+      <figcaption class="id">${esc(im.image_id)}</figcaption>
+    </figure>`;
+  }).join("");
+}
+
+/* ---------- 表格视图 ---------- */
+/* 一行 = 一张图，把它的断言压成列。列的选择对应研究用途：
+   身份（ID/分类/分期）、可信度（状态/置信/溯源）、证据（文献数/潜次/航次）、
+   派生（色素/填充度）、缺口（红点=未鉴定）。行点击 → 选中并回检查器。 */
+function renderTable() {
+  const list = currentList();
+  const rows = list.map(im => {
+    const st = statusOf(im), pv = provOf(im);
+    const path = taxonPath(im), lab = taxonLabel(im);
+    const stg = stageLabel(im), cf = confidenceOf(im);
+    const ad = claimOf(im, "auto_derived");
+    const v = (ad && ad.value) || {};
+    const dv = claimOf(im, "dive_is");
+    const nref = im.claims.reduce((s, c) => s + ((c.evidence || {}).references || []).length, 0);
+    const pig = v.pigment_detected ? `有` : `<span class="miss">未检出</span>`;
+    return `<tr data-id="${esc(im.image_id)}" ${STATE.cur === im.image_id ? 'aria-current="true"' : ""}>
+      <td><img class="mini" src="${esc(im.thumbData || im.asset.thumb)}" alt="" loading="lazy"></td>
+      <td class="mono">${esc(im.image_id)}</td>
+      <td data-prov="${esc(pv)}">${st === "unresolved" ? `<span class="rdot" title="未鉴定"></span><span class="miss">未鉴定</span>`
+        : path.length ? esc(path.join(" › "))
+        : `<span class="miss" title="按跳过规则有意排除，不给分类">已分诊跳过</span>`}</td>
+      <td>${stg ? `<code>${esc(stg)}</code>` : `<span class="miss">无</span>`}</td>
+      <td><span class="badge b-${esc(st)}">${esc(ST_LABEL[st] || st)}</span></td>
+      <td class="conf">${cf == null ? "—" : cf.toFixed(2)}</td>
+      <td data-prov="${esc(pv)}" title="溯源：${esc(PROV_LABEL[pv] || pv)}">${pv === "exif" ? "⌁" : pv === "auto" ? "∿" : (pv === "ai" || pv === "ai_draft") ? "AI" : pv === "human" ? "✓" : "?"}</td>
+      <td class="conf">${nref}</td>
+      <td class="mono">${esc((dv && dv.value && dv.value.dive_id) || "—")}</td>
+      <td>${pig}</td>
+      <td class="conf">${v.tissue_frac != null ? Math.round(v.tissue_frac * 100) + "%" : "—"}</td>
+    </tr>`;
+  }).join("");
+  return `<div id="tblwrap"><table class="wb">
+    <thead><tr>
+      <th title="网格缩略">图</th><th>ID</th><th>分类路径</th><th>分期</th><th>状态</th>
+      <th>置信</th><th>溯源</th><th>证据</th><th>潜次</th><th>色素</th><th>组织占比</th>
+    </tr></thead><tbody>${rows}</tbody></table></div>
+    <div id="tblfoot">左栏分区左边条颜色 = 溯源：⌁相机直读 ∿自动派生 AI 待确认 ✓你已确认 · 虚线=缺口 ·
+      红点=未鉴定 · 行可点击切换检查器。表格只读，编辑仍在右栏检查器完成。</div>`;
+}
+
+/* ---------- 关系树视图 ---------- */
+/* 分类嵌套树（非系统发育树）：节点宽度=该分支张数；
+   每个节点显示「停在此层的未定数」= 无法继续下探的图数（不确定性可视化）。
+   点节点=按该分类筛选（回图库）；展开=看子层；叶子=单图，点击跳检查器。 */
+function renderTree() {
+  const tree = buildTaxTree();
+  const maxN = Math.max(1, tree.n);
+  const width = n => Math.max(3, Math.round(n / maxN * 120));
+
+  function node(n, depth) {
+    const kids = Object.values(n.kids).sort((a, b) => b.n - a.n);
+    const open = depth < 2;                       // 默认展开到纲
+    const isTent = !kids.length && n.uncertain;   // 未定叶
+    const sentinel = depth === 0 ? "__root__" : esc(n.name);
+    let h = `<div class="tnode ${isTent ? "tent" : ""}" data-open="${open ? 1 : 0}" data-depth="${depth}">`;
+    h += `<div class="trow" data-taxon="${sentinel}" title="点节点=按「${esc(n.name)}」筛选图库">
+      <span class="tcar">${kids.length ? "▼" : ""}</span>
+      <span class="tname">${esc(n.name)}</span>
+      <span class="tbar" style="width:${width(n.n)}px"></span>
+      <span class="tc">${n.n}</span>
+      ${n.uncertain ? `<span class="tq" title="${n.uncertain} 张停在此层，未能继续下探">·${n.uncertain} 未定</span>` : ""}
+    </div>`;
+    /* 叶子只画在**终止节点**上。根节点的 term 全是「未鉴定」图（98 张），
+       若在根部平铺会把真分类挤到折叠线以下，且视觉上像"未归类杂物堆"。
+       未鉴定图统一由底部「未定（无法归类）」行 + 左栏队列表达。 */
+    const leaves = depth === 0 ? [] : (n.term || []);
+    if (kids.length || leaves.length) {
+      h += `<div class="tkids">`;
+      for (const k of kids) h += node(k, depth + 1);
+      for (const iid of leaves) {
+        const im = byId[iid]; if (!im) continue;
+        const st = statusOf(im);
+        h += `<div class="tleaf" data-id="${esc(iid)}" title="跳到检查器">
+          <img src="${esc(im.thumbData || im.asset.thumb)}" alt="" loading="lazy">
+          <span class="lst s-dot-${st}"></span>
+          <span class="lid">${esc(iid)}</span></div>`;
+      }
+      h += `</div>`;
+    }
+    h += `</div>`;
+    return h;
+  }
+  /* 未归类行数 = 根节点 term 里不在任何分类路径上的图（即未鉴定）。
+     tree.uncertain 记录的是「有路径但停层」的未定数，两者语义不同，勿相加。 */
+  const unN = (tree.term || []).length;
+  const un = unN
+    ? `<div class="tnode tent"><div class="trow" data-taxon="__unassigned__" title="无法归类的图（未鉴定）">
+        <span class="tcar"></span><span class="tname">未定（无法归类）</span>
+        <span class="tbar" style="width:${width(unN)}px"></span>
+        <span class="tc">${unN}</span></div></div>`
+    : "";
+  return `<div id="treeWrap">
+    <div style="font-size:12px;color:var(--ink3);margin:6px 4px 12px">
+      门 → 纲 → 目 → 科 → 属 的<b style="color:var(--ink2)">分类嵌套</b>，
+      <b style="color:var(--rust)">不是</b>系统发育树：分支宽度只代表张数，不代表演化距离。
+      红「未定」= 鉴定停在该层、无法继续下探的图数（不确定性可视化）。
+    </div>
+    ${node(tree, 0)}${un}
+  </div>`;
+}
+
+/* 文献库 / 修正链 / 表格 / 关系树 视图 */
+function renderSpecial() {
+  if (STATE.mode === "table") return renderTable();
+  if (STATE.mode === "tree") return renderTree();
+  if (STATE.mode === "refs") {
+    const lv = {}, ls = {};
+    for (const r of REFS) { lv[r.verify_level] = (lv[r.verify_level] || 0) + 1;
+                            ls[r.link_status] = (ls[r.link_status] || 0) + 1; }
+    return `<div class="placeholder" style="max-width:840px;text-align:left">
+      <h2>文献库 · ${REFS.length} 条唯一书目</h2>
+      <p style="color:var(--ink2)">核验层级：已打开核验 <b style="color:var(--green)">${lv.opened || 0}</b> ·
+        书目已互证 <b style="color:var(--slate)">${lv.bibliographic || 0}</b> ·
+        仅有链接待你核验 <b style="color:var(--amber)">${lv.link_only || 0}</b><br>
+        链接可达性：现在可打开 <b style="color:var(--green)">${ls.opens_now || 0}</b> ·
+        反爬墙未确认 <b style="color:var(--amber)">${ls.bot_walled || 0}</b> ·
+        当前不可达 <b style="color:var(--rust)">${ls.unreachable || 0}</b></p>
+      <p style="color:var(--ink3);font-size:11.5px;margin-top:8px">
+        反爬墙（HTTP 403）不等于链接失效：出版社拦截自动请求，你在浏览器里点开大概率正常。
+        但我不会把它标成「已核验可达」——凡我没读过的，绝不标成已核验。</p>
+      <ul class="refs" style="margin-top:16px">${REFS.map(r => refItem(r)).join("")}</ul>
+    </div>`;
+  }
+  if (STATE.mode === "revisions") {
+    return `<div class="placeholder" style="max-width:840px;text-align:left">
+      <h2>修正链 · ${REVS.length} 条被推翻的判断</h2>
+      <p style="color:var(--ink2)">研究工具的价值不在于不犯错，而在于错误可追溯。
+        以下每条都曾是「结论」，后被用户、文献或实测推翻。保留原文，不删改历史。</p>
+      <div style="margin-top:16px">${REVS.map(revItem).join("")}</div>
+    </div>`;
+  }
+  return `<div class="placeholder"><h2>该视图尚未构建</h2>
+    <p>方案 B 的表格模式与分类关系树属后续增量。当前只交付外壳 + 图库模式。</p>
+    <p style="color:var(--ink4);font-size:11.5px">数据层已是 claim-centric（${CNT.images || IMG.length} 张 ·
+      ${IMG.reduce((s, i) => s + i.claims.length, 0)} 条断言），加视图不需要改模型。</p>
+    <span class="soon">后续增量</span></div>`;
+}
+function refItem(r) {
+  const t = r.verify_level || "link_only", s = r.link_status || "unreachable";
+  const link = r.url ? `<a href="${esc(r.url)}" target="_blank" rel="noopener noreferrer">${esc(r.text)}</a>`
+                     : `<span>${esc(r.text)}</span>`;
+  return `<li><span class="tier t-${esc(t)}">${esc(TIER_LABEL[t] || t)}</span><span
+      class="lstat ls-${esc(s)}">${esc(LS_LABEL[s] || s)}${r.http_code ? ` HTTP ${esc(r.http_code)}` : ""}</span>${link}
+    ${r.link_note ? `<span class="lnote">${esc(r.link_note)}</span>` : ""}</li>`;
+}
+function revItem(r) {
+  return `<div class="rev"><div class="rh"><b>${esc(r.rev)}</b><span>${esc(r.date)}</span>
+    ${r.image_id ? `<code>${esc(r.image_id)}</code>` : ""}<span style="margin-left:auto">${esc(r.predicate)}</span></div>
+    <div class="old">✗ ${esc(r.superseded_value)}</div>
+    <div class="new">✓ ${esc(r.corrected_value)}</div>
+    <div class="why"><b>根因</b> ${esc(r.root_cause)}</div>
+    ${r.method_change ? `<div class="fix"><b>方法变更</b> ${esc(r.method_change)}</div>` : ""}
+    <div class="note" style="border:0;padding-top:4px;color:var(--ink4)">纠正方 ${esc(r.corrected_by)}</div>
+  </div>`;
+}
+
+/* ============================================================
+   渲染：检查器
+   ============================================================ */
+function renderInsp() {
+  const el = document.getElementById("insp");
+  if (!STATE.cur) {
+    el.innerHTML = `<div class="sect"><h3>检查器</h3>
+      <div style="color:var(--ink3);font-size:12px">选中一张图以查看断言、证据与修正链。<br><br>
+      左栏是<b style="color:var(--ink2)">待办队列</b>——研究工具不按「全部浏览」组织，
+      而按「今天该处理什么」组织。</div></div>
+      ${legendHTML()}`;
+    return;
+  }
+  const im = byId[STATE.cur]; if (!im) return;
+  const list = currentList();
+  const pos = list.findIndex(x => x.image_id === im.image_id);
+  const st = statusOf(im);
+
+  el.innerHTML = `
+    <div class="ihead"><h2>${esc(im.image_id)}</h2>
+      <span class="badge b-${esc(st)}">${esc(ST_LABEL[st] || st)}</span>
+      <span class="pos">${pos >= 0 ? pos + 1 : "—"}/${list.length}</span></div>
+
+    <div id="shot" title="点击放大（␣）">
+      <img src="${esc(im.fullData || im.asset.full || im.thumbData || im.asset.thumb)}" alt="${esc(im.image_id)}"
+        onerror="this.src='${esc(im.thumbData || im.asset.thumb)}';this.onerror=null">
+      <span class="cap">整帧完整展示 · ${esc((im.asset.full_w || "—") + "×" + (im.asset.full_h || "—"))}</span>
+    </div>
+
+    <div class="sect"><h3>溯源图例</h3>${legendInline()}</div>
+
+    <div class="sect"><h3>断言 <span class="rt">${im.claims.length} 条</span></h3>
+      ${renderClaims(im)}</div>
+
+    <div class="sect"><h3>裁决</h3>${renderReview(im)}</div>`;
+  el.scrollTop = 0;
+}
+/* 主体虚线框已按用户要求移除：检查器只展示整帧本体，不再叠加范围标注。
+   box_norm 字段仍保留在 claims.json 中（数据不丢），仅不再渲染。 */
+function legendHTML() {
+  return `<div class="legend">
+    <span><i style="background:var(--slate)"></i>⌁ 相机直读</span>
+    <span><i style="background:var(--slate);opacity:.55"></i>∿ 自动派生</span>
+    <span><i style="background:var(--amber)"></i>AI 待确认</span>
+    <span><i style="background:var(--green)"></i>人工确认</span>
+    <span><i style="background:transparent;border:1.5px dashed var(--rust)"></i>缺口 / 争议</span>
+  </div>`;
+}
+function legendInline() {
+  return `<div style="display:flex;gap:9px;flex-wrap:wrap;font-size:10.5px;color:var(--ink3)">
+    <span><i class="glyph">⌁</i>相机直读（机器事实）</span>
+    <span><i class="glyph">∿</i>自动派生（可复算）</span>
+    <span style="color:var(--amber)">▌AI 推断，待你确认</span>
+    <span style="color:var(--green)">▌你已确认</span>
+    <span style="color:var(--rust)">▌缺口 / 争议</span></div>`;
+}
+
+function renderClaims(im) {
+  const order = { taxon_is: 0, stage_is: 1, series_member_of: 2, triage_note: 3, dive_is: 4,
+                  auto_derived: 5, capture_context: 6, reviewer_note: 7 };
+  const cs = im.claims.slice().sort((a, b) => (order[a.predicate] ?? 9) - (order[b.predicate] ?? 9));
+  return cs.map(c => claimCard(im, c)).join("");
+}
+function claimCard(im, c) {
+  const prov = c.asserted_by || "none";
+  const stt = c.status || "unresolved";
+  const cf = c.confidence;
+  const cfCls = cf == null ? "" : cf >= 0.85 ? "hi" : cf >= 0.6 ? "" : "lo";
+  let body = "";
+
+  if (c.predicate === "taxon_is") {
+    if (!c.value) body = `<div class="cbody"><span class="v miss">未鉴定</span>
+      <div class="note">${esc(c.note || "")}</div></div>`;
+    else {
+      const p = c.value.path || [];
+      body = `<div class="cbody"><div class="path">${p.map((x, i) =>
+          `<span class="lvl ${i === p.length - 1 ? "last" : ""}">${esc(x)}</span>`).join("")}</div>
+        ${c.value.stop_reason ? `<div class="stop">停层原因：${esc(c.value.stop_reason)}</div>` : ""}
+        ${diagHTML(c)}</div>`;
+    }
+  } else if (c.predicate === "stage_is") {
+    if (!c.value) body = `<div class="cbody"><span class="v miss">未分期</span></div>`;
+    else {
+      const v = c.value, sk = v.sort_key;
+      body = `<div class="cbody">
+        <div>离散分期：<b>${v.discrete_label ? `<code>${esc(v.discrete_label)}</code>` : `<span class="v miss">无（文献无离散分期）</span>`}</b></div>
+        ${sk ? `<div style="font-size:11.5px;color:var(--ink3);margin-top:2px">
+          排序键 stage_order=${esc(sk.stage_order)}, within=${esc(sk.within)}
+          <span title="显示序号由排序计算，插入新图不需重标已有条目">ⓘ</span></div>` : ""}
+        ${v.indicator ? `<div style="margin-top:3px">判据：<span style="color:var(--ink2)">${esc(v.indicator)}</span></div>` : ""}
+        ${v.maturity_basis ? `<div>成熟度：<span style="color:var(--ink2)">${esc(v.maturity_basis)}</span></div>` : ""}
+        ${v.continuum_note ? `<div class="stop">${esc(v.continuum_note)}</div>` : ""}
+        ${v.label_basis ? `<div class="litnote">${esc(v.label_basis)}</div>` : ""}
+        ${diagHTML(c)}</div>`;
+    }
+  } else if (c.predicate === "capture_context") {
+    const v = c.value || {};
+    const row = (k, val, unit) => `<div class="f" data-prov="exif"><span class="k">${k}</span>
+      <span class="v mono">${val == null ? `<span class="v miss">缺失</span>` : esc(val)}${unit && val != null ? `<span class="u">${esc(unit)}</span>` : ""}</span></div>`;
+    body = `<div class="cbody">
+      ${row("机身", v.model)}${row("厂商", v.make)}
+      ${row("拍摄时间", v.datetime_original)}
+      ${row("导出时间", v.datetime_edit)}
+      ${row("快门", v.exposure, "s")}${row("光圈 AV", v.aperture_av)}
+      ${row("ISO", v.iso)}${row("等效焦距", v.focal_35mm, "mm")}
+      ${row("版权", v.copyright || v.artist)}
+      <div class="note">${esc(c.note || "")}</div></div>`;
+  } else if (c.predicate === "auto_derived") {
+    const v = c.value || {};
+    const pig = v.pigment_detected;
+    const row = (k, val, cls) => `<div class="f" data-prov="auto"><span class="k">${k}</span>
+      <span class="v mono ${cls || ""}">${val}</span></div>`;
+    const hex = a => a ? "#" + a.map(x => x.toString(16).padStart(2, "0")).join("") : null;
+    const sw = a => a ? `<i style="display:inline-block;width:9px;height:9px;border-radius:2px;background:${hex(a)};margin-right:5px;vertical-align:-1px;border:1px solid var(--line3)"></i>` : "";
+    body = `<div class="cbody">
+      ${row("原图", `${v.orig_w}×${v.orig_h}`)}
+      ${row("纵横比", v.aspect)}
+      ${row("主体框", v.subject_box ? v.subject_box.map(x => (+x).toFixed(3)).join(", ") : `<span class="v miss">无（全暗帧）</span>`)}
+      ${row("水体占比", v.water_frac != null ? (v.water_frac * 100).toFixed(1) + "%" : "—")}
+      ${row("组织占比", v.tissue_frac != null ? (v.tissue_frac * 100).toFixed(1) + "%" : "—")}
+      ${row("组织均色", sw(v.tissue_rgb) + (hex(v.tissue_rgb) || "—"))}
+      ${row("色素", pig ? `${sw(v.pigment_rgb)}${hex(v.pigment_rgb)} · hue ${v.pigment_hue_median} · 占组织 ${(v.pigment_frac / Math.max(v.tissue_frac, 1e-9) * 100).toFixed(1)}%`
+        : `<span class="v miss">未检出显著色素</span>`)}
+      <div class="note">${esc(c.note || "")}</div></div>`;
+  } else if (c.predicate === "dive_is") {
+    const v = c.value || {};
+    const f = (k, val) => `<div class="f" data-prov="${val == null ? "none" : "auto"}"><span class="k">${k}</span>
+      <span class="v mono">${val == null ? `<span class="v miss">待填</span>` : esc(val)}</span></div>`;
+    body = `<div class="cbody">${f("潜次", v.dive_id)}${f("航次", v.trip)}
+      ${f("深度 m", v.depth_m)}${f("水温 ℃", v.water_temp_c)}${f("地点", v.location)}
+      <div class="note">${esc(c.note || "")}</div></div>`;
+  } else if (c.predicate === "series_member_of") {
+    body = `<div class="cbody">${esc((c.value || {}).hypothesis || "")}
+      <div class="note">${esc(c.note || "")}</div></div>`;
+  } else if (c.predicate === "reviewer_note") {
+    body = `<div class="cbody"><b>你的批注：</b>${esc((c.value || {}).text || "")}</div>`;
+  } else if (c.predicate === "triage_note") {
+    const v = c.value || {};
+    const isSkip = v.triage === "skip";
+    body = `<div class="cbody">
+      <div><span class="v" style="color:${isSkip ? "var(--ink3)" : "var(--amber)"};font-weight:650">
+        ${isSkip ? "已分诊跳过" : "高倍重读后仍未达可防守层级"}</span></div>
+      ${v.reason ? `<div style="margin-top:3px">${esc(v.reason)}</div>` : ""}
+      ${v.detail ? `<div class="note" style="margin-top:4px">${esc(v.detail)}</div>` : ""}
+      ${v.group_hint ? `<div style="margin-top:4px;color:var(--ink3);font-size:11.5px">形态组提示：<code>${esc(v.group_hint)}</code></div>` : ""}
+      <div class="litnote" style="margin-top:6px">按你定的跳过规则（无剧烈变态/非幼体/原生生物）排除；如你想改判为纳入，直接改下方裁决即可。</div></div>`;
+  } else {
+    body = `<div class="cbody"><code>${esc(JSON.stringify(c.value))}</code></div>`;
+  }
+
+  const ev = c.evidence || {};
+  const refIds = ev.references || [];
+  const evHTML = refIds.length ? `<div class="note" style="border-top:1px dotted var(--line2);margin-top:6px;padding-top:6px">
+      <b style="color:var(--ink3);font-weight:650">证据 ${refIds.length} 条</b>
+      <ul class="refs" style="margin-top:5px">${refIds.map(rid => {
+        const r = REFS.find(x => x.ref_id === rid); return r ? refItem(r) : ""; }).join("")}</ul>
+      ${ev.note ? `<div class="litnote">${esc(ev.note)}</div>` : ""}</div>`
+    : (ev.note ? `<div class="litnote">${esc(ev.note)}</div>` : "");
+
+  const superseded = REVS.filter(r => r.image_id === im.image_id && r.predicate === c.predicate);
+  const supHTML = superseded.length ? `<div style="margin-top:7px">
+    <div style="font-size:10.5px;color:var(--rust);font-weight:700;margin-bottom:4px">
+      ⚠ 此断言曾被推翻 ${superseded.length} 次</div>
+    ${superseded.map(r => `<div class="rev" style="margin-bottom:5px">
+      <div class="rh"><b>${esc(r.rev)}</b><span>${esc(r.date)}</span></div>
+      <div class="old" style="font-size:11px">✗ ${esc(r.superseded_value)}</div>
+      <div class="new" style="font-size:11px">✓ ${esc(r.corrected_value)}</div>
+      <div class="why" style="font-size:10.5px"><b>根因</b> ${esc(r.root_cause)}</div>
+      ${r.method_change ? `<div class="fix" style="font-size:10.5px"><b>方法变更</b> ${esc(r.method_change)}</div>` : ""}
+    </div>`).join("")}</div>` : "";
+
+  return `<div class="claim" data-prov="${esc(prov)}" data-status="${esc(stt)}">
+    <div class="chd"><span class="cp">${esc(c.predicate)}</span>
+      <span class="badge b-${esc(stt)}">${esc(ST_LABEL[stt] || stt)}</span>
+      ${prov !== "none" ? `<span class="badge b-prov">${esc(PROV_LABEL[prov] || prov)}</span>` : ""}
+      ${cf != null ? `<span class="conf ${cfCls}"><span class="bar"><i style="width:${Math.round(cf * 100)}%"></i></span>${cf.toFixed(2)}</span>` : ""}
+    </div>${body}${supHTML}${evHTML}
+    ${c.note && !["capture_context", "auto_derived", "dive_is"].includes(c.predicate) ? `<div class="note">${esc(c.note)}</div>` : ""}
+  </div>`;
+}
+function diagHTML(c) {
+  const d = (c.evidence || {}).diagnostics || [];
+  return d.length ? `<ul class="diag">${d.map(x => `<li>${esc(x)}</li>`).join("")}</ul>` : "";
+}
+
+function renderReview(im) {
+  const o = OVERLAY[im.image_id] || {};
+  const tax = claimOf(im, "taxon_is"), stg = claimOf(im, "stage_is");
+  const curPath = (tax && tax.value && tax.value.path) ? tax.value.path.join("/") : "";
+  const curStage = (stg && stg.value && stg.value.discrete_label) || "";
+  const opt = (v, l) => `<option value="${v}" ${o.verdict === v ? "selected" : ""}>${l}</option>`;
+  return `
+    <div class="rrow"><label>裁决</label>
+      <select data-f="verdict">
+        <option value="">—</option>${opt("confirm", "认可（1）")}${opt("correct", "需修改（2）")}${opt("reject", "否决（3）")}
+      </select></div>
+    <div class="rrow"><label>分类路径</label>
+      <input type="text" data-f="taxonomy_path" placeholder="Animalia/Mollusca/Cephalopoda/…"
+        value="${esc(o.taxonomy_path || "")}"></div>
+    <div class="rrow"><label>离散分期</label>
+      <input type="text" data-f="stage_label" placeholder="zoea II / veliger / paralarva；留空=维持"
+        value="${esc(o.stage_label || "")}"></div>
+    <div class="rrow"><label>备注</label>
+      <input type="text" data-f="note" placeholder="你的判断依据或纠正说明"
+        value="${esc(o.note || "")}"></div>
+    <div class="rrow"><label>无发育序列</label>
+      <input type="checkbox" data-f="no_sequence" ${o.no_sequence ? "checked" : ""}>
+      <span style="font-size:10.5px;color:var(--ink4)">勾选＝排除出序列装配</span></div>
+    <div class="rrow" style="margin-top:9px">
+      <button class="kbtn" data-act="save">保存本条<kbd>⌘S</kbd></button>
+      <button class="kbtn" data-act="next">确认并下一条<kbd>⏎</kbd></button>
+      <button class="kbtn" data-act="clear">清除批注</button>
+    </div>
+    <div class="note" style="border:0;margin-top:7px;color:var(--ink4);font-size:10.5px">
+      当前值：分类 <code>${esc(curPath || "未鉴定")}</code> · 分期 <code>${esc(curStage || "无")}</code><br>
+      批注以覆盖层保存，不改动原始断言；被推翻的值保留在修正链里。</div>`;
+}
+
+/* ============================================================
+   交互
+   ============================================================ */
+function toast(msg, kind) {
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.className = "on " + (kind || "");
+  clearTimeout(t._h); t._h = setTimeout(() => t.className = "", 2600);
+}
+function select(id, scroll) {
+  STATE.cur = id;
+  document.querySelectorAll(".tile").forEach(el =>
+    el.setAttribute("aria-current", el.dataset.id === id));
+  if (scroll !== false) {
+    const el = document.querySelector(`.tile[data-id="${CSS.escape(id)}"]`);
+    if (el) el.scrollIntoView({ block: "nearest", behavior: "smooth" });
+  }
+  renderInsp(); updateProgress();
+}
+function move(delta) {
+  const list = currentList(); if (!list.length) return;
+  let i = list.findIndex(x => x.image_id === STATE.cur);
+  i = i < 0 ? (delta > 0 ? 0 : list.length - 1) : Math.min(list.length - 1, Math.max(0, i + delta));
+  select(list[i].image_id);
+}
+function setFilter(kind, f) {
+  STATE.filterKind = kind; STATE.filter = f;
+  STATE.mode = "gallery";
+  syncModeTabs(); renderNav(); renderStage();
+  const list = currentList();
+  if (list.length && !list.some(x => x.image_id === STATE.cur)) select(list[0].image_id, false);
+  else renderInsp();
+  updateProgress();
+}
+function syncModeTabs() {
+  document.querySelectorAll(".modes button").forEach(b =>
+    b.setAttribute("aria-selected", b.dataset.mode === STATE.mode));
+}
+function setMode(m) {
+  STATE.mode = m; syncModeTabs(); renderNav(); renderStage(); renderInsp(); updateProgress();
+}
+function updateProgress() {
+  const total = IMG.length;
+  const done = IMG.filter(decided).length;
+  document.getElementById("progTxt").textContent = `已裁决 ${done} / ${total}`;
+  document.getElementById("progBar").style.width = (done / total * 100) + "%";
+  const list = currentList();
+  const fname = STATE.filterKind === "queue" ? (QUEUES[STATE.filter] || {}).label
+    : STATE.filterKind === "all" ? "全部" : STATE.filter;
+  /* 写入文字子节点（不能整体替换 innerHTML，否则清除按钮会被抹掉）。
+     active 类控制「✕ 清除筛选」的显隐：全量时不显示，避免无意义按钮。 */
+  const ft = document.getElementById("filterTxt");
+  const ftMain = document.getElementById("filterTxtMain");
+  if (ftMain) ftMain.textContent = `筛选：${fname || "全部"} · ${list.length} 张`;
+  if (ft) {
+    const filtering = !(STATE.filterKind === "all" || !STATE.filterKind) || !!STATE.q;
+    ft.classList.toggle("active", filtering);
+    ft.title = filtering ? "点击清除筛选与搜索，回到全部图像" : "";
+  }
+}
+
+/* 覆盖层持久化 */
+function persist() {
+  try { localStorage.setItem(LS_KEY, JSON.stringify(OVERLAY)); }
+  catch (e) { toast("localStorage 写入失败：" + e.message, "err"); return false; }
+  markDirty(false); return true;
+}
+let dirty = false, fsHandle = null;
+function markDirty(v) {
+  dirty = v;
+  const b = document.getElementById("saveBtn");
+  b.className = "hbtn " + (v ? "dirty" : (fsHandle ? "ok" : ""));
+  b.textContent = v ? "保存 ●" : (fsHandle ? "已保存" : "保存");
+  document.getElementById("saveTxt").textContent = v ? "有未保存改动"
+    : (fsHandle ? `已绑定本地文件` : "改动暂存于浏览器");
+}
+function collectForm() {
+  const el = document.getElementById("insp");
+  const im = byId[STATE.cur]; if (!im) return null;
+  const g = f => el.querySelector(`[data-f="${f}"]`);
+  const rec = { verdict: g("verdict").value || null,
+    no_sequence: g("no_sequence").checked || null,
+    taxonomy_path: g("taxonomy_path").value.trim() || null,
+    stage_label: g("stage_label").value.trim() || null,
+    note: g("note").value.trim() || null,
+    _at: new Date().toISOString() };
+  return Object.values(rec).some((v, i) => i < 5 && v) ? rec : null;
+}
+function applyForm() {
+  const im = byId[STATE.cur]; if (!im) return;
+  const rec = collectForm();
+  if (!rec) { delete OVERLAY[im.image_id]; }
+  else {
+    const o = rec;
+    if (o.taxonomy_path) o.taxon_is = { path: o.taxonomy_path.split("/").map(s => s.trim()).filter(Boolean),
+      stop_reason: "人工修订", confidence: 1.0 };
+    if (o.stage_label) o.stage_is = { discrete_label: o.stage_label, sort_key: null,
+      indicator: "人工修订", maturity_basis: null, continuum_note: null, label_basis: null };
+    OVERLAY[im.image_id] = o;
+  }
+  persist(); markDirty(true); renderNav(); renderStage(); renderInsp(); updateProgress();
+}
+async function saveFile() {
+  const payload = exportPayload();
+  if (window.showSaveFilePicker) {
+    try {
+      if (!fsHandle) fsHandle = await window.showSaveFilePicker({
+        suggestedName: "workbench_decisions.json",
+        types: [{ description: "JSON", accept: { "application/json": [".json"] } }] });
+      const w = await fsHandle.createWritable();
+      await w.write(JSON.stringify(payload, null, 1)); await w.close();
+      markDirty(false); toast(`已保存到本地文件（${Object.keys(OVERLAY).length} 条批注）`, "ok");
+      return;
+    } catch (e) { if (e.name === "AbortError") return; toast("写入失败：" + e.message, "err"); }
+  }
+  // 回退：下载
+  const blob = new Blob([JSON.stringify(payload, null, 1)], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob); a.download = "workbench_decisions.json"; a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+  markDirty(false); toast("已导出下载（此浏览器不支持直接写本地文件）", "ok");
+}
+async function openFile() {
+  if (window.showOpenFilePicker) {
+    try {
+      const [h] = await window.showOpenFilePicker({
+        types: [{ description: "JSON", accept: { "application/json": [".json"] } }] });
+      const txt = await (await h.getFile()).text();
+      const d = JSON.parse(txt);
+      if (d && d.overlay) { OVERLAY = d.overlay; fsHandle = h; persist();
+        renderNav(); renderStage(); renderInsp(); updateProgress();
+        toast(`已载入 ${Object.keys(OVERLAY).length} 条批注`, "ok"); }
+      else toast("文件格式不含 overlay 字段", "err");
+      return;
+    } catch (e) { if (e.name === "AbortError") return; toast("读取失败：" + e.message, "err"); return; }
+  }
+  const inp = document.createElement("input"); inp.type = "file"; inp.accept = ".json";
+  inp.onchange = () => { const f = inp.files[0]; if (!f) return;
+    const r = new FileReader();
+    r.onload = () => { try { const d = JSON.parse(r.result);
+      if (d && d.overlay) { OVERLAY = d.overlay; persist(); renderNav(); renderStage();
+        renderInsp(); updateProgress(); toast(`已载入 ${Object.keys(OVERLAY).length} 条批注`, "ok"); }
+      else toast("文件格式不含 overlay 字段", "err");
+    } catch (e) { toast("解析失败：" + e.message, "err"); } };
+    r.readAsText(f); };
+  inp.click();
+}
+function exportPayload() {
+  return { schema: "plankton-workbench/decisions/v1",
+    exported_at: new Date().toISOString(),
+    source_db: DB.schema,
+    images_total: IMG.length,
+    decisions_count: Object.keys(OVERLAY).length,
+    note: EXPORT_NOTE,
+    overlay: OVERLAY };
+}
+
+/* ---------- 导入面板（浏览器内自动填充） ----------
+   口径：浏览器内完成 EXIF/主体框/色彩三分类/图层降采样/入队/持久化；
+   分类·幼体分期·文献 由离线 larval-taxonomy SOP 产出批注文件，经顶栏「打开」合并。
+   色彩三分类与 build_assets.py 同口径简化版：色素只认暖色相且占组织 ≥2% 才算检出。 */
+const IMP_DB = "plankton_wb_imports", IMP_STORE = "imgs";
+function impOpen() {
+  return new Promise((res, rej) => {
+    const rq = indexedDB.open(IMP_DB, 1);
+    rq.onupgradeneeded = () => { rq.result.createObjectStore(IMP_STORE, { keyPath: "image_id" }); };
+    rq.onsuccess = () => res(rq.result); rq.onerror = () => rej(rq.error);
+  });
+}
+async function impPut(rec) {
+  const db = await impOpen();
+  return new Promise((res, rej) => {
+    const tx = db.transaction(IMP_STORE, "readwrite");
+    tx.objectStore(IMP_STORE).put(rec);
+    tx.oncomplete = () => { db.close(); res(); }; tx.onerror = () => { db.close(); rej(tx.error); };
+  });
+}
+async function impAll() {
+  try { const db = await impOpen();
+    return await new Promise((res, rej) => {
+      const tx = db.transaction(IMP_STORE, "readonly");
+      const rq = tx.objectStore(IMP_STORE).getAll();
+      rq.onsuccess = () => { db.close(); res(rq.result || []); };
+      rq.onerror = () => { db.close(); rej(rq.error); };
+    });
+  } catch (e) { return []; }
+}
+
+/* 极简 EXIF 解析（JPEG APP1 / TIFF IFD0 + ExifIFD，只取需要的标签） */
+function parseExif(buf) {
+  const out = { make: null, model: null, software: null, datetime_original: null,
+                datetime_edit: null, exposure: null, aperture_av: null, iso: null, focal_35mm: null };
+  try {
+    const dv = new DataView(buf);
+    if (dv.byteLength < 4 || dv.getUint16(0) !== 0xFFD8) return out;
+    let off = 2;
+    while (off + 4 < dv.byteLength) {
+      if (dv.getUint16(off) !== 0xFFE1) { off += 2 + dv.getUint16(off + 2); continue; }
+      const seg = off + 2, len = dv.getUint16(off + 2);
+      if (dv.getUint32(seg + 2) !== 0x45786966) return out; // "Exif"
+      const t0 = seg + 6, le = dv.getUint16(t0) === 0x4949;
+      const g16 = p => dv.getUint16(t0 + p, le), g32 = p => dv.getUint32(t0 + p, le);
+      const str = (p, n) => { let s = ""; for (let i = 0; i < n - 1; i++) { const c = dv.getUint8(t0 + p + i); if (!c) break; s += String.fromCharCode(c); } return s.trim() || null; };
+      const rat = p => { const a = g32(p), b = g32(p + 4); return b ? a / b : null; };
+      const readIfd = (base, exifPtrOut) => {
+        const n = g16(base);
+        for (let i = 0; i < n; i++) {
+          const e = base + 2 + i * 12, tag = g16(e), ty = g16(e + 2), cnt = g32(e + 4);
+          const vp = e + 8;
+          const offv = (ty === 2 && cnt > 4) ? g32(vp) : (e - t0 + 8);
+          if (tag === 0x010F) out.make = str(offv, cnt);
+          else if (tag === 0x0110) out.model = str(offv, cnt);
+          else if (tag === 0x0131) out.software = str(offv, cnt);
+          else if (tag === 0x0132 && !out.datetime_edit) out.datetime_edit = str(offv, cnt);
+          else if (tag === 0x8769 && exifPtrOut) exifPtrOut.v = g32(vp);
+          else if (exifPtrOut && exifPtrOut.inExif) {
+            if (tag === 0x9003) out.datetime_original = str(offv, cnt);
+            else if (tag === 0x829A) out.exposure = rat(offv);
+            else if (tag === 0x829D) out.aperture_av = rat(offv);
+            else if (tag === 0x8827 && ty === 3) out.iso = g16(vp);
+            else if (tag === 0xA405 && ty === 3) out.focal_35mm = g16(vp);
+            else if (tag === 0x920A && out.focal_35mm == null) out.focal_35mm = Math.round(rat(offv) || 0) || null;
+          }
+        }
+      };
+      const ptr = { v: null };
+      readIfd(t0 + g32(4), ptr);
+      if (ptr.v) { ptr.inExif = true; readIfd(t0 + ptr.v, {}); }
+      return out;
+    }
+  } catch (e) { /* EXIF 缺失不影响导入 */ }
+  return out;
+}
+
+/* 降采样 + 主体框 + 色彩三分类（与 build_assets.py 同口径简化版） */
+function downscale(bmp, longEdge) {
+  const s = Math.min(1, longEdge / Math.max(bmp.width, bmp.height));
+  const w = Math.max(1, Math.round(bmp.width * s)), h = Math.max(1, Math.round(bmp.height * s));
+  const cv = document.createElement("canvas"); cv.width = w; cv.height = h;
+  cv.getContext("2d").drawImage(bmp, 0, 0, w, h);
+  return cv;
+}
+function analyze(cv) {
+  const ctx = cv.getContext("2d"), d = ctx.getImageData(0, 0, cv.width, cv.height).data;
+  let x0 = cv.width, y0 = cv.height, x1 = -1, y1 = -1;
+  let tissue = 0, water = 0, pig = 0, pr = 0, pg = 0, pb = 0;
+  const N = cv.width * cv.height;
+  for (let y = 0; y < cv.height; y += 2) for (let x = 0; x < cv.width; x += 2) {
+    const i = (y * cv.width + x) * 4, r = d[i], g = d[i + 1], b = d[i + 2];
+    const lum = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+    if (lum < 26) continue;                       // 黑水背景
+    const mx = Math.max(r, g, b), mn = Math.min(r, g, b), s = mx ? (mx - mn) / mx : 0;
+    let h = 0;
+    if (mx !== mn) {
+      if (mx === r) h = ((g - b) / (mx - mn) + 6) % 6;
+      else if (mx === g) h = (b - r) / (mx - mn) + 2;
+      else h = (r - g) / (mx - mn) + 4;
+      h *= 60;
+    }
+    const warm = (h <= 75 || h >= 330) && s > 0.25 && mx > 60;
+    if (warm) { pig++; pr += r; pg += g; pb += b; }
+    else if (s < 0.35 && b >= r) water++;
+    tissue++;
+    if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y;
+  }
+  const hasBox = x1 >= x0 && y1 >= y0;
+  const box = hasBox ? [x0 / cv.width, y0 / cv.height, (x1 - x0 + 1) / cv.width, (y1 - y0 + 1) / cv.height] : null;
+  const tissueDen = Math.max(1, tissue);
+  return {
+    tissue_frac: +(tissue / Math.max(1, (cv.width / 2) * (cv.height / 2))).toFixed(4),
+    water_frac: +(water / tissueDen).toFixed(4),
+    pigment_frac: +(pig / tissueDen).toFixed(4),
+    pigment_detected: pig / tissueDen >= 0.02,
+    pigment_rgb: pig ? [Math.round(pr / pig), Math.round(pg / pig), Math.round(pb / pig)] : null,
+    box_norm: box
+  };
+}
+
+function impRow(id, name, st, cls) {
+  const el = document.getElementById("impList");
+  const d = document.createElement("div");
+  d.className = "it " + (cls || ""); d.dataset.id = id;
+  d.innerHTML = `<img alt=""><span class="nm"></span><span class="st"></span>`;
+  d.querySelector(".nm").textContent = name;
+  d.querySelector(".st").textContent = st;
+  el.appendChild(d); return d;
+}
+function impSetRow(row, st, cls, thumb) {
+  row.className = "it " + (cls || "");
+  row.querySelector(".st").textContent = st;
+  if (thumb) row.querySelector("img").src = thumb;
+}
+
+async function importFiles(files) {
+  const meta = document.getElementById("impMeta");
+  let done = 0, dup = 0, err = 0;
+  for (const f of files) {
+    if (!/image\/(jpeg|png)/.test(f.type)) { impRow("", f.name, "非 jpg/png，跳过", "err"); err++; continue; }
+    const base = f.name.replace(/\.(jpe?g|png)$/i, "");
+    if (IMG.some(im => im.image_id === base)) { impRow(base, f.name, "已存在，跳过", "err"); dup++; continue; }
+    const row = impRow(base, f.name, "处理中…");
+    try {
+      const buf = await f.arrayBuffer();
+      const ex = parseExif(buf);
+      const bmp = await createImageBitmap(new Blob([buf], { type: f.type }));
+      const fullCv = downscale(bmp, 1200), thumbCv = downscale(bmp, 400);
+      const an = analyze(fullCv);
+      const fullData = fullCv.toDataURL("image/jpeg", 0.85);
+      const thumbData = thumbCv.toDataURL("image/jpeg", 0.85);
+      const rec = {
+        image_id: base, source_path: "(浏览器导入：" + f.name + ")", trip: null, dive_id: null,
+        color_label: null, annotated: false, imported: true, imported_at: new Date().toISOString(),
+        thumbData, fullData,
+        asset: { thumb: null, full: null, detail: null,
+                 thumb_w: thumbCv.width, thumb_h: thumbCv.height,
+                 full_w: fullCv.width, full_h: fullCv.height,
+                 aspect: +(thumbCv.width / thumbCv.height).toFixed(3), box_norm: an.box_norm },
+        claims: [
+          { claim_id: "imp-" + base + "-cc", subject: { type: "image", id: base }, predicate: "capture_context",
+            value: { make: ex.make, model: ex.model, software: ex.software,
+                     datetime_original: ex.datetime_original, datetime_edit: ex.datetime_edit,
+                     exposure: ex.exposure == null ? null : String(ex.exposure),
+                     aperture_av: ex.aperture_av == null ? null : String(ex.aperture_av),
+                     iso: ex.iso, focal_35mm: ex.focal_35mm, artist: null, copyright: null },
+            confidence: null, status: "machine_read", asserted_by: "exif",
+            evidence: { references: [], diagnostics: [], note: null }, supersedes: null, superseded_by: null },
+          { claim_id: "imp-" + base + "-ad", subject: { type: "image", id: base }, predicate: "auto_derived",
+            value: Object.assign({}, an, { source: "browser_import" }),
+            confidence: null, status: "machine_read", asserted_by: "auto",
+            evidence: { references: [], diagnostics: [], note: null }, supersedes: null, superseded_by: null,
+            note: "浏览器内降采样简化口径：与 build_assets.py 同规则（色素只认暖色相且占组织≥2%）。分类/分期/文献待离线 SOP 回填。" }
+        ]
+      };
+      IMG.push(rec);
+      await impPut({ image_id: base, name: f.name, thumbData, fullData,
+                     asset: rec.asset, claims: rec.claims, imported_at: rec.imported_at });
+      impSetRow(row, "已入库 · 待鉴定", "done", thumbData);
+      done++;
+    } catch (e) { impSetRow(row, "失败：" + e.message, "err"); err++; }
+  }
+  meta.textContent = `本次：入库 ${done} · 重复 ${dup} · 失败/跳过 ${err} · 图库共 ${IMG.length} 张`;
+  renderNav(); renderStage(); if (typeof updateProgress === "function") updateProgress();
+  if (done) toast(`已导入 ${done} 张并入待鉴定队列（分类/分期/文献待离线回填）`, "ok");
+}
+
+async function restoreImports() {
+  const recs = await impAll();
+  if (!recs.length) return 0;
+  const have = new Set(IMG.map(i => i.image_id));
+  let n = 0;
+  for (const r of recs) if (!have.has(r.image_id)) {
+    IMG.push({ image_id: r.image_id, source_path: r.name ? "(浏览器导入：" + r.name + ")" : "(浏览器导入)",
+               trip: null, dive_id: null, color_label: null, annotated: false,
+               imported: true, imported_at: r.imported_at || null,
+               thumbData: r.thumbData, fullData: r.fullData, asset: r.asset, claims: r.claims || [] });
+    n++;
+  }
+  return n;
+}
+
+/* 事件绑定 */
+document.getElementById("importBtn").addEventListener("click", () => {
+  const p = document.getElementById("importPanel");
+  const on = p.classList.toggle("on");
+  document.getElementById("navCfg").classList.remove("on");
+  if (on) positionPanel(p);
+});
+function positionPanel(p) {
+  const h = document.querySelector("header").getBoundingClientRect();
+  p.style.top = Math.round(h.bottom + 6) + "px";
+}
+(function bindImportPanel() {
+  const drop = document.getElementById("impDrop"), inp = document.getElementById("impFile");
+  drop.addEventListener("click", () => inp.click());
+  inp.addEventListener("change", () => { if (inp.files.length) importFiles(Array.from(inp.files)); inp.value = ""; });
+  ["dragenter", "dragover"].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add("over"); }));
+  ["dragleave", "drop"].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove("over"); }));
+  drop.addEventListener("drop", e => {
+    const fs = Array.from(e.dataTransfer.files || []).filter(f => /image\/(jpeg|png)/.test(f.type));
+    if (fs.length) importFiles(fs);
+  });
+})();
+document.addEventListener("click", e => {
+  const box = document.getElementById("importPanel");
+  if (!box.classList.contains("on")) return;
+  if (box.contains(e.target) || e.target.closest("#importBtn")) return;
+  box.classList.remove("on");
+});
+
+document.getElementById("nav").addEventListener("click", e => {
+  const tg = e.target.closest("[data-toggle]");
+  if (tg) { const s = tg.closest(".nsec");
+    s.dataset.open = s.dataset.open === "1" ? "0" : "1"; return; }
+  const jump = e.target.closest("[data-mode-jump]");
+  if (jump) { setMode(jump.dataset.modeJump); return; }
+  const it = e.target.closest("[data-fkind]");
+  if (it) setFilter(it.dataset.fkind, it.dataset.f);
+});
+document.getElementById("grid").addEventListener("click", e => {
+  const t = e.target.closest(".tile"); if (t) select(t.dataset.id);
+});
+/* 页脚筛选提示：有筛选时点击即回全部。这是**永不消失**的出口——
+   不依赖左栏分区是否展开/是否被 ⚙ 隐藏，也不依赖当前处于哪个视图
+   （图库/表格/关系树/文献库里同样有效）。
+   两点讲究：① 保留当前视图（setFilter 会强制切回图库，这里先记下模式再还原）；
+   ② 连搜索词一起清——两者都会收窄列表，只清其一会让用户以为「还是出不去」。 */
+function clearFilter() {
+  const hadFilter = !(STATE.filterKind === "all" || !STATE.filterKind);
+  const hadQ = !!STATE.q;
+  if (!hadFilter && !hadQ) return;
+  const mode = STATE.mode;
+  STATE.q = "";
+  const qEl = document.getElementById("q");
+  if (qEl) { qEl.value = ""; qEl.blur(); }
+  STATE.filterKind = "all"; STATE.filter = "all";
+  STATE.mode = mode;
+  syncModeTabs(); renderNav(); renderStage();
+  const list = currentList();
+  if (list.length && !list.some(x => x.image_id === STATE.cur)) select(list[0].image_id, false);
+  else renderInsp();
+  updateProgress();
+  toast("已清除筛选，回到全部图像");
+}
+document.getElementById("filterTxt").addEventListener("click", () => clearFilter());
+document.getElementById("filterTxt").addEventListener("keydown", e => {
+  if (e.key === "Enter" || e.key === " ") { e.preventDefault(); clearFilter(); }
+});
+document.getElementById("stage").addEventListener("click", e => {
+  const t = e.target.closest(".tile"); if (t) { select(t.dataset.id); return; }
+  /* 表格行 → 选中并回检查器 */
+  const tr = e.target.closest("table.wb tr[data-id]");
+  if (tr) { select(tr.dataset.id); return; }
+  /* 关系树：叶子（单图）→ 跳检查器 */
+  const leaf = e.target.closest(".tleaf[data-id]");
+  if (leaf) { select(leaf.dataset.id); return; }
+  /* 关系树：小箭头 → 展开/折叠（必须先于 .trow 判定，箭头在行内） */
+  const car = e.target.closest(".tcar");
+  if (car) { const nd = car.closest(".tnode");
+    nd.dataset.open = nd.dataset.open === "1" ? "0" : "1"; return; }
+  /* 关系树：点行（非箭头）→ 按该分类筛选并回图库 */
+  const row = e.target.closest(".trow");
+  if (row) {
+    const name = row.dataset.taxon;
+    if (name === "__unassigned__") { setFilter("queue", "unidentified"); setMode("gallery"); }
+    else if (name === "__root__") { setFilter("all", "all"); setMode("gallery"); }
+    else if (name) { setFilter("taxon", name); setMode("gallery"); }
+    return;
+  }
+});
+document.getElementById("insp").addEventListener("click", e => {
+  const shot = e.target.closest("#shot");
+  if (shot) { STATE.zoom = !STATE.zoom;
+    shot.querySelector("img").style.maxHeight = STATE.zoom ? "none" : "340px";
+    shot.style.maxHeight = STATE.zoom ? "none" : "340px";
+    return; }
+  const b = e.target.closest("[data-act]");
+  if (!b) return;
+  const a = b.dataset.act;
+  if (a === "save") { applyForm(); toast("已保存本条批注", "ok"); }
+  else if (a === "next") { applyForm(); move(1); }
+  else if (a === "clear") { delete OVERLAY[STATE.cur]; persist(); markDirty(true);
+    renderNav(); renderStage(); renderInsp(); updateProgress(); toast("已清除本条批注"); }
+});
+document.getElementById("insp").addEventListener("change", e => {
+  if (e.target.closest("[data-f]")) { markDirty(true); }
+});
+document.getElementById("insp").addEventListener("input", e => {
+  if (e.target.closest('[data-f="note"],[data-f="taxonomy_path"],[data-f="stage_label"]')) markDirty(true);
+});
+document.getElementById("q").addEventListener("input", e => {
+  STATE.q = e.target.value.trim(); renderStage(); updateProgress();
+});
+document.querySelectorAll(".modes button").forEach(b =>
+  b.addEventListener("click", () => { if (!b.disabled) setMode(b.dataset.mode); }));
+document.getElementById("saveBtn").addEventListener("click", () => { if (STATE.cur) applyForm(); saveFile(); });
+document.getElementById("openBtn").addEventListener("click", openFile);
+document.getElementById("themeBtn").addEventListener("click", () => {
+  const h = document.documentElement;
+  h.dataset.theme = h.dataset.theme === "light" ? "" : "light";
+  try { localStorage.setItem("plankton_wb_theme", h.dataset.theme); } catch (e) {}
+});
+document.getElementById("navToggle").addEventListener("click", () =>
+  document.getElementById("main").classList.toggle("nav-closed"));
+document.getElementById("inspToggle").addEventListener("click", () =>
+  document.getElementById("main").classList.toggle("insp-closed"));
+
+/* ---------- 左栏设置（显隐 + 顺序，持久化） ---------- */
+function renderNavCfg() {
+  const box = document.getElementById("navCfg");
+  if (!box) return;
+  box.innerHTML = `<h4>左栏分区 · 显隐与顺序</h4>` +
+    NAVCFG.order.map(k => `<label><input type="checkbox" data-sec="${k}"
+      ${NAVCFG.hidden[k] ? "" : "checked"}>${esc(NAV_SECS[k] || k)}</label>`).join("") +
+    `<div class="row">
+       <button data-nav="up" title="把底部单选选中的分区在排序中上移">↑ 上移</button>
+       <button data-nav="down" title="把底部单选选中的分区在排序中下移">↓ 下移</button>
+     </div>
+     <div class="row"><button data-nav="reset">恢复默认</button>
+       <button data-nav="close">完成</button></div>
+     <div style="margin-top:8px;color:var(--ink4);font-size:10.5px;line-height:1.5">
+       勾选=在左栏显示；↑↓ 调整底部单选选中分区的位置。设置即时生效并保存在浏览器里。</div>
+     <div style="margin-top:6px">` +
+    NAVCFG.order.map(k => `<label style="padding:2px"><input type="radio" name="navpick"
+      value="${k}" style="width:12px;height:12px;accent-color:var(--slate)">
+      <span style="font-size:11px">${esc(NAV_SECS[k] || k)}</span></label>`).join("") +
+    `</div>`;
+}
+document.getElementById("navCfgBtn").addEventListener("click", e => {
+  e.stopPropagation();
+  const box = document.getElementById("navCfg");
+  const on = box.classList.toggle("on");
+  document.getElementById("importPanel").classList.remove("on");
+  if (on) { renderNavCfg(); positionPanel(box); }
+});
+document.addEventListener("click", e => {
+  const box = document.getElementById("navCfg");
+  if (!box.classList.contains("on")) return;
+  if (box.contains(e.target) || e.target.closest("#navCfgBtn")) return;
+  box.classList.remove("on");
+});
+document.getElementById("navCfg").addEventListener("change", e => {
+  const cb = e.target.closest("input[data-sec]");
+  if (cb) { NAVCFG.hidden[cb.dataset.sec] = !cb.checked; saveNavCfg(); renderNav(); return; }
+});
+document.getElementById("navCfg").addEventListener("click", e => {
+  const b = e.target.closest("[data-nav]");
+  if (!b) return;
+  const act = b.dataset.nav;
+  if (act === "close") { document.getElementById("navCfg").classList.remove("on"); return; }
+  if (act === "reset") {
+    NAVCFG = { order: ["queue", "taxon", "dive", "refs", "revs"],
+               hidden: { refs: true, revs: true } };
+    saveNavCfg(); renderNavCfg(); renderNav(); return;
+  }
+  const pick = document.querySelector('#navCfg input[name="navpick"]:checked');
+  if (!pick) { toast("先在底部单选一个分区，再用 ↑↓ 调顺序"); return; }
+  const k = pick.value, i = NAVCFG.order.indexOf(k);
+  const j = act === "up" ? i - 1 : i + 1;
+  if (j < 0 || j >= NAVCFG.order.length) return;
+  NAVCFG.order.splice(i, 1); NAVCFG.order.splice(j, 0, k);
+  saveNavCfg(); renderNavCfg(); renderNav();
+});
+
+/* 键盘流：3108 张靠鼠标点选不可能完成，故内建。 */
+document.addEventListener("keydown", e => {
+  const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName);
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "s") {
+    e.preventDefault(); if (STATE.cur) applyForm(); saveFile(); return; }
+  if (e.key === "/" && !typing) { e.preventDefault(); document.getElementById("q").focus(); return; }
+  if (e.key === "Escape") { document.getElementById("q").blur();
+    document.activeElement.blur && document.activeElement.blur();
+    /* Esc 兼作「退出筛选」：旧版只失焦搜索框，筛选仍在，用户找不到出口只能刷新。 */
+    if (!(STATE.filterKind === "all" || !STATE.filterKind) || STATE.q) clearFilter();
+    return; }
+  if (typing) return;
+  if (e.key === "j" || e.key === "J" || e.key === "ArrowDown") { e.preventDefault(); move(1); }
+  else if (e.key === "k" || e.key === "K" || e.key === "ArrowUp") { e.preventDefault(); move(-1); }
+  else if (e.key === " ") { e.preventDefault(); const s = document.getElementById("shot");
+    if (s) s.click(); }
+  else if (e.key === "Enter") { e.preventDefault(); if (STATE.cur) { applyForm(); move(1); } }
+  else if (["1", "2", "3"].includes(e.key)) {
+    const sel = document.querySelector('#insp [data-f="verdict"]'); if (!sel) return;
+    sel.value = { "1": "confirm", "2": "correct", "3": "reject" }[e.key];
+    applyForm();
+    toast({ "1": "已认可", "2": "已标记需修改", "3": "已否决" }[e.key], "ok");
+    if (e.key === "1") move(1);
+  }
+});
+window.addEventListener("beforeunload", e => { if (dirty) { e.preventDefault(); e.returnValue = ""; } });
+
+/* 启动 */
+(async function init() {
+  try { const th = localStorage.getItem("plankton_wb_theme");
+    if (th) document.documentElement.dataset.theme = th; } catch (e) {}
+  if (!window.showSaveFilePicker) {
+    document.getElementById("saveBtn").title = "此浏览器不支持直接写本地文件，将改为下载 JSON";
+  }
+  const nImp = await restoreImports();
+  renderNav(); setFilter("queue", "to_decide");
+  const first = currentList()[0] || IMG[0];
+  if (first) select(first.image_id, false);
+  markDirty(false);
+  toast(`已载入 ${IMG.length} 张 · ${IMG.reduce((s, i) => s + i.claims.length, 0)} 条断言 · ${REFS.length} 条文献` +
+        (nImp ? ` · 恢复浏览器导入 ${nImp} 张` : ""));
+})();
+</script>
+</body>
+</html>

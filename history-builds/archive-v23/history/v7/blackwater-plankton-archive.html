@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Homoplankton — Blackwater Archive</title>
+<script src="assets/data.js"></script>
+<style>
+/* SECTION: base */
+*{margin:0;padding:0;box-sizing:border-box}
+html{background:#000}
+body{background:#000;overflow-x:hidden;overscroll-behavior:none}
+#snow{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:1;opacity:.5}
+#field{position:relative;z-index:2;opacity:0;transition:opacity 1s ease}
+#field.revealed{opacity:1}
+/* SECTION: tiles — 图片常驻，不逐张淡入 */
+.tile{position:absolute;left:0;top:0;will-change:transform;cursor:pointer}
+.tile .body{position:relative;width:100%;height:100%;border-radius:8px;overflow:hidden;
+  transition:transform .5s cubic-bezier(.2,.9,.25,1)}
+.tile img{display:block;width:100%;height:100%;object-fit:fill}  /* 原始比例，无裁切 */
+.tile .body.dead{background:radial-gradient(circle at 50% 50%, #0a141c 0%, transparent 72%)}
+.tile:hover{z-index:60}
+.tile:hover .body{transform:scale(1.1)}
+/* SECTION: lightbox */
+#lb{position:fixed;inset:0;z-index:70;display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.92);opacity:0;pointer-events:none;transition:opacity .4s ease}
+#lb.open{opacity:1;pointer-events:auto}
+#lb .frame{max-width:min(96vw,1400px);text-align:center}
+#lb img{max-width:100%;max-height:92vh;width:auto;border-radius:6px;
+  box-shadow:0 30px 90px rgba(0,0,0,.9)}
+#lb .spin{position:absolute;top:50%;left:50%;width:26px;height:26px;margin:-13px;
+  border:2px solid rgba(130,210,255,.25);border-top-color:#8fd8ff;border-radius:50%;
+  opacity:0;transition:opacity .2s}
+#lb.loading .spin{opacity:1}
+</style>
+</head>
+<body>
+<canvas id="snow"></canvas>
+<div id="field" aria-hidden="true"></div>
+<div id="lb" role="dialog" aria-modal="true">
+  <div class="spin"></div>
+  <div class="frame"><img id="lb-img" alt=""></div>
+</div>
+<script>
+"use strict";
+/* SECTION: scatter field — 零重叠随机散布 + 微幅超慢漂移 */
+const DATA = window.BW_DATA || [];
+const FIELD = document.getElementById("field");
+const MOBILE = innerWidth < 720;
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const rnd = (a,b)=>a+Math.random()*(b-a);
+/* 视觉尺寸多样化：主体占画面小的图放大更多，屏幕主体大小参差 */
+function screenScale(d){
+  if(!d.box) return 0.62;
+  const f = Math.max(d.box[2]-d.box[0], (d.box[3]-d.box[1])*0.75);
+  return Math.min(1.0, Math.max(0.38, 0.6 / Math.max(f, 0.18)));
+}
+const tiles = DATA.map(d=>{
+  const el = document.createElement("figure");
+  el.className = "tile";
+  el.innerHTML = `<div class="body"><img data-image="${d.u}" alt="${d.id}"></div>`;
+  const img = el.querySelector("img");
+  img.addEventListener("load", () => settle(d.id));
+  img.addEventListener("error", () => { img.remove(); el.querySelector(".body").classList.add("dead"); settle(d.id); });
+  img.src = img.dataset.image;                          // 无 lazy：全部立即加载
+  el.addEventListener("click", () => openLB(d));
+  FIELD.appendChild(el);
+  return { el, d,
+    ax: rnd(3, 8), ay: rnd(3, 8),                       // 漂移半径：微幅，刚刚可察觉
+    wx: rnd(0.005, 0.012), wy: rnd(0.004, 0.011),      // 周期数百秒：极慢
+    phx: rnd(0, 6.28), phy: rnd(0, 6.28),
+    rot: rnd(-4, 4), rw: rnd(0.002, 0.006), rph: rnd(0, 6.28),
+    w: 0, h: 0, x: 0, y: 0 };
+});
+/* 布局：格点随机分配 + 包络锁格内（数学保证任意时刻互不重叠且留间距） */
+function layout(){
+  const W = innerWidth;
+  const cols = MOBILE ? 3 : Math.max(7, Math.min(9, Math.round(W / 230)));
+  const rows = Math.ceil(tiles.length / cols);
+  const slot = W / cols;
+  const rowH = Math.round(slot * 1.2);
+  const cells = [];
+  for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) cells.push([c, r]);
+  for (let i = cells.length - 1; i > 0; i--) { const j = (Math.random() * (i + 1)) | 0; [cells[i], cells[j]] = [cells[j], cells[i]]; }
+  let maxY = 0;
+  tiles.forEach((t, i) => {
+    const [c, r] = cells[i % cells.length];
+    /* 尺寸在格宽的 42%-78% 间参差；移动端下限更高避免图过小 */
+    const lo = MOBILE ? 0.5 : 0.36;
+    const fs = Math.min(0.78, Math.max(lo,
+      (0.36 + 0.62 * Math.abs(Math.sin(i * 12.9898 % 6.28))) * screenScale(t.d) / 0.6));
+    let w = Math.round(slot * fs);
+    const ratio = (t.d.h || 3) / (t.d.w || 4);
+    let h = Math.round(w * ratio);
+    if (h > rowH * 0.92) { h = Math.round(rowH * 0.92); w = Math.max(1, Math.round(h / ratio)); }
+    t.w = w; t.h = h;
+    t.el.style.width = w + "px"; t.el.style.height = h + "px";
+    /* 漂移先钳制到格内余量，锚点抖动再让出漂移空间 → 包络永不越格 */
+    t.ax = Math.min(t.ax, Math.max(1, (slot - w) / 2 - 2));
+    t.ay = Math.min(t.ay, Math.max(1, (rowH - h) / 2 - 2));
+    const roomX = Math.max(0, (slot - w) / 2 - 2 - t.ax);
+    const roomY = Math.max(0, (rowH - h) / 2 - 2 - t.ay);
+    t.x = Math.round((c + 0.5) * slot + rnd(-roomX, roomX) - w / 2);
+    t.y = Math.round((r + 0.5) * rowH + rnd(-roomY, roomY) - h / 2);
+    maxY = Math.max(maxY, t.y + h);
+  });
+  FIELD.style.height = Math.round(maxY + rowH) + "px";
+}
+layout();
+/* SECTION: one-shot reveal — 首屏图片集齐后整层一次浮现，之后常驻 */
+const aboveFold = tiles.filter(t => t.y < innerHeight * 1.2).map(t => t.d.id);
+const need = new Set(aboveFold);
+function settle(id){
+  need.delete(id);
+  if (need.size === 0) reveal();
+}
+let revealed = false;
+function reveal(){ if (revealed) return; revealed = true; FIELD.classList.add("revealed"); }
+setTimeout(reveal, 5000);                                // 兜底：5秒必显，不黑屏
+/* SECTION: marine snow */
+const cv = document.getElementById("snow"), ctx = cv.getContext("2d");
+let flakes = [];
+function seedSnow(){ cv.width = innerWidth; cv.height = innerHeight;
+  const N = MOBILE ? 110 : 280;
+  flakes = Array.from({length: N}, () => ({x: rnd(0, cv.width), y: rnd(0, cv.height),
+    r: rnd(.4, 1.9), vy: rnd(2, 8), vx: rnd(-2, 2), o: rnd(.05, .4)})); }
+seedSnow();
+function drawSnow(dt){ ctx.clearRect(0, 0, cv.width, cv.height);
+  for (const f of flakes) { f.y -= f.vy * dt; f.x += Math.sin(f.y * 0.003) * 0.12 + f.vx * dt * 0.08;
+    if (f.y < -4) { f.y = cv.height + 4; f.x = rnd(0, cv.width); }
+    ctx.beginPath(); ctx.arc(f.x, f.y, f.r, 0, 6.283);
+    ctx.fillStyle = `rgba(190,225,255,${f.o})`; ctx.fill(); } }
+/* SECTION: micro-drift loop — 位置微动，无常驻动画之外的明暗变化 */
+let last = 0, raf = null;
+function tick(ts){ const dt = Math.min(.05, (ts - last) / 1000) || 0.016; last = ts;
+  const s = ts / 1000;
+  for (const t of tiles) {
+    const x = t.x + Math.sin(s * t.wx + t.phx) * t.ax;
+    const y = t.y + Math.sin(s * t.wy + t.phy) * t.ay;
+    const r = t.rot + Math.sin(s * t.rw + t.rph) * 1.2;
+    t.el.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0) rotate(${r.toFixed(2)}deg)`; }
+  drawSnow(dt);
+  raf = requestAnimationFrame(tick); }
+if (reduced) { for (const t of tiles)
+    t.el.style.transform = `translate3d(${t.x}px,${t.y}px,0) rotate(${t.rot}deg)`;
+} else { raf = requestAnimationFrame(t => { last = t; tick(t); }); }
+let rzT = null;
+addEventListener("resize", () => { clearTimeout(rzT); rzT = setTimeout(() => { layout(); seedSnow(); }, 150); });
+/* SECTION: lightbox — 点击加载完整原图 */
+const lb = document.getElementById("lb"), lbImg = document.getElementById("lb-img");
+function openLB(d){
+  lbImg.alt = d.id;
+  lbImg.src = d.u;
+  if (d.fu) { lb.classList.add("open", "loading");
+    const hi = new Image();
+    hi.onload = () => { lbImg.src = d.fu; lb.classList.remove("loading"); };
+    hi.onerror = () => lb.classList.remove("loading");
+    hi.src = d.fu; }
+  else lb.classList.add("open"); }
+lb.addEventListener("click", () => { lb.classList.remove("open", "loading"); });
+addEventListener("keydown", e => { if (e.key === "Escape") lb.classList.remove("open", "loading"); });
+</script>
+</body>
+</html>

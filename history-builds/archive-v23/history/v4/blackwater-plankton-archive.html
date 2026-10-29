@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Homoplankton — Blackwater Archive</title>
+<script src="assets/data.js"></script>
+<style>
+/* SECTION: base */
+*{margin:0;padding:0;box-sizing:border-box}
+html{background:#000}
+body{background:#000;overflow-x:hidden;overscroll-behavior:none}
+#snow{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:1;opacity:.5}
+#field{position:relative;z-index:2}
+/* SECTION: tiles */
+.tile{position:absolute;left:0;top:0;will-change:transform;cursor:pointer}
+.tile .body{position:relative;width:100%;height:100%;border-radius:8px;overflow:hidden;
+  transition:transform .4s cubic-bezier(.2,.9,.25,1), filter .4s ease}
+.tile img{display:block;width:100%;height:100%;object-fit:fill;  /* 容器=图片原始比例，无裁切无形变 */
+  opacity:0;transition:opacity 1.1s ease}
+.tile img.on{opacity:1}
+.tile .body.dead{background:radial-gradient(circle at 50% 50%, #0a141c 0%, transparent 72%)}
+.tile:hover{z-index:9}
+.tile:hover .body{transform:scale(1.15);filter:brightness(1.12) saturate(1.08)}
+/* SECTION: lightbox */
+#lb{position:fixed;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.9);opacity:0;pointer-events:none;transition:opacity .35s ease}
+#lb.open{opacity:1;pointer-events:auto}
+#lb .frame{max-width:min(94vw,1200px);max-height:92vh;text-align:center}
+#lb img{max-width:100%;max-height:88vh;width:auto;border-radius:8px;
+  box-shadow:0 30px 90px rgba(0,0,0,.9)}
+#lb .spin{position:absolute;top:50%;left:50%;width:26px;height:26px;margin:-13px;
+  border:2px solid rgba(130,210,255,.25);border-top-color:#8fd8ff;border-radius:50%;
+  opacity:0;transition:opacity .2s}
+#lb.loading .spin{opacity:1}
+</style>
+</head>
+<body>
+<canvas id="snow"></canvas>
+<div id="field" aria-hidden="true"></div>
+<div id="lb" role="dialog" aria-modal="true">
+  <div class="spin"></div>
+  <div class="frame"><img id="lb-img" alt=""></div>
+</div>
+<script>
+"use strict";
+/* SECTION: scatter field engine */
+const DATA = window.BW_DATA || [];
+const FIELD = document.getElementById("field");
+const MOBILE = innerWidth < 720;
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const rnd = (a,b)=>a+Math.random()*(b-a);
+/* 色彩交错：按颜色轮转，避免同色聚集 */
+const byColor = {};
+DATA.forEach(d => (byColor[d.c] = byColor[d.c] || []).push(d));
+const cols0 = Object.keys(byColor).sort((a,b)=>byColor[b].length-byColor[a].length);
+const ordered = [];
+{ let added = true, i = 0;
+  while (added) { added = false;
+    for (const c of cols0) { const arr = byColor[c];
+      if (arr[i]) { ordered.push(arr[i]); added = true; } }
+    i++; } }
+const tiles = ordered.map(d=>{
+  const el = document.createElement("figure");
+  el.className = "tile";
+  el.innerHTML = `<div class="body"><img data-image="${d.u}" alt="${d.t} specimen ${d.y}"
+    loading="lazy" decoding="async"></div>`;
+  const img = el.querySelector("img");
+  img.src = img.dataset.image;                          // 运行时赋值
+  img.onload = () => img.classList.add("on");
+  img.onerror = () => { img.remove(); el.querySelector(".body").classList.add("dead"); };
+  el.addEventListener("click", () => openLB(d));
+  FIELD.appendChild(el);
+  /* 漂浮参数：尺寸大小混排、各自周期、明显摆幅 */
+  return { el, d,
+    fs: Math.pow(rnd(0.45, 1.35), 1.25),                // 大小随机：小配角到大主角
+    ax: rnd(14, 30), ay: rnd(16, 34),                   // 漂移半径 px
+    wx: rnd(0.07, 0.18), wy: rnd(0.06, 0.15),
+    phx: rnd(0, 6.28), phy: rnd(0, 6.28),
+    rot: rnd(-7, 7), rw: rnd(0.04, 0.1), rph: rnd(0, 6.28),
+    w: 0, h: 0, x: 0, y: 0 };
+});
+/* SECTION: layout — 原始比例 + 随机散布（飞镖算法，带漂移包络保证不重叠） */
+const GAP = 26;                                          // 任意两图的最小间距
+function overlaps(a, b){
+  return Math.abs(a.cx - b.cx) < (a.ew + b.ew) / 2 + GAP
+      && Math.abs(a.cy - b.cy) < (a.eh + b.eh) / 2 + GAP;
+}
+function layout(){
+  const W = innerWidth;
+  const base = MOBILE ? W * 0.2 : Math.max(150, W * 0.13);
+  for (const t of tiles) {
+    t.w = Math.round(base * t.fs);
+    t.h = Math.round(t.w * (t.d.h || 3) / (t.d.w || 4));  // 原始长宽比
+    if (MOBILE && t.w > W * 0.34) { t.h = Math.round(t.h * W * 0.34 / t.w); t.w = Math.round(W * 0.34); }
+    t.el.style.width = t.w + "px"; t.el.style.height = t.h + "px";
+  }
+  /* 长卷高度按覆盖率反推，保证疏朗 */
+  let area = 0;
+  for (const t of tiles) {
+    t.ew = t.w + 2 * t.ax; t.eh = t.h + 2 * t.ay;          // 漂移包络
+    area += t.ew * t.eh; }
+  const H = Math.max(innerHeight * 1.4, area / (MOBILE ? 0.16 : 0.2));
+  FIELD.style.height = Math.round(H) + "px";
+  const placed = [];
+  let fallbackY = 0;
+  for (const t of tiles) {
+    const padX = t.ew / 2 + 6, padY = t.eh / 2 + 6;
+    let ok = false, cx = 0, cy = 0;
+    for (let k = 0; k < 90; k++) {
+      cx = rnd(padX, W - padX); cy = rnd(padY, H - padY);
+      const box = { cx, cy, ew: t.ew, eh: t.eh };
+      if (!placed.some(p => overlaps(p, box))) { ok = true; break; }
+    }
+    if (!ok) {                                              // 兜底：继续往下延长
+      cy = fallbackY + t.eh / 2 + 10; cx = rnd(padX, W - padX);
+      fallbackY = cy + t.eh / 2;
+      for (let k = 0; k < 30 && placed.some(p => overlaps(p, { cx, cy, ew: t.ew, eh: t.eh })); k++)
+        cy += 40;
+      FIELD.style.height = Math.round(fallbackY + 80) + "px";
+    }
+    placed.push({ cx, cy, ew: t.ew, eh: t.eh });
+    t.x = cx - t.w / 2; t.y = cy - t.h / 2;
+    t.cx = cx; t.cy = cy;
+  }
+}
+layout();
+/* SECTION: marine snow */
+const cv = document.getElementById("snow"), ctx = cv.getContext("2d");
+let flakes = [];
+function seedSnow(){ cv.width = innerWidth; cv.height = innerHeight;
+  const N = MOBILE ? 120 : 300;
+  flakes = Array.from({length: N}, () => ({x: rnd(0, cv.width), y: rnd(0, cv.height),
+    r: rnd(.4, 1.9), vy: rnd(3, 13), vx: rnd(-3, 3), o: rnd(.05, .4)})); }
+seedSnow();
+function drawSnow(dt){ ctx.clearRect(0, 0, cv.width, cv.height);
+  for (const f of flakes) { f.y -= f.vy * dt; f.x += Math.sin(f.y * 0.004) * 0.15 + f.vx * dt * 0.1;
+    if (f.y < -4) { f.y = cv.height + 4; f.x = rnd(0, cv.width); }
+    ctx.beginPath(); ctx.arc(f.x, f.y, f.r, 0, 6.283);
+    ctx.fillStyle = `rgba(190,225,255,${f.o})`; ctx.fill(); } }
+/* SECTION: float loop — 每图独立周期的缓慢漂移与摆动 */
+let last = 0, raf = null;
+function tick(ts){ const dt = Math.min(.05, (ts - last) / 1000) || 0.016; last = ts;
+  const s = ts / 1000;
+  for (const t of tiles) {
+    const x = t.x + Math.sin(s * t.wx + t.phx) * t.ax;
+    const y = t.y + Math.sin(s * t.wy + t.phy) * t.ay;
+    const r = t.rot + Math.sin(s * t.rw + t.rph) * 2.5;
+    t.el.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0) rotate(${r.toFixed(2)}deg)`; }
+  drawSnow(dt);
+  raf = requestAnimationFrame(tick); }
+if (reduced) { for (const t of tiles)
+    t.el.style.transform = `translate3d(${t.x}px,${t.y}px,0) rotate(${t.rot}deg)`;
+} else { raf = requestAnimationFrame(t => { last = t; tick(t); }); }
+let rzT = null;
+addEventListener("resize", () => { clearTimeout(rzT); rzT = setTimeout(() => { layout(); seedSnow(); }, 150); });
+/* SECTION: lightbox — 点击加载完整原图，缩略图即时垫底 */
+const lb = document.getElementById("lb"), lbImg = document.getElementById("lb-img");
+function openLB(d){
+  lbImg.alt = `${d.t} specimen ${d.y}`;
+  lbImg.src = d.u;                                      // 秒开占位
+  if (d.fu) { lb.classList.add("open", "loading");
+    const hi = new Image();
+    hi.onload = () => { lbImg.src = d.fu; lb.classList.remove("loading"); };
+    hi.onerror = () => lb.classList.remove("loading");
+    hi.src = d.fu;                                      // 原图渐进替换
+  } else lb.classList.add("open"); }
+lb.addEventListener("click", () => { lb.classList.remove("open", "loading"); });
+addEventListener("keydown", e => { if (e.key === "Escape") lb.classList.remove("open", "loading"); });
+</script>
+</body>
+</html>

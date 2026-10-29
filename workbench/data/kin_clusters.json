@@ -1,0 +1,426 @@
+{
+ "schema": "plankton-workbench/kin-clusters/v1",
+ "threshold": 0.18,
+ "max_intra_limit": 0.18,
+ "note": "待核验簇，非结论。每簇需目视判定：coherent(同种/同型) / mixed(需拆分) / rejected(不像)。判定结果写入 kinship.json",
+ "clusters": [
+  {
+   "cluster": "C01",
+   "n": 4,
+   "members": [
+    "DSC_0214",
+    "DSC_0242",
+    "DSC_0860-Edit",
+    "_Y3A0153"
+   ],
+   "max_intra": 0.127,
+   "burst_pairs": 0,
+   "cross_trip_pairs": 3,
+   "diff_dive_pairs": 2,
+   "same_dive_pairs": 1
+  },
+  {
+   "cluster": "C02",
+   "n": 4,
+   "members": [
+    "DSC_0388",
+    "DSC_1694",
+    "DSC_1760",
+    "DSC_1835"
+   ],
+   "max_intra": 0.1288,
+   "burst_pairs": 0,
+   "cross_trip_pairs": 3,
+   "diff_dive_pairs": 2,
+   "same_dive_pairs": 1
+  },
+  {
+   "cluster": "C03",
+   "n": 4,
+   "members": [
+    "DSC_0913",
+    "DSC_1519",
+    "DSC_3058",
+    "DSC_3233"
+   ],
+   "max_intra": 0.1219,
+   "burst_pairs": 0,
+   "cross_trip_pairs": 5,
+   "diff_dive_pairs": 1,
+   "same_dive_pairs": 0
+  },
+  {
+   "cluster": "C04",
+   "n": 4,
+   "members": [
+    "DSC_0933",
+    "DSC_1189",
+    "DSC_1621-Edit",
+    "DSC_3113"
+   ],
+   "max_intra": 0.1188,
+   "burst_pairs": 0,
+   "cross_trip_pairs": 3,
+   "diff_dive_pairs": 3,
+   "same_dive_pairs": 0
+  },
+  {
+   "cluster": "C05",
+   "n": 4,
+   "members": [
+    "DSC_1079-Edit1",
+    "DSC_1268",
+    "DSC_1273",
+    "DSC_1722"
+   ],
+   "max_intra": 0.1449,
+   "burst_pairs": 0,
+   "cross_trip_pairs": 3,
+   "diff_dive_pairs": 2,
+   "same_dive_pairs": 1
+  },
+  {
+   "cluster": "C06",
+   "n": 4,
+   "members": [
+    "DSC_1106",
+    "DSC_1779",
+    "DSC_1912",
+    "DSC_26982020"
+   ],
+   "max_intra": 0.0964,
+   "burst_pairs": 0,
+   "cross_trip_pairs": 0,
+   "diff_dive_pairs": 6,
+   "same_dive_pairs": 0
+  },
+  {
+   "cluster": "C07",
+   "n": 4,
+   "members": [
+    "DSC_1746-Edit",
+    "DSC_2102",
+    "DSC_2132",
+    "DSC_2158"
+   ],
+   "max_intra": 0.16,
+   "burst_pairs": 0,
+   "cross_trip_pairs": 0,
+   "diff_dive_pairs": 3,
+   "same_dive_pairs": 3
+  },
+  {
+   "cluster": "C08",
+   "n": 3,
+   "members": [
+    "DSC_0361",
+    "DSC_1278_2019-September-Cephalopoda",
+    "DSC_1296"
+   ],
+   "max_intra": 0.1791,
+   "burst_pairs": 0,
+   "cross_trip_pairs": 2,
+   "diff_dive_pairs": 0,
+   "same_dive_pairs": 1
+  },
+  {
+   "cluster": "C09",
+   "n": 3,
+   "members": [
+    "DSC_0863",
+    "DSC_1821",
+    "_Y3A0374"
+   ],
+   "max_intra": 0.1134,
+   "burst_pairs": 0,
+   "cross_trip_pairs": 2,
+   "diff_dive_pairs": 1,
+   "same_dive_pairs": 0
+  },
+  {
+   "cluster": "C10",
+   "n": 3,
+   "members": [
+    "DSC_1011",
+    "DSC_1060",
+    "DSC_1062"
+   ],
+   "max_intra": 0.1349,
+   "burst_pairs": 0,
+   "cross_trip_pairs": 0,
+   "diff_dive_pairs": 0,
+   "same_dive_pairs": 3
+  },
+  {
+   "cluster": "C11",
+   "n": 3,
+   "members": [
+    "DSC_1341",
+    "DSC_1343-Edit",
+    "_Y3A0257"
+   ],
+   "max_intra": 0.0907,
+   "burst_pairs": 0,
+   "cross_trip_pairs": 2,
+   "diff_dive_pairs": 0,
+   "same_dive_pairs": 1
+  },
+  {
+   "cluster": "C12",
+   "n": 3,
+   "members": [
+    "DSC_1342_2019-December-Spincula",
+    "_Y3A0193",
+    "_Y3A0662-Edit"
+   ],
+   "max_intra": 0.1485,
+   "burst_pairs": 0,
+   "cross_trip_pairs": 2,
+   "diff_dive_pairs": 1,
+   "same_dive_pairs": 0
+  },
+  {
+   "cluster": "C13",
+   "n": 3,
+   "members": [
+    "DSC_1346",
+    "DSC_2052",
+    "DSC_2430"
+   ],
+   "max_intra": 0.151,
+   "burst_pairs": 0,
+   "cross_trip_pairs": 0,
+   "diff_dive_pairs": 3,
+   "same_dive_pairs": 0
+  },
+  {
+   "cluster": "C14",
+   "n": 3,
+   "members": [
+    "DSC_2511",
+    "DSC_25112020",
+    "DSC_34212020"
+   ],
+   "max_intra": 0.1468,
+   "burst_pairs": 1,
+   "cross_trip_pairs": 0,
+   "diff_dive_pairs": 2,
+   "same_dive_pairs": 1
+  },
+  {
+   "cluster": "C15",
+   "n": 3,
+   "members": [
+    "DSC_34192020",
+    "_Y3A0034",
+    "_Y3A0037"
+   ],
+   "max_intra": 0.1476,
+   "burst_pairs": 1,
+   "cross_trip_pairs": 2,
+   "diff_dive_pairs": 0,
+   "same_dive_pairs": 1
+  },
+  {
+   "cluster": "C16",
+   "n": 3,
+   "members": [
+    "_Y3A0097",
+    "_Y3A0098",
+    "_Y3A0102"
+   ],
+   "max_intra": 0.1045,
+   "burst_pairs": 3,
+   "cross_trip_pairs": 0,
+   "diff_dive_pairs": 0,
+   "same_dive_pairs": 3
+  },
+  {
+   "cluster": "C17",
+   "n": 2,
+   "members": [
+    "DSC_0878-Edit",
+    "DSC_27172020"
+   ],
+   "max_intra": 0.1389,
+   "burst_pairs": 0,
+   "cross_trip_pairs": 0,
+   "diff_dive_pairs": 1,
+   "same_dive_pairs": 0
+  },
+  {
+   "cluster": "C18",
+   "n": 2,
+   "members": [
+    "DSC_0880",
+    "_Y3A0272"
+   ],
+   "max_intra": 0.0924,
+   "burst_pairs": 0,
+   "cross_trip_pairs": 1,
+   "diff_dive_pairs": 0,
+   "same_dive_pairs": 0
+  },
+  {
+   "cluster": "C19",
+   "n": 2,
+   "members": [
+    "DSC_1010",
+    "DSC_1332"
+   ],
+   "max_intra": 0.1423,
+   "burst_pairs": 0,
+   "cross_trip_pairs": 1,
+   "diff_dive_pairs": 0,
+   "same_dive_pairs": 0
+  },
+  {
+   "cluster": "C20",
+   "n": 2,
+   "members": [
+    "DSC_1125",
+    "DSC_1297"
+   ],
+   "max_intra": 0.1171,
+   "burst_pairs": 0,
+   "cross_trip_pairs": 0,
+   "diff_dive_pairs": 1,
+   "same_dive_pairs": 0
+  },
+  {
+   "cluster": "C21",
+   "n": 2,
+   "members": [
+    "DSC_1202",
+    "_Y3A0165"
+   ],
+   "max_intra": 0.1108,
+   "burst_pairs": 0,
+   "cross_trip_pairs": 1,
+   "diff_dive_pairs": 0,
+   "same_dive_pairs": 0
+  },
+  {
+   "cluster": "C22",
+   "n": 2,
+   "members": [
+    "DSC_1238",
+    "DSC_1329"
+   ],
+   "max_intra": 0.1347,
+   "burst_pairs": 0,
+   "cross_trip_pairs": 1,
+   "diff_dive_pairs": 0,
+   "same_dive_pairs": 0
+  },
+  {
+   "cluster": "C23",
+   "n": 2,
+   "members": [
+    "DSC_1439",
+    "DSC_2355"
+   ],
+   "max_intra": 0.1251,
+   "burst_pairs": 0,
+   "cross_trip_pairs": 0,
+   "diff_dive_pairs": 1,
+   "same_dive_pairs": 0
+  },
+  {
+   "cluster": "C24",
+   "n": 2,
+   "members": [
+    "DSC_1540",
+    "DSC_2795"
+   ],
+   "max_intra": 0.095,
+   "burst_pairs": 0,
+   "cross_trip_pairs": 0,
+   "diff_dive_pairs": 1,
+   "same_dive_pairs": 0
+  },
+  {
+   "cluster": "C25",
+   "n": 2,
+   "members": [
+    "DSC_1555",
+    "DSC_30352020"
+   ],
+   "max_intra": 0.0941,
+   "burst_pairs": 0,
+   "cross_trip_pairs": 0,
+   "diff_dive_pairs": 1,
+   "same_dive_pairs": 0
+  },
+  {
+   "cluster": "C26",
+   "n": 2,
+   "members": [
+    "DSC_1575",
+    "DSC_2999"
+   ],
+   "max_intra": 0.1005,
+   "burst_pairs": 0,
+   "cross_trip_pairs": 1,
+   "diff_dive_pairs": 0,
+   "same_dive_pairs": 0
+  },
+  {
+   "cluster": "C27",
+   "n": 2,
+   "members": [
+    "DSC_2096",
+    "DSC_3185"
+   ],
+   "max_intra": 0.1092,
+   "burst_pairs": 0,
+   "cross_trip_pairs": 1,
+   "diff_dive_pairs": 0,
+   "same_dive_pairs": 0
+  },
+  {
+   "cluster": "C28",
+   "n": 2,
+   "members": [
+    "DSC_2193",
+    "DSC_34042020"
+   ],
+   "max_intra": 0.1167,
+   "burst_pairs": 0,
+   "cross_trip_pairs": 0,
+   "diff_dive_pairs": 1,
+   "same_dive_pairs": 0
+  },
+  {
+   "cluster": "C29",
+   "n": 2,
+   "members": [
+    "_Y3A0081",
+    "_Y3A0091"
+   ],
+   "max_intra": 0.1505,
+   "burst_pairs": 0,
+   "cross_trip_pairs": 0,
+   "diff_dive_pairs": 0,
+   "same_dive_pairs": 1
+  },
+  {
+   "cluster": "C30",
+   "n": 2,
+   "members": [
+    "_Y3A0408",
+    "_Y3A0409"
+   ],
+   "max_intra": 0.0529,
+   "burst_pairs": 1,
+   "cross_trip_pairs": 0,
+   "diff_dive_pairs": 0,
+   "same_dive_pairs": 1
+  }
+ ],
+ "sheets": [
+  "/Users/jialingcai/Documents/qwen-agent/NZKKxizmz2/default/plankton-workbench/data/sheets/sheet_01.jpg",
+  "/Users/jialingcai/Documents/qwen-agent/NZKKxizmz2/default/plankton-workbench/data/sheets/sheet_02.jpg",
+  "/Users/jialingcai/Documents/qwen-agent/NZKKxizmz2/default/plankton-workbench/data/sheets/sheet_03.jpg"
+ ]
+}

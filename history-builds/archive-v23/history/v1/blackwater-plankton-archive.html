@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HOMOPLANKTON — A Blackwater Archive</title>
+<script src="assets/data.js"></script>
+<style>
+/* SECTION: base */
+:root{
+  --abyss:#020407; --glow:#7fd4ff; --ink:#e8f2f8; --dim:#8fa6b5;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--abyss);color:var(--ink);overflow:hidden;
+  font-family:"Avenir Next","Helvetica Neue",Inter,"Segoe UI",sans-serif;
+  -webkit-font-smoothing:antialiased}
+#stage{position:fixed;inset:0;
+  background:radial-gradient(120% 90% at 50% 30%, #071522 0%, #030a13 45%, #010306 100%)}
+#snow{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.65}
+#field{position:absolute;inset:0;overflow:hidden}
+.vignette{position:absolute;inset:0;pointer-events:none;z-index:6;
+  background:radial-gradient(90% 75% at 50% 45%, transparent 55%, rgba(0,2,5,.55) 100%)}
+/* SECTION: tiles */
+.tile{position:absolute;left:0;top:0;will-change:transform;cursor:pointer;z-index:2;
+  transition:opacity .5s ease}
+.tile .body{position:relative;width:100%;height:100%;border-radius:14px;overflow:hidden;
+  box-shadow:0 0 0 1px rgba(130,200,255,.07), 0 18px 42px rgba(0,0,0,.55);
+  filter:saturate(.92) contrast(1.02);
+  transition:transform .45s cubic-bezier(.2,.9,.25,1), box-shadow .45s ease, filter .45s ease}
+.tile img{display:block;width:100%;height:100%;object-fit:cover;
+  opacity:0;transition:opacity 1.2s ease}
+.tile img.on{opacity:1}
+.tile .body.dead{background:radial-gradient(circle at 50% 50%, #0a2233 0%, transparent 70%)}
+.tile:hover{z-index:9}
+.tile:hover .body{transform:scale(1.18);filter:saturate(1.15) contrast(1.05);
+  box-shadow:0 0 0 1px rgba(140,220,255,.35), 0 0 46px rgba(80,190,255,.22), 0 22px 60px rgba(0,0,0,.7)}
+.tile .tag{position:absolute;left:0;right:0;bottom:0;padding:14px 10px 8px;text-align:center;
+  font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#dff3ff;
+  background:linear-gradient(to top, rgba(1,6,11,.88), transparent);
+  opacity:0;transform:translateY(6px);transition:opacity .3s ease, transform .3s ease}
+.tile:hover .tag{opacity:1;transform:none}
+.tile.dim{opacity:.07}
+/* SECTION: hero */
+#hero{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;text-align:center;z-index:5;pointer-events:none;padding:0 6vw}
+#hero .kicker{font-size:12px;letter-spacing:.55em;text-transform:uppercase;color:var(--glow);
+  opacity:.9;margin-bottom:18px;animation:rise 1.6s .2s both}
+#hero h1{font-size:clamp(38px,7.5vw,92px);font-weight:600;letter-spacing:.12em;
+  line-height:1.05;animation:rise 1.8s .45s both;
+  text-shadow:0 0 60px rgba(70,180,255,.35), 0 4px 30px rgba(0,0,0,.8)}
+#hero h1 em{font-style:normal;color:var(--glow)}
+#hero .sub{margin-top:22px;max-width:560px;font-size:clamp(13px,1.4vw,16px);line-height:1.7;
+  color:var(--dim);animation:rise 2s .7s both}
+#hero .rule{width:64px;height:1px;margin:26px auto 0;
+  background:linear-gradient(90deg,transparent,var(--glow),transparent);animation:rise 2s .9s both}
+@keyframes rise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+/* SECTION: footer bar */
+#bar{position:absolute;left:0;right:0;bottom:0;z-index:7;display:flex;align-items:center;
+  gap:18px;flex-wrap:wrap;justify-content:center;padding:14px 4vw 18px;
+  background:linear-gradient(to top, rgba(1,3,7,.85), transparent);pointer-events:none}
+#bar .stat{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
+#bar .stat b{color:var(--ink);font-weight:600}
+#chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;pointer-events:auto}
+.chip{display:inline-flex;align-items:center;gap:7px;padding:6px 12px;border-radius:999px;
+  border:1px solid rgba(130,200,255,.16);background:rgba(6,18,30,.55);cursor:pointer;
+  font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);
+  transition:border-color .3s, color .3s, background .3s}
+.chip .dot{width:7px;height:7px;border-radius:50%}
+.chip:hover,.chip.active{color:#fff;border-color:rgba(150,225,255,.6);background:rgba(14,42,64,.8)}
+/* SECTION: lightbox */
+#lb{position:fixed;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;
+  background:rgba(1,3,6,.86);opacity:0;pointer-events:none;transition:opacity .35s ease}
+#lb.open{opacity:1;pointer-events:auto}
+#lb .frame{max-width:min(88vw,720px);text-align:center}
+#lb img{width:100%;border-radius:10px;box-shadow:0 0 90px rgba(60,170,255,.25),0 30px 80px rgba(0,0,0,.8)}
+#lb .meta{margin-top:16px;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--glow)}
+#lb .hint{margin-top:8px;font-size:11px;color:var(--dim);letter-spacing:.1em}
+@media (max-width:720px){#bar{gap:10px}.chip{padding:5px 9px;font-size:10px}}
+@media (prefers-reduced-motion: reduce){.tile{transition:none}}
+</style>
+</head>
+<body>
+<div id="stage">
+  <canvas id="snow"></canvas>
+  <div id="field" aria-hidden="true"></div>
+  <div class="vignette"></div>
+  <!-- SECTION: hero copy -->
+  <header id="hero">
+    <div class="kicker">Cai Jialing · Underwater Photography</div>
+    <h1>HOMO<em>PLANKTON</em></h1>
+    <p class="sub">Drifting organisms photographed in the black water column at night —
+      cephalopods, cnidarians, ctenophores and crustaceans suspended in absolute darkness.</p>
+    <div class="rule"></div>
+  </header>
+  <!-- SECTION: filter bar -->
+  <footer id="bar">
+    <span class="stat"><b id="st-n">1774</b> specimens archived</span>
+    <span class="stat"><b>9</b> taxonomic groups</span>
+    <nav id="chips" aria-label="Filter by taxonomic group"></nav>
+  </footer>
+</div>
+<!-- SECTION: lightbox -->
+<div id="lb" role="dialog" aria-modal="true">
+  <div class="frame">
+    <img id="lb-img" alt="">
+    <div class="meta" id="lb-meta"></div>
+    <div class="hint">click anywhere to close</div>
+  </div>
+</div>
+<script>
+"use strict";
+/* SECTION: drift field engine */
+const DATA = window.BW_DATA || [];
+const FIELD = document.getElementById("field");
+const MOBILE = innerWidth < 720;
+const COUNT = MOBILE ? Math.min(64, DATA.length) : DATA.length;
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const COL = {red:"#ff6b5e",orange:"#ffa94d",yellow:"#ffe066",green:"#69db7c",
+  cyan:"#66e0e0",blue:"#74b8ff",pink:"#f783ac",clear:"#d7e9f5"};
+/* 色彩交错排布：按颜色分组轮转，避免同色聚集 */
+const byColor = {};
+DATA.forEach(d => (byColor[d.c] = byColor[d.c] || []).push(d));
+const cols = Object.keys(byColor).sort((a,b)=>byColor[b].length-byColor[a].length);
+const interleaved = [];
+{ let added = true, i = 0;
+  while (added) { added = false;
+    for (const c of cols) { const arr = byColor[c];
+      if (arr[i]) { interleaved.push(arr[i]); added = true; } }
+    i++; } }
+const chosen = interleaved.slice(0, COUNT);
+const rnd = (a,b)=>a+Math.random()*(b-a);
+const tiles = chosen.map((d,i)=>{
+  const hero = i < (MOBILE?2:4);                       // 主角大尺寸环绕标题
+  const size = hero ? rnd(230,300) : MOBILE ? rnd(56,130) : rnd(70,210);
+  const layer = hero ? 3 : (size>150?2:size>100?1:0);  // 景深：越大越近
+  const el = document.createElement("figure");
+  el.className = "tile";
+  el.style.width = el.style.height = Math.round(size)+"px";
+  el.innerHTML = `<div class="body"><img data-image="${d.u}" alt="${d.t} specimen ${d.y}"
+    loading="eager" decoding="async"><span class="tag">${d.t} · ${d.y}</span></div>`;
+  const img = el.querySelector("img");
+  img.src = img.dataset.image;                          // 运行时赋值
+  img.onload = () => img.classList.add("on");
+  img.onerror = () => { img.remove(); el.querySelector(".body").classList.add("dead"); };
+  el.addEventListener("click", ()=>openLB(d));
+  FIELD.appendChild(el);
+  const x = hero ? rnd(0.06,0.88)*innerWidth - size/2 : rnd(-size*0.2, innerWidth+size*0.2);
+  return { el, x, y: hero ? innerHeight*0.5 + rnd(-innerHeight*0.34,innerHeight*0.34)
+                            : rnd(-innerHeight*0.15, innerHeight*1.15),
+    vy: (hero?3.5:rnd(2.5,9)) * (MOBILE?0.7:1),          // 上浮 px/s
+    amp: rnd(6,26), w: rnd(0.05,0.22), ph: rnd(0,6.28), rot: rnd(-4,4),
+    par: [0.28,0.55,0.85,1.15][layer], size, hero, d};
+});
+let mx=0,my=0,tmx=0,tmy=0;
+addEventListener("pointermove",e=>{tmx=(e.clientX/innerWidth-.5);tmy=(e.clientY/innerHeight-.5);});
+/* SECTION: marine snow */
+const cv=document.getElementById("snow"),ctx=cv.getContext("2d");
+let flakes=[];
+function seedSnow(){ cv.width=innerWidth; cv.height=innerHeight;
+  const N=MOBILE?120:300;
+  flakes=Array.from({length:N},()=>({x:rnd(0,cv.width),y:rnd(0,cv.height),
+    r:rnd(.4,2.1),vy:rnd(3,14),vx:rnd(-3,3),o:rnd(.06,.5)})); }
+seedSnow();
+function drawSnow(dt){ ctx.clearRect(0,0,cv.width,cv.height);
+  for(const f of flakes){ f.y-=f.vy*dt; f.x+=Math.sin(f.y*0.004)*0.15+f.vx*dt*0.1;
+    if(f.y<-4){f.y=cv.height+4;f.x=rnd(0,cv.width);}
+    ctx.beginPath();ctx.arc(f.x,f.y,f.r,0,6.283);
+    ctx.fillStyle=`rgba(190,225,255,${f.o})`;ctx.fill(); } }
+/* SECTION: animation loop */
+let last=0, raf=null;
+function tick(ts){ const dt=Math.min(.05,(ts-last)/1000)||0.016; last=ts;
+  mx+=(tmx-mx)*0.04; my+=(tmy-my)*0.04;
+  for(const t of tiles){ t.y-=t.vy*dt;
+    if(t.y < -t.size-20){ t.y=innerHeight+t.size+rnd(0,60); if(!t.hero) t.x=rnd(-t.size*.2,innerWidth); }
+    const wx=Math.sin(ts/1000*t.w+t.ph)*t.amp, sway=Math.sin(ts/1000*0.07+t.ph)*3;
+    t.el.style.transform=`translate3d(${(t.x+wx-mx*40*t.par).toFixed(1)}px,${(t.y-sway-my*26*t.par).toFixed(1)}px,0) rotate(${(t.rot+sway*0.4).toFixed(2)}deg)`; }
+  drawSnow(dt);
+  raf=requestAnimationFrame(tick); }
+if(reduced){ for(const t of tiles){ t.el.style.transform=`translate3d(${t.x}px,${t.y}px,0)`; }
+}else{ raf=requestAnimationFrame(t=>{last=t;tick(t);}); }
+addEventListener("resize",()=>{seedSnow();});
+/* SECTION: taxon filter */
+const taxa={}; DATA.forEach(d=>taxa[d.t]=(taxa[d.t]||0)+1);
+const chips=document.getElementById("chips");
+const taxList=Object.entries(taxa).sort((a,b)=>b[1]-a[1]);
+const chipDefs=[["All","#9adcff"],...taxList.map(([t])=>[t,COL[(DATA.find(d=>d.t===t)||{}).c]||"#9adcff"])];
+let active="All";
+chipDefs.forEach(([name,c],idx)=>{
+  const b=document.createElement("button");
+  b.className="chip"; if(idx===0)b.dataset.primaryAction="filter-taxon";
+  b.innerHTML=`<span class="dot" style="background:${c}"></span>${name}${name!=="All"?" "+taxa[name]:""}`;
+  b.onclick=()=>{active=name;
+    chips.querySelectorAll(".chip").forEach(x=>x.classList.toggle("active",x===b));
+    for(const t of tiles) t.el.classList.toggle("dim", active!=="All" && t.d.t!==active);};
+  chips.appendChild(b); });
+chips.children[0].classList.add("active");
+/* SECTION: lightbox */
+const lb=document.getElementById("lb"),lbImg=document.getElementById("lb-img"),
+      lbMeta=document.getElementById("lb-meta");
+function openLB(d){ lbImg.alt=`${d.t} specimen ${d.y}`; lbImg.src=d.u;
+  lbMeta.textContent=`${d.t} · night cruise ${d.y}`; lb.classList.add("open"); }
+lb.addEventListener("click",()=>lb.classList.remove("open"));
+addEventListener("keydown",e=>{if(e.key==="Escape")lb.classList.remove("open");});
+</script>
+</body>
+</html>

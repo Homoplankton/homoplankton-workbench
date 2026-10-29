@@ -1,0 +1,14 @@
+{
+  "spacingFactor": 0.45,
+  "voidRatio": 1.5,
+  "speedFactor": 1.38,
+  "fixScreensCap": true,
+  "fixFallbackScan": true,
+  "fixOrbitRadius": true,
+  "fixWeakMovers": true,
+  "weakRatio": 0.72,
+  "speedFloorCap": 6,
+  "sizeSpread": 2.6,
+  "randomSize": 1,
+  "sizeJumpMin": 0.18
+}

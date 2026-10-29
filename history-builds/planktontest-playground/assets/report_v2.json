@@ -1,0 +1,18 @@
+{
+ "source_folder": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest",
+ "count": 104,
+ "variant_merged": 0,
+ "burst_grouped": 0,
+ "display_total_mb": 6.1,
+ "display_median_kb": 57,
+ "display_used_original": 0,
+ "full_total_mb": 269.4,
+ "box_detected": 101,
+ "box_null": 3,
+ "taxa": "(无类目信息：源目录名未含类群关键词)",
+ "with_taxon": 0,
+ "with_exif_date": 104,
+ "stage_display": "/Users/jialingcai/Documents/qwen-agent/NZKKxizmz2/default/planktontest-playground/stage2/display",
+ "stage_full": "",
+ "data_js": "/Users/jialingcai/Documents/qwen-agent/NZKKxizmz2/default/planktontest-playground/assets/data_v2.js"
+}

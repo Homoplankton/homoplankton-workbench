@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "projectId": "5a66f2c1-2ad2-41fe-ac6b-c2fa9d61a74d",
+  "lineageId": "5a66f2c1-2ad2-41fe-ac6b-c2fa9d61a74d",
+  "semanticName": "blackwater-plankton-archive",
+  "createdAt": "2026-10-24T17:46:21.893Z",
+  "updatedAt": "2026-10-24T17:46:21.893Z",
+  "entryFile": null,
+  "status": "workspace_ready",
+  "operationId": "bw-archive-2026-10-24-a"
+}

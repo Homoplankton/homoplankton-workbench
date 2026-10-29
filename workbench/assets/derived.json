@@ -1,0 +1,7477 @@
+{
+ "schema": "plankton-workbench/derived/v1",
+ "source_dir": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest",
+ "thumb_px": 400,
+ "detail_px": 1200,
+ "pad_ratio": 0.12,
+ "color_model": {
+  "type": "three_way_split(water/tissue/pigment)",
+  "water_pctl": 0.25,
+  "t_mult": 1.35,
+  "t_floor_add": 14,
+  "t_min": 16,
+  "pigment_sat": 0.22,
+  "pigment_warm_hue": [
+   32,
+   330
+  ],
+  "pigment_min_of_tissue": 0.02
+ },
+ "note": "从外置盘原图派生。data.js 的 CDN 链接 auth_key 于 2026-11-24 过期，故工作台改用本地产物；重新生成本文件需要外置盘挂载，日常使用不需要。",
+ "records": [
+  {
+   "id": "DSC_0077",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_0077.jpg",
+    "orig_w": 2419,
+    "orig_h": 3632,
+    "orig_bytes": 1900218,
+    "aspect": 0.666
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_0077.jpg",
+    "thumb_w": 266,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_0077.jpg",
+    "detail_w": 799,
+    "detail_h": 1200,
+    "crop_method": "full_frame",
+    "box_norm": null,
+    "box_px": [
+     0,
+     0,
+     2419,
+     3632
+    ],
+    "full": "assets/full/DSC_0077.jpg",
+    "full_w": 799,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.775,
+    "tissue_frac": 0.225,
+    "pigment_frac": 0.0341,
+    "tissue_rgb": [
+     173,
+     164,
+     154
+    ],
+    "tissue_bright_p90": 182.8,
+    "pigment": {
+     "rgb": [
+      173,
+      131,
+      99
+     ],
+     "hue_median": 27,
+     "of_tissue": 0.1515,
+     "detected": true
+    }
+   },
+   "color_label": "橙红色素15% · 浅灰组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:12:15",
+    "DateTimeOriginal": "2019:12:16 12:47:36",
+    "DateTimeDigitized": "2019:12:16 12:47:36",
+    "ApertureValue": "8.33985",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "2500",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_0214",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_0214.jpg",
+    "orig_w": 2633,
+    "orig_h": 3949,
+    "orig_bytes": 2148213,
+    "aspect": 0.667
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_0214.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_0214.jpg",
+    "detail_w": 955,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.1208,
+     0.1757,
+     0.8842,
+     0.8154
+    ],
+    "box_px": [
+     77,
+     391,
+     2569,
+     3523
+    ],
+    "full": "assets/full/DSC_0214.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.7916,
+    "tissue_frac": 0.2084,
+    "pigment_frac": 0.0058,
+    "tissue_rgb": [
+     74,
+     87,
+     108
+    ],
+    "tissue_bright_p90": 82.8,
+    "pigment": {
+     "rgb": [
+      193,
+      153,
+      132
+     ],
+     "hue_median": 20,
+     "of_tissue": 0.0278,
+     "detected": true
+    }
+   },
+   "color_label": "红色素3% · 暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:12:21",
+    "DateTimeOriginal": "2019:12:16 16:05:09",
+    "DateTimeDigitized": "2019:12:16 16:05:09",
+    "ApertureValue": "8.918863",
+    "ExposureTime": "0.01",
+    "ISOSpeedRatings": "1600",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_0242",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_0242.jpg",
+    "orig_w": 3667,
+    "orig_h": 5500,
+    "orig_bytes": 4298880,
+    "aspect": 0.667
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_0242.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_0242.jpg",
+    "detail_w": 966,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.0572,
+     0.1024,
+     0.8878,
+     0.762
+    ],
+    "box_px": [
+     0,
+     128,
+     3621,
+     4626
+    ],
+    "full": "assets/full/DSC_0242.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.8022,
+    "tissue_frac": 0.1978,
+    "pigment_frac": 0.0076,
+    "tissue_rgb": [
+     86,
+     94,
+     108
+    ],
+    "tissue_bright_p90": 89.2,
+    "pigment": {
+     "rgb": [
+      202,
+      148,
+      113
+     ],
+     "hue_median": 23,
+     "of_tissue": 0.0383,
+     "detected": true
+    }
+   },
+   "color_label": "橙红色素4% · 暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:12:29",
+    "DateTimeOriginal": "2019:12:16 16:12:48",
+    "DateTimeDigitized": "2019:12:16 16:12:48",
+    "ApertureValue": "8.918863",
+    "ExposureTime": "0.01",
+    "ISOSpeedRatings": "1600",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_0361",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_0361.jpg",
+    "orig_w": 4407,
+    "orig_h": 2938,
+    "orig_bytes": 4579288,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_0361.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/DSC_0361.jpg",
+    "detail_w": 757,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.3949,
+     0.2661,
+     0.6351,
+     0.8373
+    ],
+    "box_px": [
+     1613,
+     580,
+     2926,
+     2661
+    ],
+    "full": "assets/full/DSC_0361.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 22.2,
+    "water_baseline_p25": 8.2,
+    "water_frac": 0.3003,
+    "tissue_frac": 0.6997,
+    "pigment_frac": 0.0202,
+    "tissue_rgb": [
+     132,
+     141,
+     149
+    ],
+    "tissue_bright_p90": 198.6,
+    "pigment": {
+     "rgb": [
+      146,
+      105,
+      98
+     ],
+     "hue_median": 11,
+     "of_tissue": 0.0288,
+     "detected": true
+    }
+   },
+   "color_label": "红色素3% · 浅灰组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.4 (Macintosh)",
+    "DateTime": "2023:07:17 19:03:15",
+    "DateTimeOriginal": "2023:03:13 12:43:12",
+    "DateTimeDigitized": "2023:03:13 12:43:12",
+    "ApertureValue": "8.33985",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "800",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_0388",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_0388.jpg",
+    "orig_w": 5040,
+    "orig_h": 3360,
+    "orig_bytes": 2044085,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_0388.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/DSC_0388.jpg",
+    "detail_w": 1200,
+    "detail_h": 1043,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.297,
+     0.1815,
+     0.7052,
+     0.7135
+    ],
+    "box_px": [
+     1250,
+     395,
+     3801,
+     2612
+    ],
+    "full": "assets/full/DSC_0388.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.535,
+    "tissue_frac": 0.465,
+    "pigment_frac": 0.0113,
+    "tissue_rgb": [
+     116,
+     120,
+     125
+    ],
+    "tissue_bright_p90": 158.5,
+    "pigment": {
+     "rgb": [
+      147,
+      109,
+      101
+     ],
+     "hue_median": 13,
+     "of_tissue": 0.0243,
+     "detected": true
+    }
+   },
+   "color_label": "红色素2% · 浅灰组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.4 (Macintosh)",
+    "DateTime": "2023:07:17 19:03:22",
+    "DateTimeOriginal": "2023:03:13 12:46:57",
+    "DateTimeDigitized": "2023:03:13 12:46:57",
+    "ApertureValue": "8.33985",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "800",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_0860-Edit",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_0860-Edit.jpg",
+    "orig_w": 4463,
+    "orig_h": 6786,
+    "orig_bytes": 3128187,
+    "aspect": 0.658
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_0860-Edit.jpg",
+    "thumb_w": 263,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_0860-Edit.jpg",
+    "detail_w": 1075,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.097,
+     0.1761,
+     0.903,
+     0.7681
+    ],
+    "box_px": [
+     1,
+     713,
+     4462,
+     5694
+    ],
+    "full": "assets/full/DSC_0860-Edit.jpg",
+    "full_w": 789,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.9096,
+    "tissue_frac": 0.0904,
+    "pigment_frac": 0.0014,
+    "tissue_rgb": [
+     67,
+     72,
+     79
+    ],
+    "tissue_bright_p90": 9.4,
+    "pigment": {
+     "rgb": null,
+     "hue_median": null,
+     "of_tissue": 0.0155,
+     "detected": false,
+     "note": "色素占组织比 < 2%，不足以支撑一个色值，如实报未检出"
+    }
+   },
+   "color_label": "暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:13:09",
+    "DateTimeOriginal": "2019:12:19 11:57:52",
+    "DateTimeDigitized": "2019:12:19 11:57:52",
+    "ApertureValue": "9.715962",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "800",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_0863",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_0863.jpg",
+    "orig_w": 4281,
+    "orig_h": 2854,
+    "orig_bytes": 1823209,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_0863.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/DSC_0863.jpg",
+    "detail_w": 1200,
+    "detail_h": 992,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.2803,
+     0.1003,
+     0.8552,
+     0.8132
+    ],
+    "box_px": [
+     905,
+     42,
+     3956,
+     2565
+    ],
+    "full": "assets/full/DSC_0863.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.8209,
+    "tissue_frac": 0.1791,
+    "pigment_frac": 0.0028,
+    "tissue_rgb": [
+     80,
+     87,
+     101
+    ],
+    "tissue_bright_p90": 71.0,
+    "pigment": {
+     "rgb": null,
+     "hue_median": null,
+     "of_tissue": 0.0156,
+     "detected": false,
+     "note": "色素占组织比 < 2%，不足以支撑一个色值，如实报未检出"
+    }
+   },
+   "color_label": "暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:13:16",
+    "DateTimeOriginal": "2019:12:19 11:59:49",
+    "DateTimeDigitized": "2019:12:19 11:59:49",
+    "ApertureValue": "9.715962",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "800",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_0878-Edit",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_0878-Edit.jpg",
+    "orig_w": 2670,
+    "orig_h": 1780,
+    "orig_bytes": 599613,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_0878-Edit.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/DSC_0878-Edit.jpg",
+    "detail_w": 1200,
+    "detail_h": 813,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.2285,
+     0.2198,
+     0.6304,
+     0.6286
+    ],
+    "box_px": [
+     481,
+     304,
+     1812,
+     1206
+    ],
+    "full": "assets/full/DSC_0878-Edit.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.5815,
+    "tissue_frac": 0.4185,
+    "pigment_frac": 0.2693,
+    "tissue_rgb": [
+     137,
+     81,
+     32
+    ],
+    "tissue_bright_p90": 110.4,
+    "pigment": {
+     "rgb": [
+      149,
+      81,
+      36
+     ],
+     "hue_median": 25,
+     "of_tissue": 0.6435,
+     "detected": true
+    }
+   },
+   "color_label": "橙红色素64% · 暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:13:16",
+    "DateTimeOriginal": "2019:12:19 12:08:44",
+    "DateTimeDigitized": "2019:12:19 12:08:44",
+    "ApertureValue": "9.715962",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "800",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_0880",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_0880.jpg",
+    "orig_w": 3423,
+    "orig_h": 2282,
+    "orig_bytes": 1248338,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_0880.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/DSC_0880.jpg",
+    "detail_w": 1200,
+    "detail_h": 564,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.3465,
+     0.337,
+     0.8679,
+     0.7047
+    ],
+    "box_px": [
+     972,
+     668,
+     3185,
+     1709
+    ],
+    "full": "assets/full/DSC_0880.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.5642,
+    "tissue_frac": 0.4358,
+    "pigment_frac": 0.1688,
+    "tissue_rgb": [
+     161,
+     111,
+     51
+    ],
+    "tissue_bright_p90": 142.1,
+    "pigment": {
+     "rgb": [
+      155,
+      96,
+      53
+     ],
+     "hue_median": 28,
+     "of_tissue": 0.3873,
+     "detected": true
+    }
+   },
+   "color_label": "橙红色素39% · 暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:13:22",
+    "DateTimeOriginal": "2019:12:19 12:09:34",
+    "DateTimeDigitized": "2019:12:19 12:09:34",
+    "ApertureValue": "9.715962",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "800",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_0933",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_0933.jpg",
+    "orig_w": 3529,
+    "orig_h": 2353,
+    "orig_bytes": 2081329,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_0933.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/DSC_0933.jpg",
+    "detail_w": 1142,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.3588,
+     0.2318,
+     0.6724,
+     0.7265
+    ],
+    "box_px": [
+     1133,
+     406,
+     2506,
+     1849
+    ],
+    "full": "assets/full/DSC_0933.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 24.2,
+    "water_baseline_p25": 10.2,
+    "water_frac": 0.4004,
+    "tissue_frac": 0.5996,
+    "pigment_frac": 0.0002,
+    "tissue_rgb": [
+     82,
+     90,
+     100
+    ],
+    "tissue_bright_p90": 137.8,
+    "pigment": {
+     "rgb": null,
+     "hue_median": null,
+     "of_tissue": 0.0004,
+     "detected": false,
+     "note": "色素占组织比 < 2%，不足以支撑一个色值，如实报未检出"
+    }
+   },
+   "color_label": "暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:13:33",
+    "DateTimeOriginal": "2019:12:19 12:42:56",
+    "DateTimeDigitized": "2019:12:19 12:42:56",
+    "ApertureValue": "9.715962",
+    "ExposureTime": "0.004",
+    "ISOSpeedRatings": "1600",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1010",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1010.jpg",
+    "orig_w": 3214,
+    "orig_h": 2143,
+    "orig_bytes": 2001521,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1010.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/DSC_1010.jpg",
+    "detail_w": 1200,
+    "detail_h": 665,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.0927,
+     0.1034,
+     0.7276,
+     0.6316
+    ],
+    "box_px": [
+     53,
+     86,
+     2583,
+     1489
+    ],
+    "full": "assets/full/DSC_1010.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.1,
+    "water_frac": 0.7986,
+    "tissue_frac": 0.2014,
+    "pigment_frac": 0.0395,
+    "tissue_rgb": [
+     93,
+     83,
+     105
+    ],
+    "tissue_bright_p90": 85.8,
+    "pigment": {
+     "rgb": [
+      176,
+      97,
+      87
+     ],
+     "hue_median": 16,
+     "of_tissue": 0.1964,
+     "detected": true
+    }
+   },
+   "color_label": "红色素20% · 暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.4 (Macintosh)",
+    "DateTime": "2023:07:17 15:56:47",
+    "DateTimeOriginal": "2023:03:15 11:59:42",
+    "DateTimeDigitized": "2023:03:15 11:59:42",
+    "ApertureValue": "8.918863",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "400",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1011",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1011.jpg",
+    "orig_w": 2226,
+    "orig_h": 3339,
+    "orig_bytes": 2509591,
+    "aspect": 0.667
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1011.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_1011.jpg",
+    "detail_w": 790,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.1207,
+     0.2034,
+     0.8226,
+     0.9148
+    ],
+    "box_px": [
+     81,
+     394,
+     2019,
+     3339
+    ],
+    "full": "assets/full/DSC_1011.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.1,
+    "water_frac": 0.8461,
+    "tissue_frac": 0.1539,
+    "pigment_frac": 0.0164,
+    "tissue_rgb": [
+     72,
+     72,
+     96
+    ],
+    "tissue_bright_p90": 53.8,
+    "pigment": {
+     "rgb": [
+      198,
+      80,
+      68
+     ],
+     "hue_median": 23,
+     "of_tissue": 0.1068,
+     "detected": true
+    }
+   },
+   "color_label": "橙红色素11% · 暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.4 (Macintosh)",
+    "DateTime": "2023:07:17 15:56:47",
+    "DateTimeOriginal": "2023:03:15 11:59:46",
+    "DateTimeDigitized": "2023:03:15 11:59:46",
+    "ApertureValue": "8.918863",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "400",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1048_2019-December-Fish",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1048_2019-December-Fish.jpg",
+    "orig_w": 3060,
+    "orig_h": 2040,
+    "orig_bytes": 1930395,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1048_2019-December-Fish.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/DSC_1048_2019-December-Fish.jpg",
+    "detail_w": 1200,
+    "detail_h": 635,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.1692,
+     0.1762,
+     0.8064,
+     0.6821
+    ],
+    "box_px": [
+     284,
+     236,
+     2702,
+     1515
+    ],
+    "full": "assets/full/DSC_1048_2019-December-Fish.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 16.2,
+    "water_baseline_p25": 2.2,
+    "water_frac": 0.5725,
+    "tissue_frac": 0.4275,
+    "pigment_frac": 0.0003,
+    "tissue_rgb": [
+     87,
+     91,
+     96
+    ],
+    "tissue_bright_p90": 119.1,
+    "pigment": {
+     "rgb": null,
+     "hue_median": null,
+     "of_tissue": 0.0007,
+     "detected": false,
+     "note": "色素占组织比 < 2%，不足以支撑一个色值，如实报未检出"
+    }
+   },
+   "color_label": "暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:14:00",
+    "DateTimeOriginal": "2019:12:19 15:39:23",
+    "DateTimeDigitized": "2019:12:19 15:39:23",
+    "ApertureValue": "9.715962",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "500",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1060",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1060.jpg",
+    "orig_w": 2745,
+    "orig_h": 4117,
+    "orig_bytes": 3462097,
+    "aspect": 0.667
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1060.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_1060.jpg",
+    "detail_w": 904,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.1284,
+     0.2232,
+     0.8116,
+     0.828
+    ],
+    "box_px": [
+     127,
+     620,
+     2453,
+     3708
+    ],
+    "full": "assets/full/DSC_1060.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 17.9,
+    "water_baseline_p25": 3.9,
+    "water_frac": 0.8122,
+    "tissue_frac": 0.1878,
+    "pigment_frac": 0.038,
+    "tissue_rgb": [
+     97,
+     88,
+     104
+    ],
+    "tissue_bright_p90": 89.0,
+    "pigment": {
+     "rgb": [
+      171,
+      87,
+      78
+     ],
+     "hue_median": 15,
+     "of_tissue": 0.2022,
+     "detected": true
+    }
+   },
+   "color_label": "红色素20% · 暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.4 (Macintosh)",
+    "DateTime": "2023:07:17 15:56:51",
+    "DateTimeOriginal": "2023:03:15 12:32:21",
+    "DateTimeDigitized": "2023:03:15 12:32:21",
+    "ApertureValue": "8.0",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "400",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1062",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1062.jpg",
+    "orig_w": 3436,
+    "orig_h": 5166,
+    "orig_bytes": 4867611,
+    "aspect": 0.665
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1062.jpg",
+    "thumb_w": 266,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_1062.jpg",
+    "detail_w": 762,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.1629,
+     0.1925,
+     0.8304,
+     0.8919
+    ],
+    "box_px": [
+     285,
+     561,
+     3128,
+     5041
+    ],
+    "full": "assets/full/DSC_1062.jpg",
+    "full_w": 798,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 16.2,
+    "water_baseline_p25": 2.2,
+    "water_frac": 0.8363,
+    "tissue_frac": 0.1637,
+    "pigment_frac": 0.0276,
+    "tissue_rgb": [
+     78,
+     78,
+     93
+    ],
+    "tissue_bright_p90": 63.0,
+    "pigment": {
+     "rgb": [
+      97,
+      67,
+      50
+     ],
+     "hue_median": 22,
+     "of_tissue": 0.1686,
+     "detected": true
+    }
+   },
+   "color_label": "橙红色素17% · 暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.4 (Macintosh)",
+    "DateTime": "2023:07:17 15:56:52",
+    "DateTimeOriginal": "2023:03:15 12:33:05",
+    "DateTimeDigitized": "2023:03:15 12:33:05",
+    "ApertureValue": "8.0",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "400",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1079-Edit1",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1079-Edit1.jpg",
+    "orig_w": 4164,
+    "orig_h": 6151,
+    "orig_bytes": 3466111,
+    "aspect": 0.677
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1079-Edit1.jpg",
+    "thumb_w": 271,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_1079-Edit1.jpg",
+    "detail_w": 608,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.2824,
+     0.117,
+     0.6815,
+     0.6508
+    ],
+    "box_px": [
+     976,
+     326,
+     3037,
+     4397
+    ],
+    "full": "assets/full/DSC_1079-Edit1.jpg",
+    "full_w": 812,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 1.0,
+    "water_frac": 0.6402,
+    "tissue_frac": 0.3598,
+    "pigment_frac": 0.0199,
+    "tissue_rgb": [
+     94,
+     94,
+     103
+    ],
+    "tissue_bright_p90": 128.2,
+    "pigment": {
+     "rgb": [
+      227,
+      160,
+      119
+     ],
+     "hue_median": 19,
+     "of_tissue": 0.0553,
+     "detected": true
+    }
+   },
+   "color_label": "红色素6% · 暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.4 (Macintosh)",
+    "DateTime": "2023:07:17 15:56:52",
+    "DateTimeOriginal": "2023:03:15 12:42:00",
+    "DateTimeDigitized": "2023:03:15 12:42:00",
+    "ApertureValue": "8.0",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "400",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1106",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1106.jpg",
+    "orig_w": 2529,
+    "orig_h": 3801,
+    "orig_bytes": 1494457,
+    "aspect": 0.665
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1106.jpg",
+    "thumb_w": 266,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_1106.jpg",
+    "detail_w": 1012,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.1795,
+     0.2734,
+     0.7554,
+     0.7277
+    ],
+    "box_px": [
+     279,
+     832,
+     2085,
+     2973
+    ],
+    "full": "assets/full/DSC_1106.jpg",
+    "full_w": 798,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.6184,
+    "tissue_frac": 0.3816,
+    "pigment_frac": 0.0097,
+    "tissue_rgb": [
+     120,
+     124,
+     134
+    ],
+    "tissue_bright_p90": 177.5,
+    "pigment": {
+     "rgb": [
+      136,
+      104,
+      81
+     ],
+     "hue_median": 27,
+     "of_tissue": 0.0254,
+     "detected": true
+    }
+   },
+   "color_label": "橙红色素3% · 浅灰组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:14:15",
+    "DateTimeOriginal": "2019:12:20 15:09:37",
+    "DateTimeDigitized": "2019:12:20 15:09:37",
+    "ApertureValue": "9.715962",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "640",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1125",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1125.jpg",
+    "orig_w": 2855,
+    "orig_h": 4285,
+    "orig_bytes": 2839506,
+    "aspect": 0.666
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1125.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_1125.jpg",
+    "detail_w": 697,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.245,
+     0.2822,
+     0.68,
+     0.7812
+    ],
+    "box_px": [
+     550,
+     953,
+     2090,
+     3604
+    ],
+    "full": "assets/full/DSC_1125.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 23.2,
+    "water_baseline_p25": 9.2,
+    "water_frac": 0.3664,
+    "tissue_frac": 0.6336,
+    "pigment_frac": 0.0159,
+    "tissue_rgb": [
+     92,
+     92,
+     108
+    ],
+    "tissue_bright_p90": 164.4,
+    "pigment": {
+     "rgb": [
+      136,
+      96,
+      111
+     ],
+     "hue_median": 331,
+     "of_tissue": 0.0252,
+     "detected": true
+    }
+   },
+   "color_label": "品红色素3% · 暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:14:22",
+    "DateTimeOriginal": "2019:12:20 15:15:29",
+    "DateTimeDigitized": "2019:12:20 15:15:29",
+    "ApertureValue": "9.715962",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "800",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1189",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1189.jpg",
+    "orig_w": 7117,
+    "orig_h": 4745,
+    "orig_bytes": 9431737,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1189.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/DSC_1189.jpg",
+    "detail_w": 1183,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.2705,
+     0.0741,
+     0.8006,
+     0.9309
+    ],
+    "box_px": [
+     1472,
+     0,
+     6151,
+     4745
+    ],
+    "full": "assets/full/DSC_1189.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.4831,
+    "tissue_frac": 0.5169,
+    "pigment_frac": 0.0006,
+    "tissue_rgb": [
+     66,
+     78,
+     98
+    ],
+    "tissue_bright_p90": 105.5,
+    "pigment": {
+     "rgb": null,
+     "hue_median": null,
+     "of_tissue": 0.0012,
+     "detected": false,
+     "note": "色素占组织比 < 2%，不足以支撑一个色值，如实报未检出"
+    }
+   },
+   "color_label": "暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:14:30",
+    "DateTimeOriginal": "2019:12:20 15:52:18",
+    "DateTimeDigitized": "2019:12:20 15:52:18",
+    "ApertureValue": "9.715962",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "500",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1202",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1202.jpg",
+    "orig_w": 2898,
+    "orig_h": 4356,
+    "orig_bytes": 2654804,
+    "aspect": 0.665
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1202.jpg",
+    "thumb_w": 266,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_1202.jpg",
+    "detail_w": 1024,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.2061,
+     0.2376,
+     0.8148,
+     0.7121
+    ],
+    "box_px": [
+     386,
+     787,
+     2573,
+     3350
+    ],
+    "full": "assets/full/DSC_1202.jpg",
+    "full_w": 798,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.5231,
+    "tissue_frac": 0.4769,
+    "pigment_frac": 0.0513,
+    "tissue_rgb": [
+     88,
+     86,
+     107
+    ],
+    "tissue_bright_p90": 125.2,
+    "pigment": {
+     "rgb": [
+      174,
+      120,
+      127
+     ],
+     "hue_median": 343,
+     "of_tissue": 0.1076,
+     "detected": true
+    }
+   },
+   "color_label": "红色素11% · 暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:14:36",
+    "DateTimeOriginal": "2019:12:20 15:58:35",
+    "DateTimeDigitized": "2019:12:20 15:58:35",
+    "ApertureValue": "9.715962",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "500",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1226",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1226.jpg",
+    "orig_w": 4537,
+    "orig_h": 6806,
+    "orig_bytes": 5424986,
+    "aspect": 0.667
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1226.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_1226.jpg",
+    "detail_w": 1200,
+    "detail_h": 1123,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.1357,
+     0.2495,
+     0.9802,
+     0.7354
+    ],
+    "box_px": [
+     156,
+     1301,
+     4537,
+     5402
+    ],
+    "full": "assets/full/DSC_1226.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.5546,
+    "tissue_frac": 0.4454,
+    "pigment_frac": 0.0105,
+    "tissue_rgb": [
+     99,
+     92,
+     110
+    ],
+    "tissue_bright_p90": 130.0,
+    "pigment": {
+     "rgb": [
+      117,
+      83,
+      96
+     ],
+     "hue_median": 335,
+     "of_tissue": 0.0235,
+     "detected": true
+    }
+   },
+   "color_label": "品红色素2% · 暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:14:46",
+    "DateTimeOriginal": "2019:12:20 16:03:58",
+    "DateTimeDigitized": "2019:12:20 16:03:58",
+    "ApertureValue": "8.918863",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "800",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1238",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1238.jpg",
+    "orig_w": 2308,
+    "orig_h": 1539,
+    "orig_bytes": 599147,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1238.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/DSC_1238.jpg",
+    "detail_w": 1200,
+    "detail_h": 778,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.2703,
+     0.2416,
+     0.783,
+     0.74
+    ],
+    "box_px": [
+     482,
+     280,
+     1949,
+     1231
+    ],
+    "full": "assets/full/DSC_1238.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.5937,
+    "tissue_frac": 0.4063,
+    "pigment_frac": 0.01,
+    "tissue_rgb": [
+     60,
+     83,
+     101
+    ],
+    "tissue_bright_p90": 96.5,
+    "pigment": {
+     "rgb": [
+      171,
+      135,
+      106
+     ],
+     "hue_median": 28,
+     "of_tissue": 0.0246,
+     "detected": true
+    }
+   },
+   "color_label": "橙红色素2% · 暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON D850",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:04 23:38:51",
+    "DateTimeOriginal": "2017:03:08 16:30:55",
+    "DateTimeDigitized": "2017:03:08 16:30:55",
+    "ApertureValue": "6.0",
+    "ExposureTime": "0.004",
+    "ISOSpeedRatings": "400",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1268",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1268.jpg",
+    "orig_w": 2090,
+    "orig_h": 3137,
+    "orig_bytes": 1230047,
+    "aspect": 0.666
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1268.jpg",
+    "thumb_w": 266,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_1268.jpg",
+    "detail_w": 674,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.216,
+     0.1295,
+     0.7657,
+     0.7814
+    ],
+    "box_px": [
+     314,
+     161,
+     1738,
+     2697
+    ],
+    "full": "assets/full/DSC_1268.jpg",
+    "full_w": 799,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.7696,
+    "tissue_frac": 0.2304,
+    "pigment_frac": 0.0474,
+    "tissue_rgb": [
+     104,
+     92,
+     108
+    ],
+    "tissue_bright_p90": 111.9,
+    "pigment": {
+     "rgb": [
+      203,
+      123,
+      132
+     ],
+     "hue_median": 346,
+     "of_tissue": 0.2057,
+     "detected": true
+    }
+   },
+   "color_label": "红色素21% · 暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:14:47",
+    "DateTimeOriginal": "2019:12:21 13:31:13",
+    "DateTimeDigitized": "2019:12:21 13:31:13",
+    "ApertureValue": "9.715962",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "400",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1273",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1273.jpg",
+    "orig_w": 2811,
+    "orig_h": 4217,
+    "orig_bytes": 3675085,
+    "aspect": 0.667
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1273.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_1273.jpg",
+    "detail_w": 664,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.2291,
+     0.0956,
+     0.7443,
+     0.7166
+    ],
+    "box_px": [
+     470,
+     89,
+     2266,
+     3336
+    ],
+    "full": "assets/full/DSC_1273.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 16.0,
+    "water_baseline_p25": 2.0,
+    "water_frac": 0.7128,
+    "tissue_frac": 0.2872,
+    "pigment_frac": 0.0449,
+    "tissue_rgb": [
+     95,
+     87,
+     98
+    ],
+    "tissue_bright_p90": 120.6,
+    "pigment": {
+     "rgb": [
+      191,
+      125,
+      132
+     ],
+     "hue_median": 345,
+     "of_tissue": 0.1562,
+     "detected": true
+    }
+   },
+   "color_label": "红色素16% · 暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:14:55",
+    "DateTimeOriginal": "2019:12:21 13:31:49",
+    "DateTimeDigitized": "2019:12:21 13:31:49",
+    "ApertureValue": "9.715962",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "400",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1278_2019-September-Cephalopoda",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1278_2019-September-Cephalopoda.jpg",
+    "orig_w": 1281,
+    "orig_h": 1922,
+    "orig_bytes": 356862,
+    "aspect": 0.666
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1278_2019-September-Cephalopoda.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_1278_2019-September-Cephalopoda.jpg",
+    "detail_w": 750,
+    "detail_h": 899,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.2664,
+     0.1942,
+     0.7386,
+     0.5713
+    ],
+    "box_px": [
+     269,
+     286,
+     1019,
+     1185
+    ],
+    "full": "assets/full/DSC_1278_2019-September-Cephalopoda.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.4298,
+    "tissue_frac": 0.5702,
+    "pigment_frac": 0.0202,
+    "tissue_rgb": [
+     175,
+     185,
+     197
+    ],
+    "tissue_bright_p90": 232.0,
+    "pigment": {
+     "rgb": [
+      183,
+      137,
+      107
+     ],
+     "hue_median": 27,
+     "of_tissue": 0.0355,
+     "detected": true
+    }
+   },
+   "color_label": "橙红色素4% · 浅灰组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON D850",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:04 23:38:51",
+    "DateTimeOriginal": "2017:03:08 16:43:23",
+    "DateTimeDigitized": "2017:03:08 16:43:23",
+    "ApertureValue": "6.0",
+    "ExposureTime": "0.004",
+    "ISOSpeedRatings": "400",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1296",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1296.jpg",
+    "orig_w": 708,
+    "orig_h": 1062,
+    "orig_bytes": 268577,
+    "aspect": 0.667
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1296.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_1296.jpg",
+    "detail_w": 282,
+    "detail_h": 520,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.3139,
+     0.2444,
+     0.6356,
+     0.6389
+    ],
+    "box_px": [
+     195,
+     209,
+     477,
+     729
+    ],
+    "full": "assets/full/DSC_1296.jpg",
+    "full_w": 708,
+    "full_h": 1062
+   },
+   "color": {
+    "water_threshold": 19.7,
+    "water_baseline_p25": 5.7,
+    "water_frac": 0.3357,
+    "tissue_frac": 0.6643,
+    "pigment_frac": 0.1137,
+    "tissue_rgb": [
+     150,
+     149,
+     163
+    ],
+    "tissue_bright_p90": 212.9,
+    "pigment": {
+     "rgb": [
+      225,
+      124,
+      111
+     ],
+     "hue_median": 21,
+     "of_tissue": 0.1711,
+     "detected": true
+    }
+   },
+   "color_label": "橙红色素17% · 浅灰组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON D850",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:04 23:38:51",
+    "DateTimeOriginal": "2017:03:08 16:45:28",
+    "DateTimeDigitized": "2017:03:08 16:45:28",
+    "ApertureValue": "6.0",
+    "ExposureTime": "0.004",
+    "ISOSpeedRatings": "200",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1297",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1297.jpg",
+    "orig_w": 2344,
+    "orig_h": 3516,
+    "orig_bytes": 2033564,
+    "aspect": 0.667
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1297.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_1297.jpg",
+    "detail_w": 577,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.2927,
+     0.146,
+     0.6156,
+     0.594
+    ],
+    "box_px": [
+     595,
+     324,
+     1534,
+     2278
+    ],
+    "full": "assets/full/DSC_1297.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 47.6,
+    "water_baseline_p25": 33.6,
+    "water_frac": 0.3094,
+    "tissue_frac": 0.6906,
+    "pigment_frac": 0.0077,
+    "tissue_rgb": [
+     126,
+     131,
+     141
+    ],
+    "tissue_bright_p90": 195.5,
+    "pigment": {
+     "rgb": null,
+     "hue_median": null,
+     "of_tissue": 0.0112,
+     "detected": false,
+     "note": "色素占组织比 < 2%，不足以支撑一个色值，如实报未检出"
+    }
+   },
+   "color_label": "浅灰组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:15:03",
+    "DateTimeOriginal": "2019:12:21 13:54:20",
+    "DateTimeDigitized": "2019:12:21 13:54:20",
+    "ApertureValue": "9.715962",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "400",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1329",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1329.jpg",
+    "orig_w": 2672,
+    "orig_h": 1781,
+    "orig_bytes": 1757388,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1329.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/DSC_1329.jpg",
+    "detail_w": 1200,
+    "detail_h": 778,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.2331,
+     0.1784,
+     0.8391,
+     0.7683
+    ],
+    "box_px": [
+     429,
+     192,
+     2436,
+     1494
+    ],
+    "full": "assets/full/DSC_1329.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 17.0,
+    "water_baseline_p25": 3.0,
+    "water_frac": 0.6533,
+    "tissue_frac": 0.3467,
+    "pigment_frac": 0.0078,
+    "tissue_rgb": [
+     96,
+     99,
+     105
+    ],
+    "tissue_bright_p90": 127.8,
+    "pigment": {
+     "rgb": [
+      101,
+      83,
+      71
+     ],
+     "hue_median": 27,
+     "of_tissue": 0.0225,
+     "detected": true
+    }
+   },
+   "color_label": "橙红色素2% · 暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:15:10",
+    "DateTimeOriginal": "2019:12:21 14:12:05",
+    "DateTimeDigitized": "2019:12:21 14:12:05",
+    "ApertureValue": "9.715962",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "400",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1332",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1332.jpg",
+    "orig_w": 2029,
+    "orig_h": 1353,
+    "orig_bytes": 441323,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1332.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/DSC_1332.jpg",
+    "detail_w": 968,
+    "detail_h": 1030,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.2738,
+     0.1638,
+     0.6584,
+     0.7776
+    ],
+    "box_px": [
+     462,
+     122,
+     1430,
+     1152
+    ],
+    "full": "assets/full/DSC_1332.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.6547,
+    "tissue_frac": 0.3453,
+    "pigment_frac": 0.0581,
+    "tissue_rgb": [
+     96,
+     89,
+     102
+    ],
+    "tissue_bright_p90": 114.1,
+    "pigment": {
+     "rgb": [
+      161,
+      104,
+      95
+     ],
+     "hue_median": 12,
+     "of_tissue": 0.1683,
+     "detected": true
+    }
+   },
+   "color_label": "红色素17% · 暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:15:16",
+    "DateTimeOriginal": "2019:12:21 14:14:06",
+    "DateTimeDigitized": "2019:12:21 14:14:06",
+    "ApertureValue": "9.715962",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "400",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1340",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1340.jpg",
+    "orig_w": 3577,
+    "orig_h": 2385,
+    "orig_bytes": 3342723,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1340.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/DSC_1340.jpg",
+    "detail_w": 1200,
+    "detail_h": 392,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.1638,
+     0.3634,
+     0.8607,
+     0.705
+    ],
+    "box_px": [
+     287,
+     769,
+     3378,
+     1779
+    ],
+    "full": "assets/full/DSC_1340.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 17.9,
+    "water_baseline_p25": 3.9,
+    "water_frac": 0.6647,
+    "tissue_frac": 0.3353,
+    "pigment_frac": 0.2113,
+    "tissue_rgb": [
+     159,
+     119,
+     110
+    ],
+    "tissue_bright_p90": 160.5,
+    "pigment": {
+     "rgb": [
+      170,
+      110,
+      96
+     ],
+     "hue_median": 13,
+     "of_tissue": 0.6302,
+     "detected": true
+    }
+   },
+   "color_label": "红色素63% · 暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.4 (Macintosh)",
+    "DateTime": "2023:07:17 15:57:24",
+    "DateTimeOriginal": "2023:03:16 12:18:54",
+    "DateTimeDigitized": "2023:03:16 12:18:54",
+    "ApertureValue": "8.918863",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "400",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1341",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1341.jpg",
+    "orig_w": 1316,
+    "orig_h": 1974,
+    "orig_bytes": 719280,
+    "aspect": 0.667
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1341.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_1341.jpg",
+    "detail_w": 966,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.1783,
+     0.1912,
+     0.8017,
+     0.7077
+    ],
+    "box_px": [
+     136,
+     255,
+     1153,
+     1519
+    ],
+    "full": "assets/full/DSC_1341.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 1.2,
+    "water_frac": 0.6789,
+    "tissue_frac": 0.3211,
+    "pigment_frac": 0.0035,
+    "tissue_rgb": [
+     51,
+     71,
+     95
+    ],
+    "tissue_bright_p90": 79.2,
+    "pigment": {
+     "rgb": null,
+     "hue_median": null,
+     "of_tissue": 0.0109,
+     "detected": false,
+     "note": "色素占组织比 < 2%，不足以支撑一个色值，如实报未检出"
+    }
+   },
+   "color_label": "暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:15:15",
+    "DateTimeOriginal": "2019:12:21 15:34:06",
+    "DateTimeDigitized": "2019:12:21 15:34:06",
+    "ApertureValue": "9.715962",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "400",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1342_2019-December-Spincula",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1342_2019-December-Spincula.jpg",
+    "orig_w": 1165,
+    "orig_h": 1748,
+    "orig_bytes": 304397,
+    "aspect": 0.666
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1342_2019-December-Spincula.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_1342_2019-December-Spincula.jpg",
+    "detail_w": 618,
+    "detail_h": 1130,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.2721,
+     0.2198,
+     0.6996,
+     0.7413
+    ],
+    "box_px": [
+     257,
+     275,
+     875,
+     1405
+    ],
+    "full": "assets/full/DSC_1342_2019-December-Spincula.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.5842,
+    "tissue_frac": 0.4158,
+    "pigment_frac": 0.0,
+    "tissue_rgb": [
+     48,
+     69,
+     90
+    ],
+    "tissue_bright_p90": 90.4,
+    "pigment": {
+     "rgb": null,
+     "hue_median": null,
+     "of_tissue": 0.0,
+     "detected": false,
+     "note": "色素占组织比 < 2%，不足以支撑一个色值，如实报未检出"
+    }
+   },
+   "color_label": "暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:15:16",
+    "DateTimeOriginal": "2019:12:21 15:34:34",
+    "DateTimeDigitized": "2019:12:21 15:34:34",
+    "ApertureValue": "9.715962",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "400",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1343-Edit",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1343-Edit.jpg",
+    "orig_w": 1906,
+    "orig_h": 1361,
+    "orig_bytes": 385086,
+    "aspect": 1.4
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1343-Edit.jpg",
+    "thumb_w": 400,
+    "thumb_h": 286,
+    "detail": "assets/detail/DSC_1343-Edit.jpg",
+    "detail_w": 1029,
+    "detail_h": 1050,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.2578,
+     0.2109,
+     0.6933,
+     0.8327
+    ],
+    "box_px": [
+     392,
+     185,
+     1421,
+     1235
+    ],
+    "full": "assets/full/DSC_1343-Edit.jpg",
+    "full_w": 1200,
+    "full_h": 857
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.7197,
+    "tissue_frac": 0.2803,
+    "pigment_frac": 0.0011,
+    "tissue_rgb": [
+     53,
+     79,
+     107
+    ],
+    "tissue_bright_p90": 75.9,
+    "pigment": {
+     "rgb": null,
+     "hue_median": null,
+     "of_tissue": 0.0041,
+     "detected": false,
+     "note": "色素占组织比 < 2%，不足以支撑一个色值，如实报未检出"
+    }
+   },
+   "color_label": "暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:15:10",
+    "DateTimeOriginal": "2019:12:21 15:34:41",
+    "DateTimeDigitized": "2019:12:21 15:34:41",
+    "ApertureValue": "9.715962",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "400",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1346",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1346.jpg",
+    "orig_w": 1313,
+    "orig_h": 1970,
+    "orig_bytes": 326204,
+    "aspect": 0.666
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1346.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_1346.jpg",
+    "detail_w": 412,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.3752,
+     0.2357,
+     0.6515,
+     0.7721
+    ],
+    "box_px": [
+     449,
+     338,
+     899,
+     1648
+    ],
+    "full": "assets/full/DSC_1346.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.5903,
+    "tissue_frac": 0.4097,
+    "pigment_frac": 0.0047,
+    "tissue_rgb": [
+     106,
+     108,
+     113
+    ],
+    "tissue_bright_p90": 181.9,
+    "pigment": {
+     "rgb": null,
+     "hue_median": null,
+     "of_tissue": 0.0115,
+     "detected": false,
+     "note": "色素占组织比 < 2%，不足以支撑一个色值，如实报未检出"
+    }
+   },
+   "color_label": "暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:15:16",
+    "DateTimeOriginal": "2019:12:21 15:39:19",
+    "DateTimeDigitized": "2019:12:21 15:39:19",
+    "ApertureValue": "9.715962",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "400",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1389",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1389.jpg",
+    "orig_w": 4325,
+    "orig_h": 2889,
+    "orig_bytes": 2297555,
+    "aspect": 1.497
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1389.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/DSC_1389.jpg",
+    "detail_w": 1200,
+    "detail_h": 802,
+    "crop_method": "full_frame",
+    "box_norm": null,
+    "box_px": [
+     0,
+     0,
+     4325,
+     2889
+    ],
+    "full": "assets/full/DSC_1389.jpg",
+    "full_w": 1200,
+    "full_h": 802
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.733,
+    "tissue_frac": 0.267,
+    "pigment_frac": 0.08,
+    "tissue_rgb": [
+     177,
+     145,
+     105
+    ],
+    "tissue_bright_p90": 170.4,
+    "pigment": {
+     "rgb": [
+      164,
+      114,
+      79
+     ],
+     "hue_median": 26,
+     "of_tissue": 0.2995,
+     "detected": true
+    }
+   },
+   "color_label": "橙红色素30% · 暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:15:35",
+    "DateTimeOriginal": "2019:12:21 15:58:28",
+    "DateTimeDigitized": "2019:12:21 15:58:28",
+    "ApertureValue": "9.715962",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "400",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1396",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1396.jpg",
+    "orig_w": 3513,
+    "orig_h": 2342,
+    "orig_bytes": 1392900,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1396.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/DSC_1396.jpg",
+    "detail_w": 1200,
+    "detail_h": 891,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.4743,
+     0.3136,
+     0.7768,
+     0.6506
+    ],
+    "box_px": [
+     1539,
+     640,
+     2856,
+     1618
+    ],
+    "full": "assets/full/DSC_1396.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 166.8,
+    "water_baseline_p25": 123.5,
+    "water_frac": 0.7143,
+    "tissue_frac": 0.2857,
+    "pigment_frac": 0.0312,
+    "tissue_rgb": [
+     195,
+     175,
+     146
+    ],
+    "tissue_bright_p90": 177.0,
+    "pigment": {
+     "rgb": [
+      199,
+      166,
+      130
+     ],
+     "hue_median": 31,
+     "of_tissue": 0.1092,
+     "detected": true
+    }
+   },
+   "color_label": "橙红色素11% · 暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:15:40",
+    "DateTimeOriginal": "2019:12:21 16:00:22",
+    "DateTimeDigitized": "2019:12:21 16:00:22",
+    "ApertureValue": "9.715962",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "400",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1439",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1439.jpg",
+    "orig_w": 1229,
+    "orig_h": 1848,
+    "orig_bytes": 612965,
+    "aspect": 0.665
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1439.jpg",
+    "thumb_w": 266,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_1439.jpg",
+    "detail_w": 547,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.2822,
+     0.2227,
+     0.6737,
+     0.7939
+    ],
+    "box_px": [
+     289,
+     285,
+     886,
+     1594
+    ],
+    "full": "assets/full/DSC_1439.jpg",
+    "full_w": 798,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 18.6,
+    "water_baseline_p25": 4.6,
+    "water_frac": 0.4576,
+    "tissue_frac": 0.5424,
+    "pigment_frac": 0.042,
+    "tissue_rgb": [
+     81,
+     87,
+     112
+    ],
+    "tissue_bright_p90": 118.5,
+    "pigment": {
+     "rgb": [
+      181,
+      96,
+      82
+     ],
+     "hue_median": 18,
+     "of_tissue": 0.0775,
+     "detected": true
+    }
+   },
+   "color_label": "红色素8% · 暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:16:00",
+    "DateTimeOriginal": "2019:12:21 16:20:14",
+    "DateTimeDigitized": "2019:12:21 16:20:14",
+    "ApertureValue": "9.715962",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "400",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1519",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1519.jpg",
+    "orig_w": 6095,
+    "orig_h": 4063,
+    "orig_bytes": 1747500,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1519.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/DSC_1519.jpg",
+    "detail_w": 1200,
+    "detail_h": 770,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.3262,
+     0.2013,
+     0.688,
+     0.5495
+    ],
+    "box_px": [
+     1724,
+     648,
+     4458,
+     2402
+    ],
+    "full": "assets/full/DSC_1519.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.6876,
+    "tissue_frac": 0.3124,
+    "pigment_frac": 0.0062,
+    "tissue_rgb": [
+     104,
+     114,
+     136
+    ],
+    "tissue_bright_p90": 140.3,
+    "pigment": {
+     "rgb": null,
+     "hue_median": null,
+     "of_tissue": 0.0199,
+     "detected": false,
+     "note": "色素占组织比 < 2%，不足以支撑一个色值，如实报未检出"
+    }
+   },
+   "color_label": "暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:16:24",
+    "DateTimeOriginal": "2019:12:22 12:44:15",
+    "DateTimeDigitized": "2019:12:22 12:44:15",
+    "ApertureValue": "9.715962",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "200",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1540",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1540.jpg",
+    "orig_w": 2461,
+    "orig_h": 3692,
+    "orig_bytes": 1678545,
+    "aspect": 0.667
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1540.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_1540.jpg",
+    "detail_w": 931,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.2575,
+     0.2803,
+     0.7092,
+     0.6686
+    ],
+    "box_px": [
+     500,
+     863,
+     1879,
+     2641
+    ],
+    "full": "assets/full/DSC_1540.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 18.2,
+    "water_baseline_p25": 4.2,
+    "water_frac": 0.3101,
+    "tissue_frac": 0.6899,
+    "pigment_frac": 0.0932,
+    "tissue_rgb": [
+     136,
+     132,
+     142
+    ],
+    "tissue_bright_p90": 193.1,
+    "pigment": {
+     "rgb": [
+      171,
+      131,
+      110
+     ],
+     "hue_median": 20,
+     "of_tissue": 0.1351,
+     "detected": true
+    }
+   },
+   "color_label": "红色素14% · 浅灰组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:16:34",
+    "DateTimeOriginal": "2019:12:22 12:52:13",
+    "DateTimeDigitized": "2019:12:22 12:52:13",
+    "ApertureValue": "9.715962",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "125",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1555",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1555.jpg",
+    "orig_w": 5182,
+    "orig_h": 3455,
+    "orig_bytes": 3478402,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1555.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/DSC_1555.jpg",
+    "detail_w": 1180,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.255,
+     0.0791,
+     0.7416,
+     0.8302
+    ],
+    "box_px": [
+     1019,
+     0,
+     4146,
+     3180
+    ],
+    "full": "assets/full/DSC_1555.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 1.2,
+    "water_frac": 0.6578,
+    "tissue_frac": 0.3422,
+    "pigment_frac": 0.025,
+    "tissue_rgb": [
+     91,
+     96,
+     104
+    ],
+    "tissue_bright_p90": 132.9,
+    "pigment": {
+     "rgb": [
+      168,
+      132,
+      108
+     ],
+     "hue_median": 26,
+     "of_tissue": 0.0731,
+     "detected": true
+    }
+   },
+   "color_label": "橙红色素7% · 暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:16:44",
+    "DateTimeOriginal": "2019:12:22 12:55:44",
+    "DateTimeDigitized": "2019:12:22 12:55:44",
+    "ApertureValue": "9.715962",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "125",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1575",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1575.jpg",
+    "orig_w": 5231,
+    "orig_h": 3487,
+    "orig_bytes": 3209785,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1575.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/DSC_1575.jpg",
+    "detail_w": 1103,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.3042,
+     0.1738,
+     0.6414,
+     0.7242
+    ],
+    "box_px": [
+     1380,
+     376,
+     3567,
+     2756
+    ],
+    "full": "assets/full/DSC_1575.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 53.2,
+    "water_baseline_p25": 39.2,
+    "water_frac": 0.3334,
+    "tissue_frac": 0.6666,
+    "pigment_frac": 0.0011,
+    "tissue_rgb": [
+     102,
+     118,
+     135
+    ],
+    "tissue_bright_p90": 160.3,
+    "pigment": {
+     "rgb": null,
+     "hue_median": null,
+     "of_tissue": 0.0017,
+     "detected": false,
+     "note": "色素占组织比 < 2%，不足以支撑一个色值，如实报未检出"
+    }
+   },
+   "color_label": "暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:16:51",
+    "DateTimeOriginal": "2019:12:22 13:04:27",
+    "DateTimeDigitized": "2019:12:22 13:04:27",
+    "ApertureValue": "9.715962",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "400",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1586",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1586.jpg",
+    "orig_w": 3000,
+    "orig_h": 2000,
+    "orig_bytes": 1773871,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1586.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/DSC_1586.jpg",
+    "detail_w": 1200,
+    "detail_h": 836,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.3894,
+     0.214,
+     0.7951,
+     0.6377
+    ],
+    "box_px": [
+     1022,
+     326,
+     2531,
+     1377
+    ],
+    "full": "assets/full/DSC_1586.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 20.4,
+    "water_baseline_p25": 6.4,
+    "water_frac": 0.3544,
+    "tissue_frac": 0.6456,
+    "pigment_frac": 0.048,
+    "tissue_rgb": [
+     136,
+     129,
+     104
+    ],
+    "tissue_bright_p90": 198.7,
+    "pigment": {
+     "rgb": [
+      145,
+      109,
+      86
+     ],
+     "hue_median": 26,
+     "of_tissue": 0.0743,
+     "detected": true
+    }
+   },
+   "color_label": "橙红色素7% · 暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:16:59",
+    "DateTimeOriginal": "2019:12:22 13:15:39",
+    "DateTimeDigitized": "2019:12:22 13:15:39",
+    "ApertureValue": "9.715962",
+    "ExposureTime": "0.00625",
+    "ISOSpeedRatings": "100",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1621-Edit",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1621-Edit.jpg",
+    "orig_w": 7159,
+    "orig_h": 4773,
+    "orig_bytes": 6698401,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1621-Edit.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/DSC_1621-Edit.jpg",
+    "detail_w": 1122,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.2264,
+     0.0451,
+     0.7291,
+     0.9766
+    ],
+    "box_px": [
+     1189,
+     0,
+     5651,
+     4773
+    ],
+    "full": "assets/full/DSC_1621-Edit.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.5638,
+    "tissue_frac": 0.4362,
+    "pigment_frac": 0.001,
+    "tissue_rgb": [
+     73,
+     83,
+     101
+    ],
+    "tissue_bright_p90": 104.3,
+    "pigment": {
+     "rgb": null,
+     "hue_median": null,
+     "of_tissue": 0.0023,
+     "detected": false,
+     "note": "色素占组织比 < 2%，不足以支撑一个色值，如实报未检出"
+    }
+   },
+   "color_label": "暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:17:17",
+    "DateTimeOriginal": "2019:12:22 14:40:30",
+    "DateTimeDigitized": "2019:12:22 14:40:30",
+    "ApertureValue": "9.715962",
+    "ExposureTime": "0.00625",
+    "ISOSpeedRatings": "400",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1694",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1694.jpg",
+    "orig_w": 5469,
+    "orig_h": 3646,
+    "orig_bytes": 5853335,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1694.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/DSC_1694.jpg",
+    "detail_w": 1200,
+    "detail_h": 873,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.0803,
+     0.0822,
+     0.6975,
+     0.7561
+    ],
+    "box_px": [
+     34,
+     5,
+     4220,
+     3052
+    ],
+    "full": "assets/full/DSC_1694.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 17.2,
+    "water_baseline_p25": 3.2,
+    "water_frac": 0.5773,
+    "tissue_frac": 0.4227,
+    "pigment_frac": 0.014,
+    "tissue_rgb": [
+     125,
+     129,
+     144
+    ],
+    "tissue_bright_p90": 169.0,
+    "pigment": {
+     "rgb": [
+      123,
+      86,
+      82
+     ],
+     "hue_median": 27,
+     "of_tissue": 0.0332,
+     "detected": true
+    }
+   },
+   "color_label": "橙红色素3% · 浅灰组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:17:49",
+    "DateTimeOriginal": "2019:12:22 15:17:08",
+    "DateTimeDigitized": "2019:12:22 15:17:08",
+    "ApertureValue": "9.287712",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "160",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1722",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1722.jpg",
+    "orig_w": 2479,
+    "orig_h": 3718,
+    "orig_bytes": 1302303,
+    "aspect": 0.667
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1722.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_1722.jpg",
+    "detail_w": 573,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.2913,
+     0.187,
+     0.7337,
+     0.8041
+    ],
+    "box_px": [
+     591,
+     420,
+     1950,
+     3265
+    ],
+    "full": "assets/full/DSC_1722.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.6329,
+    "tissue_frac": 0.3671,
+    "pigment_frac": 0.0243,
+    "tissue_rgb": [
+     109,
+     113,
+     136
+    ],
+    "tissue_bright_p90": 135.3,
+    "pigment": {
+     "rgb": [
+      74,
+      52,
+      61
+     ],
+     "hue_median": 332,
+     "of_tissue": 0.0663,
+     "detected": true
+    }
+   },
+   "color_label": "品红色素7% · 暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:18:02",
+    "DateTimeOriginal": "2019:12:22 15:26:31",
+    "DateTimeDigitized": "2019:12:22 15:26:31",
+    "ApertureValue": "9.715962",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "250",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1746-Edit",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1746-Edit.jpg",
+    "orig_w": 4674,
+    "orig_h": 3116,
+    "orig_bytes": 1842590,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1746-Edit.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/DSC_1746-Edit.jpg",
+    "detail_w": 1074,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.3542,
+     0.3789,
+     0.608,
+     0.8045
+    ],
+    "box_px": [
+     1513,
+     1022,
+     2984,
+     2666
+    ],
+    "full": "assets/full/DSC_1746-Edit.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 78.6,
+    "water_baseline_p25": 58.2,
+    "water_frac": 0.2758,
+    "tissue_frac": 0.7242,
+    "pigment_frac": 0.1758,
+    "tissue_rgb": [
+     184,
+     166,
+     175
+    ],
+    "tissue_bright_p90": 222.2,
+    "pigment": {
+     "rgb": [
+      225,
+      147,
+      105
+     ],
+     "hue_median": 17,
+     "of_tissue": 0.2428,
+     "detected": true
+    }
+   },
+   "color_label": "红色素24% · 浅灰组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:18:10",
+    "DateTimeOriginal": "2019:12:22 15:36:11",
+    "DateTimeDigitized": "2019:12:22 15:36:11",
+    "ApertureValue": "9.715962",
+    "ExposureTime": "0.01",
+    "ISOSpeedRatings": "250",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1760",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1760.jpg",
+    "orig_w": 2088,
+    "orig_h": 3132,
+    "orig_bytes": 1276424,
+    "aspect": 0.667
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1760.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_1760.jpg",
+    "detail_w": 1187,
+    "detail_h": 991,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.2125,
+     0.3163,
+     0.6712,
+     0.5714
+    ],
+    "box_px": [
+     329,
+     895,
+     1516,
+     1886
+    ],
+    "full": "assets/full/DSC_1760.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 1.9,
+    "water_frac": 0.5757,
+    "tissue_frac": 0.4243,
+    "pigment_frac": 0.0332,
+    "tissue_rgb": [
+     115,
+     117,
+     127
+    ],
+    "tissue_bright_p90": 160.0,
+    "pigment": {
+     "rgb": [
+      138,
+      107,
+      88
+     ],
+     "hue_median": 23,
+     "of_tissue": 0.0783,
+     "detected": true
+    }
+   },
+   "color_label": "橙红色素8% · 浅灰组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:18:23",
+    "DateTimeOriginal": "2019:12:23 12:17:14",
+    "DateTimeDigitized": "2019:12:23 12:17:14",
+    "ApertureValue": "9.715962",
+    "ExposureTime": "0.01",
+    "ISOSpeedRatings": "250",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1764",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1764.jpg",
+    "orig_w": 2199,
+    "orig_h": 3299,
+    "orig_bytes": 1656815,
+    "aspect": 0.667
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1764.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_1764.jpg",
+    "detail_w": 776,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.283,
+     0.3091,
+     0.662,
+     0.6998
+    ],
+    "box_px": [
+     522,
+     865,
+     1556,
+     2463
+    ],
+    "full": "assets/full/DSC_1764.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 1.7,
+    "water_frac": 0.6446,
+    "tissue_frac": 0.3554,
+    "pigment_frac": 0.0486,
+    "tissue_rgb": [
+     116,
+     116,
+     114
+    ],
+    "tissue_bright_p90": 152.2,
+    "pigment": {
+     "rgb": [
+      163,
+      125,
+      99
+     ],
+     "hue_median": 27,
+     "of_tissue": 0.1368,
+     "detected": true
+    }
+   },
+   "color_label": "橙红色素14% · 浅灰组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:18:23",
+    "DateTimeOriginal": "2019:12:23 12:18:29",
+    "DateTimeDigitized": "2019:12:23 12:18:29",
+    "ApertureValue": "9.715962",
+    "ExposureTime": "0.01",
+    "ISOSpeedRatings": "250",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1779",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1779.jpg",
+    "orig_w": 1929,
+    "orig_h": 2893,
+    "orig_bytes": 1919366,
+    "aspect": 0.667
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1779.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_1779.jpg",
+    "detail_w": 953,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.2713,
+     0.3317,
+     0.7765,
+     0.7561
+    ],
+    "box_px": [
+     406,
+     812,
+     1615,
+     2335
+    ],
+    "full": "assets/full/DSC_1779.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 21.7,
+    "water_baseline_p25": 7.7,
+    "water_frac": 0.5633,
+    "tissue_frac": 0.4367,
+    "pigment_frac": 0.0011,
+    "tissue_rgb": [
+     109,
+     115,
+     124
+    ],
+    "tissue_bright_p90": 167.6,
+    "pigment": {
+     "rgb": null,
+     "hue_median": null,
+     "of_tissue": 0.0024,
+     "detected": false,
+     "note": "色素占组织比 < 2%，不足以支撑一个色值，如实报未检出"
+    }
+   },
+   "color_label": "暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:18:29",
+    "DateTimeOriginal": "2019:12:23 12:30:09",
+    "DateTimeDigitized": "2019:12:23 12:30:09",
+    "ApertureValue": "8.918863",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "400",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1821",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1821.jpg",
+    "orig_w": 6565,
+    "orig_h": 4377,
+    "orig_bytes": 7585873,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1821.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/DSC_1821.jpg",
+    "detail_w": 1200,
+    "detail_h": 1005,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.1967,
+     0.126,
+     0.8189,
+     0.9156
+    ],
+    "box_px": [
+     801,
+     137,
+     5866,
+     4377
+    ],
+    "full": "assets/full/DSC_1821.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 16.9,
+    "water_baseline_p25": 2.9,
+    "water_frac": 0.784,
+    "tissue_frac": 0.216,
+    "pigment_frac": 0.0157,
+    "tissue_rgb": [
+     85,
+     89,
+     97
+    ],
+    "tissue_bright_p90": 84.8,
+    "pigment": {
+     "rgb": [
+      175,
+      121,
+      82
+     ],
+     "hue_median": 25,
+     "of_tissue": 0.0726,
+     "detected": true
+    }
+   },
+   "color_label": "橙红色素7% · 暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:18:35",
+    "DateTimeOriginal": "2019:12:23 13:05:35",
+    "DateTimeDigitized": "2019:12:23 13:05:35",
+    "ApertureValue": "8.918863",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "400",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1835",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1835.jpg",
+    "orig_w": 1731,
+    "orig_h": 2600,
+    "orig_bytes": 1124021,
+    "aspect": 0.666
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1835.jpg",
+    "thumb_w": 266,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_1835.jpg",
+    "detail_w": 1000,
+    "detail_h": 967,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.2438,
+     0.3073,
+     0.7094,
+     0.6072
+    ],
+    "box_px": [
+     325,
+     705,
+     1325,
+     1672
+    ],
+    "full": "assets/full/DSC_1835.jpg",
+    "full_w": 799,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 17.2,
+    "water_baseline_p25": 3.2,
+    "water_frac": 0.5798,
+    "tissue_frac": 0.4202,
+    "pigment_frac": 0.0049,
+    "tissue_rgb": [
+     121,
+     119,
+     132
+    ],
+    "tissue_bright_p90": 146.8,
+    "pigment": {
+     "rgb": null,
+     "hue_median": null,
+     "of_tissue": 0.0118,
+     "detected": false,
+     "note": "色素占组织比 < 2%，不足以支撑一个色值，如实报未检出"
+    }
+   },
+   "color_label": "浅灰组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:18:40",
+    "DateTimeOriginal": "2019:12:23 13:24:00",
+    "DateTimeDigitized": "2019:12:23 13:24:00",
+    "ApertureValue": "8.918863",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "500",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1853",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1853.jpg",
+    "orig_w": 5260,
+    "orig_h": 3507,
+    "orig_bytes": 5121013,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1853.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/DSC_1853.jpg",
+    "detail_w": 1200,
+    "detail_h": 665,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.1323,
+     0.2146,
+     0.7767,
+     0.7504
+    ],
+    "box_px": [
+     289,
+     527,
+     4492,
+     2857
+    ],
+    "full": "assets/full/DSC_1853.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 16.9,
+    "water_baseline_p25": 2.9,
+    "water_frac": 0.8731,
+    "tissue_frac": 0.1269,
+    "pigment_frac": 0.0487,
+    "tissue_rgb": [
+     133,
+     108,
+     86
+    ],
+    "tissue_bright_p90": 80.4,
+    "pigment": {
+     "rgb": [
+      153,
+      105,
+      71
+     ],
+     "hue_median": 26,
+     "of_tissue": 0.384,
+     "detected": true
+    }
+   },
+   "color_label": "橙红色素38% · 暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:18:46",
+    "DateTimeOriginal": "2019:12:23 13:35:49",
+    "DateTimeDigitized": "2019:12:23 13:35:49",
+    "ApertureValue": "8.918863",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "500",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_1912",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_1912.jpg",
+    "orig_w": 1141,
+    "orig_h": 1711,
+    "orig_bytes": 396303,
+    "aspect": 0.667
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_1912.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_1912.jpg",
+    "detail_w": 817,
+    "detail_h": 1122,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.1958,
+     0.2172,
+     0.7726,
+     0.7461
+    ],
+    "box_px": [
+     144,
+     263,
+     961,
+     1385
+    ],
+    "full": "assets/full/DSC_1912.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.7053,
+    "tissue_frac": 0.2947,
+    "pigment_frac": 0.0074,
+    "tissue_rgb": [
+     105,
+     109,
+     125
+    ],
+    "tissue_bright_p90": 137.8,
+    "pigment": {
+     "rgb": [
+      186,
+      107,
+      98
+     ],
+     "hue_median": 20,
+     "of_tissue": 0.0251,
+     "detected": true
+    }
+   },
+   "color_label": "红色素3% · 暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 13.0.1 (Macintosh)",
+    "DateTime": "2023:12:10 00:45:36",
+    "DateTimeOriginal": "2019:12:23 15:42:18",
+    "DateTimeDigitized": "2019:12:23 15:42:18",
+    "ApertureValue": "8.918863",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "640",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_2011",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_2011.jpg",
+    "orig_w": 3667,
+    "orig_h": 5501,
+    "orig_bytes": 6858089,
+    "aspect": 0.667
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_2011.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_2011.jpg",
+    "detail_w": 482,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.2261,
+     0.21,
+     0.6511,
+     0.9214
+    ],
+    "box_px": [
+     642,
+     686,
+     2575,
+     5501
+    ],
+    "full": "assets/full/DSC_2011.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 17.9,
+    "water_baseline_p25": 3.9,
+    "water_frac": 0.7641,
+    "tissue_frac": 0.2359,
+    "pigment_frac": 0.031,
+    "tissue_rgb": [
+     118,
+     106,
+     122
+    ],
+    "tissue_bright_p90": 122.4,
+    "pigment": {
+     "rgb": [
+      150,
+      98,
+      118
+     ],
+     "hue_median": 340,
+     "of_tissue": 0.1314,
+     "detected": true
+    }
+   },
+   "color_label": "红色素13% · 暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:07:07",
+    "DateTimeOriginal": "2019:12:25 12:04:35",
+    "DateTimeDigitized": "2019:12:25 12:04:35",
+    "ApertureValue": "9.715962",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "800",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_2052",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_2052.jpg",
+    "orig_w": 4309,
+    "orig_h": 6464,
+    "orig_bytes": 3772611,
+    "aspect": 0.667
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_2052.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_2052.jpg",
+    "detail_w": 457,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.317,
+     0.0682,
+     0.7774,
+     0.9306
+    ],
+    "box_px": [
+     1128,
+     0,
+     3588,
+     6464
+    ],
+    "full": "assets/full/DSC_2052.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.8091,
+    "tissue_frac": 0.1909,
+    "pigment_frac": 0.0078,
+    "tissue_rgb": [
+     71,
+     76,
+     93
+    ],
+    "tissue_bright_p90": 66.6,
+    "pigment": {
+     "rgb": [
+      183,
+      119,
+      80
+     ],
+     "hue_median": 24,
+     "of_tissue": 0.041,
+     "detected": true
+    }
+   },
+   "color_label": "橙红色素4% · 暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:07:18",
+    "DateTimeOriginal": "2019:12:25 12:16:22",
+    "DateTimeDigitized": "2019:12:25 12:16:22",
+    "ApertureValue": "9.715962",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "800",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_2071",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_2071.jpg",
+    "orig_w": 3199,
+    "orig_h": 4798,
+    "orig_bytes": 3411513,
+    "aspect": 0.667
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_2071.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_2071.jpg",
+    "detail_w": 559,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.2863,
+     0.1497,
+     0.6671,
+     0.6948
+    ],
+    "box_px": [
+     770,
+     404,
+     2280,
+     3647
+    ],
+    "full": "assets/full/DSC_2071.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 1.2,
+    "water_frac": 0.6481,
+    "tissue_frac": 0.3519,
+    "pigment_frac": 0.0051,
+    "tissue_rgb": [
+     108,
+     106,
+     129
+    ],
+    "tissue_bright_p90": 144.3,
+    "pigment": {
+     "rgb": null,
+     "hue_median": null,
+     "of_tissue": 0.0145,
+     "detected": false,
+     "note": "色素占组织比 < 2%，不足以支撑一个色值，如实报未检出"
+    }
+   },
+   "color_label": "暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:07:25",
+    "DateTimeOriginal": "2019:12:25 12:27:01",
+    "DateTimeDigitized": "2019:12:25 12:27:01",
+    "ApertureValue": "9.715962",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "400",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_2087",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_2087.jpg",
+    "orig_w": 2370,
+    "orig_h": 3555,
+    "orig_bytes": 1980050,
+    "aspect": 0.667
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_2087.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_2087.jpg",
+    "detail_w": 491,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.291,
+     0.126,
+     0.7707,
+     0.9274
+    ],
+    "box_px": [
+     553,
+     106,
+     1963,
+     3555
+    ],
+    "full": "assets/full/DSC_2087.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 1.2,
+    "water_frac": 0.8807,
+    "tissue_frac": 0.1193,
+    "pigment_frac": 0.0284,
+    "tissue_rgb": [
+     120,
+     109,
+     103
+    ],
+    "tissue_bright_p90": 50.9,
+    "pigment": {
+     "rgb": [
+      148,
+      121,
+      105
+     ],
+     "hue_median": 19,
+     "of_tissue": 0.2381,
+     "detected": true
+    }
+   },
+   "color_label": "红色素24% · 暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:07:31",
+    "DateTimeOriginal": "2019:12:25 12:34:07",
+    "DateTimeDigitized": "2019:12:25 12:34:07",
+    "ApertureValue": "9.715962",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "800",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_2096",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_2096.jpg",
+    "orig_w": 3903,
+    "orig_h": 5854,
+    "orig_bytes": 2911715,
+    "aspect": 0.667
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_2096.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_2096.jpg",
+    "detail_w": 1200,
+    "detail_h": 1056,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.1294,
+     0.22,
+     0.919,
+     0.6767
+    ],
+    "box_px": [
+     135,
+     967,
+     3903,
+     4282
+    ],
+    "full": "assets/full/DSC_2096.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.8306,
+    "tissue_frac": 0.1694,
+    "pigment_frac": 0.0268,
+    "tissue_rgb": [
+     113,
+     109,
+     114
+    ],
+    "tissue_bright_p90": 94.4,
+    "pigment": {
+     "rgb": [
+      139,
+      93,
+      83
+     ],
+     "hue_median": 15,
+     "of_tissue": 0.158,
+     "detected": true
+    }
+   },
+   "color_label": "红色素16% · 暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:07:34",
+    "DateTimeOriginal": "2019:12:25 12:41:05",
+    "DateTimeDigitized": "2019:12:25 12:41:05",
+    "ApertureValue": "9.715962",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "800",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_2102",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_2102.jpg",
+    "orig_w": 2658,
+    "orig_h": 3987,
+    "orig_bytes": 2578716,
+    "aspect": 0.667
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_2102.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_2102.jpg",
+    "detail_w": 924,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.1786,
+     0.2017,
+     0.7647,
+     0.7093
+    ],
+    "box_px": [
+     288,
+     561,
+     2220,
+     3071
+    ],
+    "full": "assets/full/DSC_2102.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 1.9,
+    "water_frac": 0.3958,
+    "tissue_frac": 0.6042,
+    "pigment_frac": 0.0585,
+    "tissue_rgb": [
+     132,
+     127,
+     133
+    ],
+    "tissue_bright_p90": 173.1,
+    "pigment": {
+     "rgb": [
+      104,
+      74,
+      69
+     ],
+     "hue_median": 16,
+     "of_tissue": 0.0968,
+     "detected": true
+    }
+   },
+   "color_label": "红色素10% · 浅灰组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:07:35",
+    "DateTimeOriginal": "2019:12:25 14:12:35",
+    "DateTimeDigitized": "2019:12:25 14:12:35",
+    "ApertureValue": "9.715962",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "800",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_2132",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_2132.jpg",
+    "orig_w": 1105,
+    "orig_h": 1658,
+    "orig_bytes": 244075,
+    "aspect": 0.666
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_2132.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_2132.jpg",
+    "detail_w": 604,
+    "detail_h": 592,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.2764,
+     0.3279,
+     0.7169,
+     0.6154
+    ],
+    "box_px": [
+     247,
+     486,
+     851,
+     1078
+    ],
+    "full": "assets/full/DSC_2132.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 16.2,
+    "water_baseline_p25": 2.2,
+    "water_frac": 0.4944,
+    "tissue_frac": 0.5056,
+    "pigment_frac": 0.139,
+    "tissue_rgb": [
+     133,
+     117,
+     121
+    ],
+    "tissue_bright_p90": 167.0,
+    "pigment": {
+     "rgb": [
+      183,
+      132,
+      107
+     ],
+     "hue_median": 19,
+     "of_tissue": 0.2748,
+     "detected": true
+    }
+   },
+   "color_label": "红色素27% · 浅灰组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:07:39",
+    "DateTimeOriginal": "2019:12:25 14:46:18",
+    "DateTimeDigitized": "2019:12:25 14:46:18",
+    "ApertureValue": "9.715962",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "800",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_2158",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_2158.jpg",
+    "orig_w": 2963,
+    "orig_h": 1978,
+    "orig_bytes": 1331151,
+    "aspect": 1.498
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_2158.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/DSC_2158.jpg",
+    "detail_w": 1200,
+    "detail_h": 993,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.2327,
+     0.2902,
+     0.6231,
+     0.7743
+    ],
+    "box_px": [
+     551,
+     459,
+     1985,
+     1646
+    ],
+    "full": "assets/full/DSC_2158.jpg",
+    "full_w": 1200,
+    "full_h": 801
+   },
+   "color": {
+    "water_threshold": 46.3,
+    "water_baseline_p25": 32.3,
+    "water_frac": 0.2804,
+    "tissue_frac": 0.7196,
+    "pigment_frac": 0.1231,
+    "tissue_rgb": [
+     124,
+     119,
+     117
+    ],
+    "tissue_bright_p90": 164.0,
+    "pigment": {
+     "rgb": [
+      126,
+      99,
+      83
+     ],
+     "hue_median": 22,
+     "of_tissue": 0.171,
+     "detected": true
+    }
+   },
+   "color_label": "橙红色素17% · 浅灰组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:07:43",
+    "DateTimeOriginal": "2019:12:25 14:58:38",
+    "DateTimeDigitized": "2019:12:25 14:58:38",
+    "ApertureValue": "9.715962",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "400",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_2355",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_2355.jpg",
+    "orig_w": 2033,
+    "orig_h": 3048,
+    "orig_bytes": 1081714,
+    "aspect": 0.667
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_2355.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_2355.jpg",
+    "detail_w": 444,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.3599,
+     0.165,
+     0.6417,
+     0.6728
+    ],
+    "box_px": [
+     663,
+     317,
+     1373,
+     2236
+    ],
+    "full": "assets/full/DSC_2355.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 50.2,
+    "water_baseline_p25": 36.2,
+    "water_frac": 0.3555,
+    "tissue_frac": 0.6445,
+    "pigment_frac": 0.0508,
+    "tissue_rgb": [
+     123,
+     134,
+     156
+    ],
+    "tissue_bright_p90": 178.0,
+    "pigment": {
+     "rgb": [
+      186,
+      115,
+      102
+     ],
+     "hue_median": 16,
+     "of_tissue": 0.0788,
+     "detected": true
+    }
+   },
+   "color_label": "红色素8% · 暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:08:14",
+    "DateTimeOriginal": "2019:12:26 13:22:17",
+    "DateTimeDigitized": "2019:12:26 13:22:17",
+    "ApertureValue": "8.643856",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "320",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_2370",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_2370.jpg",
+    "orig_w": 3053,
+    "orig_h": 4580,
+    "orig_bytes": 3050081,
+    "aspect": 0.667
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_2370.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_2370.jpg",
+    "detail_w": 682,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.0952,
+     0.1164,
+     0.6832,
+     0.8058
+    ],
+    "box_px": [
+     75,
+     154,
+     2301,
+     4069
+    ],
+    "full": "assets/full/DSC_2370.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.7153,
+    "tissue_frac": 0.2847,
+    "pigment_frac": 0.0029,
+    "tissue_rgb": [
+     72,
+     84,
+     109
+    ],
+    "tissue_bright_p90": 87.2,
+    "pigment": {
+     "rgb": null,
+     "hue_median": null,
+     "of_tissue": 0.01,
+     "detected": false,
+     "note": "色素占组织比 < 2%，不足以支撑一个色值，如实报未检出"
+    }
+   },
+   "color_label": "暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:08:18",
+    "DateTimeOriginal": "2019:12:26 13:27:26",
+    "DateTimeDigitized": "2019:12:26 13:27:26",
+    "ApertureValue": "8.643856",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "320",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_2430",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_2430.jpg",
+    "orig_w": 2789,
+    "orig_h": 4184,
+    "orig_bytes": 1161374,
+    "aspect": 0.667
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_2430.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_2430.jpg",
+    "detail_w": 570,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.1709,
+     0.0582,
+     0.7458,
+     0.9218
+    ],
+    "box_px": [
+     284,
+     0,
+     2272,
+     4184
+    ],
+    "full": "assets/full/DSC_2430.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.9168,
+    "tissue_frac": 0.0832,
+    "pigment_frac": 0.004,
+    "tissue_rgb": [
+     58,
+     59,
+     69
+    ],
+    "tissue_bright_p90": 9.9,
+    "pigment": {
+     "rgb": [
+      123,
+      87,
+      66
+     ],
+     "hue_median": 21,
+     "of_tissue": 0.0481,
+     "detected": true
+    }
+   },
+   "color_label": "橙红色素5% · 暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:08:32",
+    "DateTimeOriginal": "2019:12:26 15:23:47",
+    "DateTimeDigitized": "2019:12:26 15:23:47",
+    "ApertureValue": "8.918863",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "320",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_2511",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_2511.jpg",
+    "orig_w": 5165,
+    "orig_h": 3443,
+    "orig_bytes": 2651011,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_2511.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/DSC_2511.jpg",
+    "detail_w": 1200,
+    "detail_h": 709,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.2256,
+     0.1995,
+     0.7637,
+     0.6761
+    ],
+    "box_px": [
+     832,
+     490,
+     4278,
+     2525
+    ],
+    "full": "assets/full/DSC_2511.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.5035,
+    "tissue_frac": 0.4965,
+    "pigment_frac": 0.0803,
+    "tissue_rgb": [
+     134,
+     130,
+     139
+    ],
+    "tissue_bright_p90": 173.4,
+    "pigment": {
+     "rgb": [
+      167,
+      116,
+      85
+     ],
+     "hue_median": 23,
+     "of_tissue": 0.1618,
+     "detected": true
+    }
+   },
+   "color_label": "橙红色素16% · 浅灰组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:08:47",
+    "DateTimeOriginal": "2019:12:27 12:40:59",
+    "DateTimeDigitized": "2019:12:27 12:40:59",
+    "ApertureValue": "8.918863",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "160",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_25112020",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_25112020.jpg",
+    "orig_w": 5229,
+    "orig_h": 3486,
+    "orig_bytes": 2905952,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_25112020.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/DSC_25112020.jpg",
+    "detail_w": 1200,
+    "detail_h": 693,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.2459,
+     0.2103,
+     0.7785,
+     0.6718
+    ],
+    "box_px": [
+     952,
+     540,
+     4405,
+     2535
+    ],
+    "full": "assets/full/DSC_25112020.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.4998,
+    "tissue_frac": 0.5002,
+    "pigment_frac": 0.0953,
+    "tissue_rgb": [
+     153,
+     142,
+     144
+    ],
+    "tissue_bright_p90": 190.9,
+    "pigment": {
+     "rgb": [
+      179,
+      128,
+      96
+     ],
+     "hue_median": 23,
+     "of_tissue": 0.1904,
+     "detected": true
+    }
+   },
+   "color_label": "橙红色素19% · 浅灰组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 13.0.1 (Macintosh)",
+    "DateTime": "2023:12:10 00:41:04",
+    "DateTimeOriginal": "2019:12:27 12:40:59",
+    "DateTimeDigitized": "2019:12:27 12:40:59",
+    "ApertureValue": "8.918863",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "160",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_25802020",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_25802020.jpg",
+    "orig_w": 2121,
+    "orig_h": 3182,
+    "orig_bytes": 1206102,
+    "aspect": 0.667
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_25802020.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_25802020.jpg",
+    "detail_w": 1062,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.1816,
+     0.2499,
+     0.68,
+     0.6257
+    ],
+    "box_px": [
+     258,
+     652,
+     1569,
+     2134
+    ],
+    "full": "assets/full/DSC_25802020.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 22.2,
+    "water_baseline_p25": 8.2,
+    "water_frac": 0.3037,
+    "tissue_frac": 0.6963,
+    "pigment_frac": 0.002,
+    "tissue_rgb": [
+     147,
+     148,
+     151
+    ],
+    "tissue_bright_p90": 209.7,
+    "pigment": {
+     "rgb": null,
+     "hue_median": null,
+     "of_tissue": 0.0028,
+     "detected": false,
+     "note": "色素占组织比 < 2%，不足以支撑一个色值，如实报未检出"
+    }
+   },
+   "color_label": "浅灰组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 13.0.1 (Macintosh)",
+    "DateTime": "2023:12:10 00:41:35",
+    "DateTimeOriginal": "2019:12:27 13:24:34",
+    "DateTimeDigitized": "2019:12:27 13:24:34",
+    "ApertureValue": "8.918863",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "160",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_26982020",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_26982020.jpg",
+    "orig_w": 4620,
+    "orig_h": 3080,
+    "orig_bytes": 2876915,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_26982020.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/DSC_26982020.jpg",
+    "detail_w": 1064,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.3111,
+     0.1868,
+     0.6222,
+     0.7132
+    ],
+    "box_px": [
+     1265,
+     381,
+     3047,
+     2391
+    ],
+    "full": "assets/full/DSC_26982020.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 16.2,
+    "water_baseline_p25": 2.2,
+    "water_frac": 0.6358,
+    "tissue_frac": 0.3642,
+    "pigment_frac": 0.0053,
+    "tissue_rgb": [
+     107,
+     117,
+     137
+    ],
+    "tissue_bright_p90": 148.3,
+    "pigment": {
+     "rgb": null,
+     "hue_median": null,
+     "of_tissue": 0.0144,
+     "detected": false,
+     "note": "色素占组织比 < 2%，不足以支撑一个色值，如实报未检出"
+    }
+   },
+   "color_label": "暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 13.0.1 (Macintosh)",
+    "DateTime": "2023:12:10 00:42:08",
+    "DateTimeOriginal": "2019:12:28 11:56:09",
+    "DateTimeDigitized": "2019:12:28 11:56:09",
+    "ApertureValue": "8.918863",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "400",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_27172020",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_27172020.jpg",
+    "orig_w": 4267,
+    "orig_h": 2845,
+    "orig_bytes": 1900622,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_27172020.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/DSC_27172020.jpg",
+    "detail_w": 1200,
+    "detail_h": 608,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.2503,
+     0.33,
+     0.7419,
+     0.7033
+    ],
+    "box_px": [
+     816,
+     811,
+     3417,
+     2128
+    ],
+    "full": "assets/full/DSC_27172020.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.6038,
+    "tissue_frac": 0.3962,
+    "pigment_frac": 0.2363,
+    "tissue_rgb": [
+     168,
+     101,
+     35
+    ],
+    "tissue_bright_p90": 131.1,
+    "pigment": {
+     "rgb": [
+      170,
+      93,
+      36
+     ],
+     "hue_median": 27,
+     "of_tissue": 0.5963,
+     "detected": true
+    }
+   },
+   "color_label": "橙红色素60% · 暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 13.0.1 (Macintosh)",
+    "DateTime": "2023:12:10 00:42:15",
+    "DateTimeOriginal": "2019:12:28 12:01:14",
+    "DateTimeDigitized": "2019:12:28 12:01:14",
+    "ApertureValue": "8.918863",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "250",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_2795",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_2795.jpg",
+    "orig_w": 2342,
+    "orig_h": 3509,
+    "orig_bytes": 1086204,
+    "aspect": 0.667
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_2795.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_2795.jpg",
+    "detail_w": 627,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.3421,
+     0.2813,
+     0.6645,
+     0.6932
+    ],
+    "box_px": [
+     711,
+     814,
+     1647,
+     2606
+    ],
+    "full": "assets/full/DSC_2795.jpg",
+    "full_w": 801,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 23.2,
+    "water_baseline_p25": 9.2,
+    "water_frac": 0.2743,
+    "tissue_frac": 0.7257,
+    "pigment_frac": 0.0569,
+    "tissue_rgb": [
+     136,
+     132,
+     136
+    ],
+    "tissue_bright_p90": 196.7,
+    "pigment": {
+     "rgb": [
+      175,
+      140,
+      120
+     ],
+     "hue_median": 21,
+     "of_tissue": 0.0784,
+     "detected": true
+    }
+   },
+   "color_label": "橙红色素8% · 浅灰组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:09:51",
+    "DateTimeOriginal": "2019:12:28 12:53:08",
+    "DateTimeDigitized": "2019:12:28 12:53:08",
+    "ApertureValue": "8.918863",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "320",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_2846_2020-January-Polychaeta",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_2846_2020-January-Polychaeta.jpg",
+    "orig_w": 3305,
+    "orig_h": 4957,
+    "orig_bytes": 3571596,
+    "aspect": 0.667
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_2846_2020-January-Polychaeta.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_2846_2020-January-Polychaeta.jpg",
+    "detail_w": 437,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.3505,
+     0.2196,
+     0.6828,
+     0.827
+    ],
+    "box_px": [
+     1027,
+     727,
+     2388,
+     4461
+    ],
+    "full": "assets/full/DSC_2846_2020-January-Polychaeta.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 20.3,
+    "water_baseline_p25": 6.3,
+    "water_frac": 0.3452,
+    "tissue_frac": 0.6548,
+    "pigment_frac": 0.0023,
+    "tissue_rgb": [
+     138,
+     133,
+     121
+    ],
+    "tissue_bright_p90": 179.8,
+    "pigment": {
+     "rgb": null,
+     "hue_median": null,
+     "of_tissue": 0.0036,
+     "detected": false,
+     "note": "色素占组织比 < 2%，不足以支撑一个色值，如实报未检出"
+    }
+   },
+   "color_label": "浅灰组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 13.0.1 (Macintosh)",
+    "DateTime": "2023:12:10 00:42:53",
+    "DateTimeOriginal": "2019:12:29 11:53:24",
+    "DateTimeDigitized": "2019:12:29 11:53:24",
+    "ApertureValue": "9.287712",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "320",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_2999",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_2999.jpg",
+    "orig_w": 1547,
+    "orig_h": 2328,
+    "orig_bytes": 1087645,
+    "aspect": 0.665
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_2999.jpg",
+    "thumb_w": 266,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_2999.jpg",
+    "detail_w": 650,
+    "detail_h": 766,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.343,
+     0.3069,
+     0.682,
+     0.572
+    ],
+    "box_px": [
+     468,
+     640,
+     1118,
+     1406
+    ],
+    "full": "assets/full/DSC_2999.jpg",
+    "full_w": 797,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 46.9,
+    "water_baseline_p25": 32.9,
+    "water_frac": 0.2712,
+    "tissue_frac": 0.7288,
+    "pigment_frac": 0.0663,
+    "tissue_rgb": [
+     113,
+     117,
+     124
+    ],
+    "tissue_bright_p90": 187.6,
+    "pigment": {
+     "rgb": [
+      193,
+      149,
+      119
+     ],
+     "hue_median": 25,
+     "of_tissue": 0.0909,
+     "detected": true
+    }
+   },
+   "color_label": "橙红色素9% · 浅灰组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 13.2 (Macintosh)",
+    "DateTime": "2024:03:19 09:03:14",
+    "DateTimeOriginal": "2024:01:12 06:25:07",
+    "DateTimeDigitized": "2024:01:12 06:25:07",
+    "ApertureValue": "8.33985",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "800",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_30352020",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_30352020.jpg",
+    "orig_w": 2029,
+    "orig_h": 3043,
+    "orig_bytes": 1910845,
+    "aspect": 0.667
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_30352020.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_30352020.jpg",
+    "detail_w": 1169,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.1915,
+     0.217,
+     0.8785,
+     0.6874
+    ],
+    "box_px": [
+     221,
+     489,
+     1950,
+     2264
+    ],
+    "full": "assets/full/DSC_30352020.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.7,
+    "water_frac": 0.5474,
+    "tissue_frac": 0.4526,
+    "pigment_frac": 0.0475,
+    "tissue_rgb": [
+     79,
+     74,
+     93
+    ],
+    "tissue_bright_p90": 122.3,
+    "pigment": {
+     "rgb": [
+      180,
+      111,
+      70
+     ],
+     "hue_median": 23,
+     "of_tissue": 0.105,
+     "detected": true
+    }
+   },
+   "color_label": "橙红色素10% · 暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 13.0.1 (Macintosh)",
+    "DateTime": "2023:12:10 00:43:56",
+    "DateTimeOriginal": "2019:12:29 15:38:59",
+    "DateTimeDigitized": "2019:12:29 15:38:59",
+    "ApertureValue": "9.287712",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "400",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_3058",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_3058.jpg",
+    "orig_w": 5504,
+    "orig_h": 3668,
+    "orig_bytes": 15812530,
+    "aspect": 1.501
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_3058.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/DSC_3058.jpg",
+    "detail_w": 1200,
+    "detail_h": 679,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.0382,
+     0.236,
+     0.9989,
+     0.9446
+    ],
+    "box_px": [
+     0,
+     554,
+     5504,
+     3668
+    ],
+    "full": "assets/full/DSC_3058.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 19.9,
+    "water_baseline_p25": 5.9,
+    "water_frac": 0.7673,
+    "tissue_frac": 0.2327,
+    "pigment_frac": 0.0002,
+    "tissue_rgb": [
+     37,
+     55,
+     81
+    ],
+    "tissue_bright_p90": 45.6,
+    "pigment": {
+     "rgb": null,
+     "hue_median": null,
+     "of_tissue": 0.001,
+     "detected": false,
+     "note": "色素占组织比 < 2%，不足以支撑一个色值，如实报未检出"
+    }
+   },
+   "color_label": "暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 13.2 (Macintosh)",
+    "DateTime": "2024:03:19 09:03:25",
+    "DateTimeOriginal": "2024:01:12 09:09:14",
+    "DateTimeDigitized": "2024:01:12 09:09:14",
+    "ApertureValue": "8.33985",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "400",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_3113",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_3113.jpg",
+    "orig_w": 1283,
+    "orig_h": 1924,
+    "orig_bytes": 365019,
+    "aspect": 0.667
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_3113.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_3113.jpg",
+    "detail_w": 983,
+    "detail_h": 918,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.1869,
+     0.2516,
+     0.8048,
+     0.6362
+    ],
+    "box_px": [
+     145,
+     395,
+     1128,
+     1313
+    ],
+    "full": "assets/full/DSC_3113.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.5674,
+    "tissue_frac": 0.4326,
+    "pigment_frac": 0.0017,
+    "tissue_rgb": [
+     76,
+     95,
+     122
+    ],
+    "tissue_bright_p90": 109.1,
+    "pigment": {
+     "rgb": null,
+     "hue_median": null,
+     "of_tissue": 0.0039,
+     "detected": false,
+     "note": "色素占组织比 < 2%，不足以支撑一个色值，如实报未检出"
+    }
+   },
+   "color_label": "暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON D850",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:04 23:49:59",
+    "DateTimeOriginal": "2017:03:11 16:00:10",
+    "DateTimeDigitized": "2017:03:11 16:00:10",
+    "ApertureValue": "8.33985",
+    "ExposureTime": "0.004",
+    "ISOSpeedRatings": "200",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_3185",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_3185.jpg",
+    "orig_w": 2560,
+    "orig_h": 1710,
+    "orig_bytes": 1743291,
+    "aspect": 1.497
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_3185.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/DSC_3185.jpg",
+    "detail_w": 1200,
+    "detail_h": 674,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.1612,
+     0.2411,
+     0.8655,
+     0.8337
+    ],
+    "box_px": [
+     196,
+     291,
+     2432,
+     1547
+    ],
+    "full": "assets/full/DSC_3185.jpg",
+    "full_w": 1200,
+    "full_h": 802
+   },
+   "color": {
+    "water_threshold": 19.1,
+    "water_baseline_p25": 5.1,
+    "water_frac": 0.8183,
+    "tissue_frac": 0.1817,
+    "pigment_frac": 0.0238,
+    "tissue_rgb": [
+     108,
+     104,
+     111
+    ],
+    "tissue_bright_p90": 97.6,
+    "pigment": {
+     "rgb": [
+      143,
+      96,
+      88
+     ],
+     "hue_median": 11,
+     "of_tissue": 0.1307,
+     "detected": true
+    }
+   },
+   "color_label": "红色素13% · 暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 13.2 (Macintosh)",
+    "DateTime": "2024:03:19 12:16:26",
+    "DateTimeOriginal": "2024:01:13 06:54:46",
+    "DateTimeDigitized": "2024:01:13 06:54:46",
+    "ApertureValue": "7.400879",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "800",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_3227",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_3227.jpg",
+    "orig_w": 3292,
+    "orig_h": 4938,
+    "orig_bytes": 4411174,
+    "aspect": 0.667
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_3227.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_3227.jpg",
+    "detail_w": 616,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.2059,
+     0.0841,
+     0.8107,
+     0.8781
+    ],
+    "box_px": [
+     439,
+     0,
+     2908,
+     4807
+    ],
+    "full": "assets/full/DSC_3227.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.8466,
+    "tissue_frac": 0.1534,
+    "pigment_frac": 0.0006,
+    "tissue_rgb": [
+     57,
+     76,
+     96
+    ],
+    "tissue_bright_p90": 49.1,
+    "pigment": {
+     "rgb": null,
+     "hue_median": null,
+     "of_tissue": 0.0041,
+     "detected": false,
+     "note": "色素占组织比 < 2%，不足以支撑一个色值，如实报未检出"
+    }
+   },
+   "color_label": "暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 13.2 (Macintosh)",
+    "DateTime": "2024:03:19 12:16:31",
+    "DateTimeOriginal": "2024:01:13 08:47:04",
+    "DateTimeDigitized": "2024:01:13 08:47:04",
+    "ApertureValue": "8.33985",
+    "ExposureTime": "0.00625",
+    "ISOSpeedRatings": "400",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_3233",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_3233.jpg",
+    "orig_w": 3523,
+    "orig_h": 2349,
+    "orig_bytes": 938297,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_3233.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/DSC_3233.jpg",
+    "detail_w": 1200,
+    "detail_h": 965,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.2252,
+     0.1271,
+     0.8117,
+     0.8351
+    ],
+    "box_px": [
+     545,
+     99,
+     3108,
+     2161
+    ],
+    "full": "assets/full/DSC_3233.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.8546,
+    "tissue_frac": 0.1454,
+    "pigment_frac": 0.0002,
+    "tissue_rgb": [
+     62,
+     83,
+     115
+    ],
+    "tissue_bright_p90": 66.4,
+    "pigment": {
+     "rgb": null,
+     "hue_median": null,
+     "of_tissue": 0.0013,
+     "detected": false,
+     "note": "色素占组织比 < 2%，不足以支撑一个色值，如实报未检出"
+    }
+   },
+   "color_label": "暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON D850",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:04 23:49:59",
+    "DateTimeOriginal": "2017:03:11 16:27:24",
+    "DateTimeDigitized": "2017:03:11 16:27:24",
+    "ApertureValue": "8.643856",
+    "ExposureTime": "0.004",
+    "ISOSpeedRatings": "200",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_34042020",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_34042020.jpg",
+    "orig_w": 6032,
+    "orig_h": 4021,
+    "orig_bytes": 1551176,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_34042020.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/DSC_34042020.jpg",
+    "detail_w": 1200,
+    "detail_h": 874,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.2053,
+     0.17,
+     0.8321,
+     0.8545
+    ],
+    "box_px": [
+     785,
+     353,
+     5473,
+     3766
+    ],
+    "full": "assets/full/DSC_34042020.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.9106,
+    "tissue_frac": 0.0894,
+    "pigment_frac": 0.0029,
+    "tissue_rgb": [
+     79,
+     93,
+     113
+    ],
+    "tissue_bright_p90": 6.7,
+    "pigment": {
+     "rgb": [
+      247,
+      189,
+      159
+     ],
+     "hue_median": 19,
+     "of_tissue": 0.0322,
+     "detected": true
+    }
+   },
+   "color_label": "红色素3% · 暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 13.0.1 (Macintosh)",
+    "DateTime": "2023:12:10 00:46:20",
+    "DateTimeOriginal": "2019:12:31 12:40:53",
+    "DateTimeDigitized": "2019:12:31 12:40:53",
+    "ApertureValue": "8.918863",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "400",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_34192020",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_34192020.jpg",
+    "orig_w": 3158,
+    "orig_h": 4737,
+    "orig_bytes": 5074036,
+    "aspect": 0.667
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_34192020.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_34192020.jpg",
+    "detail_w": 659,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.3631,
+     0.2571,
+     0.8346,
+     0.8291
+    ],
+    "box_px": [
+     968,
+     893,
+     2814,
+     4253
+    ],
+    "full": "assets/full/DSC_34192020.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 19.2,
+    "water_baseline_p25": 5.2,
+    "water_frac": 0.4569,
+    "tissue_frac": 0.5431,
+    "pigment_frac": 0.1222,
+    "tissue_rgb": [
+     108,
+     98,
+     107
+    ],
+    "tissue_bright_p90": 147.1,
+    "pigment": {
+     "rgb": [
+      144,
+      102,
+      77
+     ],
+     "hue_median": 21,
+     "of_tissue": 0.225,
+     "detected": true
+    }
+   },
+   "color_label": "橙红色素22% · 暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 13.0.1 (Macintosh)",
+    "DateTime": "2023:12:10 00:46:26",
+    "DateTimeOriginal": "2019:12:31 14:46:46",
+    "DateTimeDigitized": "2019:12:31 14:46:46",
+    "ApertureValue": "8.918863",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "400",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_34212020",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_34212020.jpg",
+    "orig_w": 5879,
+    "orig_h": 3919,
+    "orig_bytes": 2548217,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_34212020.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/DSC_34212020.jpg",
+    "detail_w": 1200,
+    "detail_h": 763,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.2507,
+     0.2387,
+     0.7982,
+     0.7613
+    ],
+    "box_px": [
+     1088,
+     690,
+     5079,
+     3229
+    ],
+    "full": "assets/full/DSC_34212020.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.6878,
+    "tissue_frac": 0.3122,
+    "pigment_frac": 0.0787,
+    "tissue_rgb": [
+     131,
+     120,
+     130
+    ],
+    "tissue_bright_p90": 144.3,
+    "pigment": {
+     "rgb": [
+      172,
+      123,
+      91
+     ],
+     "hue_median": 23,
+     "of_tissue": 0.2522,
+     "detected": true
+    }
+   },
+   "color_label": "橙红色素25% · 浅灰组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 13.0.1 (Macintosh)",
+    "DateTime": "2023:12:10 00:46:28",
+    "DateTimeOriginal": "2019:12:31 14:47:41",
+    "DateTimeDigitized": "2019:12:31 14:47:41",
+    "ApertureValue": "8.918863",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "400",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_3441",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_3441.jpg",
+    "orig_w": 2097,
+    "orig_h": 3145,
+    "orig_bytes": 517222,
+    "aspect": 0.667
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_3441.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_3441.jpg",
+    "detail_w": 671,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.2238,
+     0.1278,
+     0.8678,
+     0.8956
+    ],
+    "box_px": [
+     307,
+     112,
+     1982,
+     3106
+    ],
+    "full": "assets/full/DSC_3441.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.8936,
+    "tissue_frac": 0.1064,
+    "pigment_frac": 0.0023,
+    "tissue_rgb": [
+     103,
+     102,
+     108
+    ],
+    "tissue_bright_p90": 20.3,
+    "pigment": {
+     "rgb": [
+      100,
+      86,
+      75
+     ],
+     "hue_median": 27,
+     "of_tissue": 0.0214,
+     "detected": true
+    }
+   },
+   "color_label": "橙红色素2% · 暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 13.0.1 (Macintosh)",
+    "DateTime": "2023:12:10 00:46:40",
+    "DateTimeOriginal": "2019:12:31 15:00:13",
+    "DateTimeDigitized": "2019:12:31 15:00:13",
+    "ApertureValue": "8.918863",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "320",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_34952020",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_34952020.jpg",
+    "orig_w": 6491,
+    "orig_h": 4327,
+    "orig_bytes": 3838088,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_34952020.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/DSC_34952020.jpg",
+    "detail_w": 1200,
+    "detail_h": 681,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.2781,
+     0.2137,
+     0.9646,
+     0.7663
+    ],
+    "box_px": [
+     1270,
+     638,
+     6491,
+     3603
+    ],
+    "full": "assets/full/DSC_34952020.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.7472,
+    "tissue_frac": 0.2528,
+    "pigment_frac": 0.1919,
+    "tissue_rgb": [
+     175,
+     112,
+     65
+    ],
+    "tissue_bright_p90": 139.3,
+    "pigment": {
+     "rgb": [
+      180,
+      107,
+      58
+     ],
+     "hue_median": 24,
+     "of_tissue": 0.7592,
+     "detected": true
+    }
+   },
+   "color_label": "橙红色素76% · 暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 13.0.1 (Macintosh)",
+    "DateTime": "2023:12:10 00:46:58",
+    "DateTimeOriginal": "2019:12:31 15:31:09",
+    "DateTimeDigitized": "2019:12:31 15:31:09",
+    "ApertureValue": "8.918863",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "500",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_3593",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_3593.jpg",
+    "orig_w": 8256,
+    "orig_h": 5504,
+    "orig_bytes": 6735959,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_3593.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/DSC_3593.jpg",
+    "detail_w": 1200,
+    "detail_h": 630,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.0786,
+     0.2963,
+     0.9989,
+     0.9983
+    ],
+    "box_px": [
+     0,
+     1167,
+     8256,
+     5504
+    ],
+    "full": "assets/full/DSC_3593.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.8624,
+    "tissue_frac": 0.1376,
+    "pigment_frac": 0.0,
+    "tissue_rgb": [
+     48,
+     66,
+     82
+    ],
+    "tissue_bright_p90": 27.6,
+    "pigment": {
+     "rgb": null,
+     "hue_median": null,
+     "of_tissue": 0.0,
+     "detected": false,
+     "note": "色素占组织比 < 2%，不足以支撑一个色值，如实报未检出"
+    }
+   },
+   "color_label": "暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 13.2 (Macintosh)",
+    "DateTime": "2024:03:19 20:29:56",
+    "DateTimeOriginal": "2024:01:14 06:30:01",
+    "DateTimeDigitized": "2024:01:14 06:30:01",
+    "ApertureValue": "8.0",
+    "ExposureTime": "0.008",
+    "ISOSpeedRatings": "400",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_40982020",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_40982020.jpg",
+    "orig_w": 1567,
+    "orig_h": 2350,
+    "orig_bytes": 1176706,
+    "aspect": 0.667
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_40982020.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_40982020.jpg",
+    "detail_w": 676,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.3335,
+     0.2675,
+     0.7353,
+     0.7433
+    ],
+    "box_px": [
+     447,
+     494,
+     1228,
+     1881
+    ],
+    "full": "assets/full/DSC_40982020.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 21.2,
+    "water_baseline_p25": 7.2,
+    "water_frac": 0.4048,
+    "tissue_frac": 0.5952,
+    "pigment_frac": 0.1193,
+    "tissue_rgb": [
+     136,
+     115,
+     132
+    ],
+    "tissue_bright_p90": 167.3,
+    "pigment": {
+     "rgb": [
+      133,
+      93,
+      99
+     ],
+     "hue_median": 344,
+     "of_tissue": 0.2005,
+     "detected": true
+    }
+   },
+   "color_label": "红色素20% · 暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 13.0.1 (Macintosh)",
+    "DateTime": "2023:12:10 00:44:39",
+    "DateTimeOriginal": "2020:01:04 12:36:10",
+    "DateTimeDigitized": "2020:01:04 12:36:10",
+    "ApertureValue": "8.33985",
+    "ExposureTime": "0.008",
+    "ISOSpeedRatings": "320",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "_Y3A0034",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/_Y3A0034.jpg",
+    "orig_w": 2263,
+    "orig_h": 1509,
+    "orig_bytes": 870798,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/_Y3A0034.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/_Y3A0034.jpg",
+    "detail_w": 586,
+    "detail_h": 667,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.3466,
+     0.3992,
+     0.5556,
+     0.7558
+    ],
+    "box_px": [
+     728,
+     538,
+     1314,
+     1205
+    ],
+    "full": "assets/full/_Y3A0034.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 17.1,
+    "water_baseline_p25": 3.1,
+    "water_frac": 0.3693,
+    "tissue_frac": 0.6307,
+    "pigment_frac": 0.1075,
+    "tissue_rgb": [
+     112,
+     105,
+     106
+    ],
+    "tissue_bright_p90": 166.8,
+    "pigment": {
+     "rgb": [
+      215,
+      146,
+      107
+     ],
+     "hue_median": 19,
+     "of_tissue": 0.1705,
+     "detected": true
+    }
+   },
+   "color_label": "红色素17% · 暗组织",
+   "exif": {
+    "Make": "Canon",
+    "Model": "Canon EOS 5D Mark IV",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:04 17:13:26",
+    "Artist": "FAN ZHANG",
+    "Copyright": "FAN ZHANG",
+    "DateTimeOriginal": "2019:01:06 20:22:24",
+    "DateTimeDigitized": "2019:01:06 20:22:24",
+    "ApertureValue": "8.643856",
+    "ExposureTime": "0.004",
+    "ISOSpeedRatings": "640"
+   }
+  },
+  {
+   "id": "_Y3A0037",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/_Y3A0037.jpg",
+    "orig_w": 1009,
+    "orig_h": 1514,
+    "orig_bytes": 175664,
+    "aspect": 0.666
+   },
+   "asset": {
+    "thumb": "assets/thumb/_Y3A0037.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/_Y3A0037.jpg",
+    "detail_w": 276,
+    "detail_h": 502,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.3865,
+     0.3668,
+     0.6068,
+     0.6343
+    ],
+    "box_px": [
+     363,
+     507,
+     639,
+     1009
+    ],
+    "full": "assets/full/_Y3A0037.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.3725,
+    "tissue_frac": 0.6275,
+    "pigment_frac": 0.0952,
+    "tissue_rgb": [
+     98,
+     103,
+     123
+    ],
+    "tissue_bright_p90": 160.0,
+    "pigment": {
+     "rgb": [
+      226,
+      162,
+      152
+     ],
+     "hue_median": 16,
+     "of_tissue": 0.1517,
+     "detected": true
+    }
+   },
+   "color_label": "红色素15% · 暗组织",
+   "exif": {
+    "Make": "Canon",
+    "Model": "Canon EOS 5D Mark IV",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:04 17:13:27",
+    "Artist": "FAN ZHANG",
+    "Copyright": "FAN ZHANG",
+    "DateTimeOriginal": "2019:01:06 20:22:30",
+    "DateTimeDigitized": "2019:01:06 20:22:30",
+    "ApertureValue": "8.643856",
+    "ExposureTime": "0.004",
+    "ISOSpeedRatings": "640"
+   }
+  },
+  {
+   "id": "_Y3A0081",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/_Y3A0081.jpg",
+    "orig_w": 6720,
+    "orig_h": 4480,
+    "orig_bytes": 5426629,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/_Y3A0081.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/_Y3A0081.jpg",
+    "detail_w": 1200,
+    "detail_h": 800,
+    "crop_method": "full_frame",
+    "box_norm": null,
+    "box_px": [
+     0,
+     0,
+     6720,
+     4480
+    ],
+    "full": "assets/full/_Y3A0081.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.7611,
+    "tissue_frac": 0.2389,
+    "pigment_frac": 0.0902,
+    "tissue_rgb": [
+     175,
+     140,
+     148
+    ],
+    "tissue_bright_p90": 168.1,
+    "pigment": {
+     "rgb": [
+      193,
+      136,
+      128
+     ],
+     "hue_median": 14,
+     "of_tissue": 0.3775,
+     "detected": true
+    }
+   },
+   "color_label": "红色素38% · 暗组织",
+   "exif": {
+    "Make": "Canon",
+    "Model": "Canon EOS 5D Mark IV",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:04 23:20:22",
+    "Artist": "FAN ZHANG",
+    "Copyright": "FAN ZHANG",
+    "DateTimeOriginal": "2019:03:13 19:21:29",
+    "DateTimeDigitized": "2019:03:13 19:21:29",
+    "ApertureValue": "8.33985",
+    "ExposureTime": "0.004",
+    "ISOSpeedRatings": "500"
+   }
+  },
+  {
+   "id": "_Y3A0085",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/_Y3A0085.jpg",
+    "orig_w": 6720,
+    "orig_h": 4480,
+    "orig_bytes": 5130269,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/_Y3A0085.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/_Y3A0085.jpg",
+    "detail_w": 1200,
+    "detail_h": 1122,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.2882,
+     0.3523,
+     0.613,
+     0.8077
+    ],
+    "box_px": [
+     1675,
+     1333,
+     4381,
+     3863
+    ],
+    "full": "assets/full/_Y3A0085.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 73.3,
+    "water_baseline_p25": 54.3,
+    "water_frac": 0.2823,
+    "tissue_frac": 0.7177,
+    "pigment_frac": 0.4565,
+    "tissue_rgb": [
+     177,
+     127,
+     139
+    ],
+    "tissue_bright_p90": 175.0,
+    "pigment": {
+     "rgb": [
+      167,
+      119,
+      112
+     ],
+     "hue_median": 333,
+     "of_tissue": 0.6361,
+     "detected": true
+    }
+   },
+   "color_label": "品红色素64% · 暗组织",
+   "exif": {
+    "Make": "Canon",
+    "Model": "Canon EOS 5D Mark IV",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:04 23:20:24",
+    "Artist": "FAN ZHANG",
+    "Copyright": "FAN ZHANG",
+    "DateTimeOriginal": "2019:03:13 19:21:40",
+    "DateTimeDigitized": "2019:03:13 19:21:40",
+    "ApertureValue": "8.33985",
+    "ExposureTime": "0.004",
+    "ISOSpeedRatings": "500"
+   }
+  },
+  {
+   "id": "_Y3A0091",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/_Y3A0091.jpg",
+    "orig_w": 4480,
+    "orig_h": 6720,
+    "orig_bytes": 5170058,
+    "aspect": 0.667
+   },
+   "asset": {
+    "thumb": "assets/thumb/_Y3A0091.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/_Y3A0091.jpg",
+    "detail_w": 1200,
+    "detail_h": 796,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.3745,
+     0.3757,
+     0.8389,
+     0.581
+    ],
+    "box_px": [
+     1428,
+     2359,
+     4008,
+     4070
+    ],
+    "full": "assets/full/_Y3A0091.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 153.5,
+    "water_baseline_p25": 113.7,
+    "water_frac": 0.5622,
+    "tissue_frac": 0.4378,
+    "pigment_frac": 0.1811,
+    "tissue_rgb": [
+     207,
+     164,
+     177
+    ],
+    "tissue_bright_p90": 196.2,
+    "pigment": {
+     "rgb": [
+      207,
+      149,
+      144
+     ],
+     "hue_median": 334,
+     "of_tissue": 0.4136,
+     "detected": true
+    }
+   },
+   "color_label": "品红色素41% · 暗组织",
+   "exif": {
+    "Make": "Canon",
+    "Model": "Canon EOS 5D Mark IV",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:04 23:20:24",
+    "Artist": "FAN ZHANG",
+    "Copyright": "FAN ZHANG",
+    "DateTimeOriginal": "2019:03:13 19:22:00",
+    "DateTimeDigitized": "2019:03:13 19:22:00",
+    "ApertureValue": "8.33985",
+    "ExposureTime": "0.004",
+    "ISOSpeedRatings": "500"
+   }
+  },
+  {
+   "id": "_Y3A0097",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/_Y3A0097.jpg",
+    "orig_w": 2273,
+    "orig_h": 1515,
+    "orig_bytes": 513894,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/_Y3A0097.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/_Y3A0097.jpg",
+    "detail_w": 831,
+    "detail_h": 786,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.3398,
+     0.2326,
+     0.6347,
+     0.6507
+    ],
+    "box_px": [
+     692,
+     276,
+     1523,
+     1062
+    ],
+    "full": "assets/full/_Y3A0097.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 17.2,
+    "water_baseline_p25": 3.2,
+    "water_frac": 0.6496,
+    "tissue_frac": 0.3504,
+    "pigment_frac": 0.004,
+    "tissue_rgb": [
+     120,
+     140,
+     152
+    ],
+    "tissue_bright_p90": 168.4,
+    "pigment": {
+     "rgb": null,
+     "hue_median": null,
+     "of_tissue": 0.0116,
+     "detected": false,
+     "note": "色素占组织比 < 2%，不足以支撑一个色值，如实报未检出"
+    }
+   },
+   "color_label": "暗组织",
+   "exif": {
+    "Make": "Canon",
+    "Model": "Canon EOS 5D Mark IV",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:04 17:30:31",
+    "Artist": "FAN ZHANG",
+    "Copyright": "FAN ZHANG",
+    "DateTimeOriginal": "2019:01:07 22:56:39",
+    "DateTimeDigitized": "2019:01:07 22:56:39",
+    "ApertureValue": "8.33985",
+    "ExposureTime": "0.004",
+    "ISOSpeedRatings": "640"
+   }
+  },
+  {
+   "id": "_Y3A0098",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/_Y3A0098.jpg",
+    "orig_w": 1122,
+    "orig_h": 1685,
+    "orig_bytes": 224286,
+    "aspect": 0.666
+   },
+   "asset": {
+    "thumb": "assets/thumb/_Y3A0098.jpg",
+    "thumb_w": 266,
+    "thumb_h": 400,
+    "detail": "assets/detail/_Y3A0098.jpg",
+    "detail_w": 770,
+    "detail_h": 820,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.2491,
+     0.2423,
+     0.8026,
+     0.6347
+    ],
+    "box_px": [
+     205,
+     329,
+     975,
+     1149
+    ],
+    "full": "assets/full/_Y3A0098.jpg",
+    "full_w": 799,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.6972,
+    "tissue_frac": 0.3028,
+    "pigment_frac": 0.0014,
+    "tissue_rgb": [
+     117,
+     140,
+     150
+    ],
+    "tissue_bright_p90": 153.6,
+    "pigment": {
+     "rgb": null,
+     "hue_median": null,
+     "of_tissue": 0.0047,
+     "detected": false,
+     "note": "色素占组织比 < 2%，不足以支撑一个色值，如实报未检出"
+    }
+   },
+   "color_label": "暗组织",
+   "exif": {
+    "Make": "Canon",
+    "Model": "Canon EOS 5D Mark IV",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:04 17:30:31",
+    "Artist": "FAN ZHANG",
+    "Copyright": "FAN ZHANG",
+    "DateTimeOriginal": "2019:01:07 22:56:42",
+    "DateTimeDigitized": "2019:01:07 22:56:42",
+    "ApertureValue": "8.33985",
+    "ExposureTime": "0.004",
+    "ISOSpeedRatings": "640"
+   }
+  },
+  {
+   "id": "_Y3A0102",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/_Y3A0102.jpg",
+    "orig_w": 1662,
+    "orig_h": 1107,
+    "orig_bytes": 207863,
+    "aspect": 1.501
+   },
+   "asset": {
+    "thumb": "assets/thumb/_Y3A0102.jpg",
+    "thumb_w": 400,
+    "thumb_h": 266,
+    "detail": "assets/detail/_Y3A0102.jpg",
+    "detail_w": 874,
+    "detail_h": 672,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.2295,
+     0.2175,
+     0.6538,
+     0.7074
+    ],
+    "box_px": [
+     297,
+     176,
+     1171,
+     848
+    ],
+    "full": "assets/full/_Y3A0102.jpg",
+    "full_w": 1200,
+    "full_h": 799
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.7331,
+    "tissue_frac": 0.2669,
+    "pigment_frac": 0.0019,
+    "tissue_rgb": [
+     91,
+     116,
+     132
+    ],
+    "tissue_bright_p90": 125.1,
+    "pigment": {
+     "rgb": null,
+     "hue_median": null,
+     "of_tissue": 0.0072,
+     "detected": false,
+     "note": "色素占组织比 < 2%，不足以支撑一个色值，如实报未检出"
+    }
+   },
+   "color_label": "暗组织",
+   "exif": {
+    "Make": "Canon",
+    "Model": "Canon EOS 5D Mark IV",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:04 17:30:31",
+    "Artist": "FAN ZHANG",
+    "Copyright": "FAN ZHANG",
+    "DateTimeOriginal": "2019:01:07 22:56:50",
+    "DateTimeDigitized": "2019:01:07 22:56:50",
+    "ApertureValue": "8.33985",
+    "ExposureTime": "0.004",
+    "ISOSpeedRatings": "640"
+   }
+  },
+  {
+   "id": "_Y3A0153",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/_Y3A0153.jpg",
+    "orig_w": 2374,
+    "orig_h": 3561,
+    "orig_bytes": 729556,
+    "aspect": 0.667
+   },
+   "asset": {
+    "thumb": "assets/thumb/_Y3A0153.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/_Y3A0153.jpg",
+    "detail_w": 967,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.0229,
+     0.0121,
+     0.9021,
+     0.7401
+    ],
+    "box_px": [
+     0,
+     0,
+     2374,
+     2947
+    ],
+    "full": "assets/full/_Y3A0153.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.9023,
+    "tissue_frac": 0.0977,
+    "pigment_frac": 0.0016,
+    "tissue_rgb": [
+     67,
+     72,
+     88
+    ],
+    "tissue_bright_p90": 13.7,
+    "pigment": {
+     "rgb": null,
+     "hue_median": null,
+     "of_tissue": 0.0168,
+     "detected": false,
+     "note": "色素占组织比 < 2%，不足以支撑一个色值，如实报未检出"
+    }
+   },
+   "color_label": "暗组织",
+   "exif": {
+    "Make": "Canon",
+    "Model": "Canon EOS 5D Mark IV",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:04 23:20:26",
+    "Artist": "FAN ZHANG",
+    "Copyright": "FAN ZHANG",
+    "DateTimeOriginal": "2019:03:13 19:46:11",
+    "DateTimeDigitized": "2019:03:13 19:46:11",
+    "ApertureValue": "8.33985",
+    "ExposureTime": "0.004",
+    "ISOSpeedRatings": "500"
+   }
+  },
+  {
+   "id": "_Y3A0165",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/_Y3A0165.jpg",
+    "orig_w": 4370,
+    "orig_h": 2913,
+    "orig_bytes": 1630491,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/_Y3A0165.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/_Y3A0165.jpg",
+    "detail_w": 1200,
+    "detail_h": 1170,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.3064,
+     0.2671,
+     0.7047,
+     0.8495
+    ],
+    "box_px": [
+     1130,
+     574,
+     3288,
+     2678
+    ],
+    "full": "assets/full/_Y3A0165.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.5476,
+    "tissue_frac": 0.4524,
+    "pigment_frac": 0.0012,
+    "tissue_rgb": [
+     54,
+     65,
+     81
+    ],
+    "tissue_bright_p90": 92.3,
+    "pigment": {
+     "rgb": null,
+     "hue_median": null,
+     "of_tissue": 0.0026,
+     "detected": false,
+     "note": "色素占组织比 < 2%，不足以支撑一个色值，如实报未检出"
+    }
+   },
+   "color_label": "暗组织",
+   "exif": {
+    "Make": "Canon",
+    "Model": "Canon EOS 5D Mark IV",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:04 17:13:27",
+    "Artist": "FAN ZHANG",
+    "Copyright": "FAN ZHANG",
+    "DateTimeOriginal": "2019:01:07 00:27:55",
+    "DateTimeDigitized": "2019:01:07 00:27:55",
+    "ApertureValue": "8.918863",
+    "ExposureTime": "0.004",
+    "ISOSpeedRatings": "500"
+   }
+  },
+  {
+   "id": "_Y3A0193",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/_Y3A0193.jpg",
+    "orig_w": 2503,
+    "orig_h": 3755,
+    "orig_bytes": 2054462,
+    "aspect": 0.667
+   },
+   "asset": {
+    "thumb": "assets/thumb/_Y3A0193.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/_Y3A0193.jpg",
+    "detail_w": 721,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.2146,
+     0.2249,
+     0.8437,
+     0.9828
+    ],
+    "box_px": [
+     348,
+     503,
+     2301,
+     3755
+    ],
+    "full": "assets/full/_Y3A0193.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.5449,
+    "tissue_frac": 0.4551,
+    "pigment_frac": 0.002,
+    "tissue_rgb": [
+     47,
+     56,
+     86
+    ],
+    "tissue_bright_p90": 72.6,
+    "pigment": {
+     "rgb": null,
+     "hue_median": null,
+     "of_tissue": 0.0043,
+     "detected": false,
+     "note": "色素占组织比 < 2%，不足以支撑一个色值，如实报未检出"
+    }
+   },
+   "color_label": "暗组织",
+   "exif": {
+    "Make": "Canon",
+    "Model": "Canon EOS 5D Mark IV",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:04 17:30:31",
+    "Artist": "FAN ZHANG",
+    "Copyright": "FAN ZHANG",
+    "DateTimeOriginal": "2019:01:07 23:21:59",
+    "DateTimeDigitized": "2019:01:07 23:21:59",
+    "ApertureValue": "8.643856",
+    "ExposureTime": "0.004",
+    "ISOSpeedRatings": "640"
+   }
+  },
+  {
+   "id": "_Y3A0208",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/_Y3A0208.jpg",
+    "orig_w": 931,
+    "orig_h": 1397,
+    "orig_bytes": 503410,
+    "aspect": 0.666
+   },
+   "asset": {
+    "thumb": "assets/thumb/_Y3A0208.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/_Y3A0208.jpg",
+    "detail_w": 645,
+    "detail_h": 605,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.3001,
+     0.3202,
+     0.8584,
+     0.6699
+    ],
+    "box_px": [
+     217,
+     389,
+     862,
+     994
+    ],
+    "full": "assets/full/_Y3A0208.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 16.2,
+    "water_baseline_p25": 2.2,
+    "water_frac": 0.7069,
+    "tissue_frac": 0.2931,
+    "pigment_frac": 0.0773,
+    "tissue_rgb": [
+     131,
+     111,
+     101
+    ],
+    "tissue_bright_p90": 138.8,
+    "pigment": {
+     "rgb": [
+      159,
+      118,
+      89
+     ],
+     "hue_median": 24,
+     "of_tissue": 0.2638,
+     "detected": true
+    }
+   },
+   "color_label": "橙红色素26% · 暗组织",
+   "exif": {
+    "Make": "Canon",
+    "Model": "Canon EOS 5D Mark IV",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:04 23:20:27",
+    "Artist": "FAN ZHANG",
+    "Copyright": "FAN ZHANG",
+    "DateTimeOriginal": "2019:03:13 23:33:09",
+    "DateTimeDigitized": "2019:03:13 23:33:09",
+    "ApertureValue": "8.33985",
+    "ExposureTime": "0.004",
+    "ISOSpeedRatings": "250"
+   }
+  },
+  {
+   "id": "_Y3A0257",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/_Y3A0257.jpg",
+    "orig_w": 3353,
+    "orig_h": 2235,
+    "orig_bytes": 1576817,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/_Y3A0257.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/_Y3A0257.jpg",
+    "detail_w": 1200,
+    "detail_h": 938,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.2904,
+     0.2151,
+     0.7401,
+     0.7422
+    ],
+    "box_px": [
+     793,
+     339,
+     2662,
+     1800
+    ],
+    "full": "assets/full/_Y3A0257.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.5,
+    "water_frac": 0.6836,
+    "tissue_frac": 0.3164,
+    "pigment_frac": 0.004,
+    "tissue_rgb": [
+     58,
+     77,
+     99
+    ],
+    "tissue_bright_p90": 89.4,
+    "pigment": {
+     "rgb": null,
+     "hue_median": null,
+     "of_tissue": 0.0126,
+     "detected": false,
+     "note": "色素占组织比 < 2%，不足以支撑一个色值，如实报未检出"
+    }
+   },
+   "color_label": "暗组织",
+   "exif": {
+    "Make": "Canon",
+    "Model": "Canon EOS 5D Mark IV",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:04 16:45:34",
+    "Artist": "FAN ZHANG",
+    "Copyright": "FAN ZHANG",
+    "DateTimeOriginal": "2019:01:04 23:48:08",
+    "DateTimeDigitized": "2019:01:04 23:48:08",
+    "ApertureValue": "8.33985",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "400"
+   }
+  },
+  {
+   "id": "_Y3A0272",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/_Y3A0272.jpg",
+    "orig_w": 3296,
+    "orig_h": 2197,
+    "orig_bytes": 904664,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/_Y3A0272.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/_Y3A0272.jpg",
+    "detail_w": 1200,
+    "detail_h": 602,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.2384,
+     0.2804,
+     0.7238,
+     0.6463
+    ],
+    "box_px": [
+     594,
+     520,
+     2578,
+     1516
+    ],
+    "full": "assets/full/_Y3A0272.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.537,
+    "tissue_frac": 0.4631,
+    "pigment_frac": 0.1123,
+    "tissue_rgb": [
+     139,
+     106,
+     60
+    ],
+    "tissue_bright_p90": 129.9,
+    "pigment": {
+     "rgb": [
+      136,
+      90,
+      57
+     ],
+     "hue_median": 28,
+     "of_tissue": 0.2424,
+     "detected": true
+    }
+   },
+   "color_label": "橙红色素24% · 暗组织",
+   "exif": {
+    "Make": "Canon",
+    "Model": "Canon EOS 5D Mark IV",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:04 17:30:32",
+    "Artist": "FAN ZHANG",
+    "Copyright": "FAN ZHANG",
+    "DateTimeOriginal": "2019:01:07 23:31:50",
+    "DateTimeDigitized": "2019:01:07 23:31:50",
+    "ApertureValue": "8.918863",
+    "ExposureTime": "0.004",
+    "ISOSpeedRatings": "400"
+   }
+  },
+  {
+   "id": "_Y3A0374",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/_Y3A0374.jpg",
+    "orig_w": 3450,
+    "orig_h": 2300,
+    "orig_bytes": 1035912,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/_Y3A0374.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/_Y3A0374.jpg",
+    "detail_w": 1200,
+    "detail_h": 962,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.307,
+     0.2164,
+     0.7774,
+     0.782
+    ],
+    "box_px": [
+     864,
+     342,
+     2877,
+     1955
+    ],
+    "full": "assets/full/_Y3A0374.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.6802,
+    "tissue_frac": 0.3198,
+    "pigment_frac": 0.0138,
+    "tissue_rgb": [
+     86,
+     93,
+     109
+    ],
+    "tissue_bright_p90": 109.2,
+    "pigment": {
+     "rgb": [
+      147,
+      105,
+      81
+     ],
+     "hue_median": 20,
+     "of_tissue": 0.043,
+     "detected": true
+    }
+   },
+   "color_label": "红色素4% · 暗组织",
+   "exif": {
+    "Make": "Canon",
+    "Model": "Canon EOS 5D Mark IV",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:04 17:30:32",
+    "Artist": "FAN ZHANG",
+    "Copyright": "FAN ZHANG",
+    "DateTimeOriginal": "2019:01:08 01:50:43",
+    "DateTimeDigitized": "2019:01:08 01:50:43",
+    "ApertureValue": "8.33985",
+    "ExposureTime": "0.004",
+    "ISOSpeedRatings": "500"
+   }
+  },
+  {
+   "id": "_Y3A0409",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/_Y3A0409.jpg",
+    "orig_w": 4044,
+    "orig_h": 2696,
+    "orig_bytes": 2239782,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/_Y3A0409.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/_Y3A0409.jpg",
+    "detail_w": 1200,
+    "detail_h": 535,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.1757,
+     0.2894,
+     0.7954,
+     0.7039
+    ],
+    "box_px": [
+     410,
+     646,
+     3517,
+     2032
+    ],
+    "full": "assets/full/_Y3A0409.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.6443,
+    "tissue_frac": 0.3557,
+    "pigment_frac": 0.0874,
+    "tissue_rgb": [
+     100,
+     97,
+     109
+    ],
+    "tissue_bright_p90": 128.4,
+    "pigment": {
+     "rgb": [
+      169,
+      119,
+      89
+     ],
+     "hue_median": 23,
+     "of_tissue": 0.2456,
+     "detected": true
+    }
+   },
+   "color_label": "橙红色素25% · 暗组织",
+   "exif": {
+    "Make": "Canon",
+    "Model": "Canon EOS 5D Mark IV",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:04 16:29:28",
+    "Artist": "FAN ZHANG",
+    "Copyright": "FAN ZHANG",
+    "DateTimeOriginal": "2019:01:05 00:11:34",
+    "DateTimeDigitized": "2019:01:05 00:11:34",
+    "ApertureValue": "8.33985",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "400"
+   }
+  },
+  {
+   "id": "_Y3A0445-Edit",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/_Y3A0445-Edit.jpg",
+    "orig_w": 1764,
+    "orig_h": 2271,
+    "orig_bytes": 909552,
+    "aspect": 0.777
+   },
+   "asset": {
+    "thumb": "assets/thumb/_Y3A0445-Edit.jpg",
+    "thumb_w": 311,
+    "thumb_h": 400,
+    "detail": "assets/detail/_Y3A0445-Edit.jpg",
+    "detail_w": 750,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.3212,
+     0.1198,
+     0.7081,
+     0.6002
+    ],
+    "box_px": [
+     485,
+     141,
+     1331,
+     1494
+    ],
+    "full": "assets/full/_Y3A0445-Edit.jpg",
+    "full_w": 932,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 18.4,
+    "water_baseline_p25": 4.4,
+    "water_frac": 0.4611,
+    "tissue_frac": 0.5389,
+    "pigment_frac": 0.029,
+    "tissue_rgb": [
+     86,
+     105,
+     128
+    ],
+    "tissue_bright_p90": 151.1,
+    "pigment": {
+     "rgb": [
+      203,
+      127,
+      113
+     ],
+     "hue_median": 16,
+     "of_tissue": 0.0539,
+     "detected": true
+    }
+   },
+   "color_label": "红色素5% · 暗组织",
+   "exif": {
+    "Make": "Canon",
+    "Model": "Canon EOS 5D Mark IV",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:04 16:48:19",
+    "Artist": "FAN ZHANG",
+    "Copyright": "FAN ZHANG",
+    "DateTimeOriginal": "2019:01:05 00:16:51",
+    "DateTimeDigitized": "2019:01:05 00:16:51",
+    "ApertureValue": "8.33985",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "400"
+   }
+  },
+  {
+   "id": "_Y3A0662-Edit",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/_Y3A0662-Edit.jpg",
+    "orig_w": 6720,
+    "orig_h": 4480,
+    "orig_bytes": 16034611,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/_Y3A0662-Edit.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/_Y3A0662-Edit.jpg",
+    "detail_w": 807,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.2443,
+     0.0619,
+     0.6052,
+     0.8977
+    ],
+    "box_px": [
+     1351,
+     0,
+     4358,
+     4471
+    ],
+    "full": "assets/full/_Y3A0662-Edit.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 1.3,
+    "water_frac": 0.4991,
+    "tissue_frac": 0.5009,
+    "pigment_frac": 0.001,
+    "tissue_rgb": [
+     47,
+     68,
+     90
+    ],
+    "tissue_bright_p90": 89.5,
+    "pigment": {
+     "rgb": null,
+     "hue_median": null,
+     "of_tissue": 0.0019,
+     "detected": false,
+     "note": "色素占组织比 < 2%，不足以支撑一个色值，如实报未检出"
+    }
+   },
+   "color_label": "暗组织",
+   "exif": {
+    "Make": "Canon",
+    "Model": "Canon EOS 5D Mark IV",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:04 17:04:49",
+    "Artist": "FAN ZHANG",
+    "Copyright": "FAN ZHANG",
+    "DateTimeOriginal": "2019:01:05 20:25:46",
+    "DateTimeDigitized": "2019:01:05 20:25:46",
+    "ApertureValue": "8.643856",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "800"
+   }
+  },
+  {
+   "id": "_Y3A0915",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/_Y3A0915.jpg",
+    "orig_w": 2986,
+    "orig_h": 4479,
+    "orig_bytes": 1446711,
+    "aspect": 0.667
+   },
+   "asset": {
+    "thumb": "assets/thumb/_Y3A0915.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/_Y3A0915.jpg",
+    "detail_w": 863,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.1665,
+     0.2073,
+     0.8852,
+     0.8735
+    ],
+    "box_px": [
+     240,
+     570,
+     2901,
+     4270
+    ],
+    "full": "assets/full/_Y3A0915.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.8708,
+    "tissue_frac": 0.1292,
+    "pigment_frac": 0.0018,
+    "tissue_rgb": [
+     105,
+     103,
+     73
+    ],
+    "tissue_bright_p90": 44.4,
+    "pigment": {
+     "rgb": null,
+     "hue_median": null,
+     "of_tissue": 0.0142,
+     "detected": false,
+     "note": "色素占组织比 < 2%，不足以支撑一个色值，如实报未检出"
+    }
+   },
+   "color_label": "暗组织",
+   "exif": {
+    "Make": "Canon",
+    "Model": "Canon EOS 5D Mark IV",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:04 23:30:48",
+    "Artist": "FAN ZHANG",
+    "Copyright": "FAN ZHANG",
+    "DateTimeOriginal": "2019:03:15 00:50:23",
+    "DateTimeDigitized": "2019:03:15 00:50:23",
+    "ApertureValue": "8.33985",
+    "ExposureTime": "0.004",
+    "ISOSpeedRatings": "320"
+   }
+  },
+  {
+   "id": "DSC_0913",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_0913.jpg",
+    "orig_w": 4234,
+    "orig_h": 2823,
+    "orig_bytes": 2309231,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_0913.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/DSC_0913.jpg",
+    "detail_w": 1198,
+    "detail_h": 1200,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.2522,
+     0.0938,
+     0.784,
+     0.8946
+    ],
+    "box_px": [
+     798,
+     0,
+     3590,
+     2797
+    ],
+    "full": "assets/full/DSC_0913.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.7696,
+    "tissue_frac": 0.2304,
+    "pigment_frac": 0.001,
+    "tissue_rgb": [
+     66,
+     77,
+     94
+    ],
+    "tissue_bright_p90": 72.4,
+    "pigment": {
+     "rgb": null,
+     "hue_median": null,
+     "of_tissue": 0.0044,
+     "detected": false,
+     "note": "色素占组织比 < 2%，不足以支撑一个色值，如实报未检出"
+    }
+   },
+   "color_label": "暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:13:33",
+    "DateTimeOriginal": "2019:12:19 12:20:44",
+    "DateTimeDigitized": "2019:12:19 12:20:44",
+    "ApertureValue": "9.715962",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "800",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_2106",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_2106.jpg",
+    "orig_w": 1515,
+    "orig_h": 2273,
+    "orig_bytes": 698604,
+    "aspect": 0.667
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_2106.jpg",
+    "thumb_w": 267,
+    "thumb_h": 400,
+    "detail": "assets/detail/DSC_2106.jpg",
+    "detail_w": 792,
+    "detail_h": 939,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.3124,
+     0.2922,
+     0.7343,
+     0.6251
+    ],
+    "box_px": [
+     397,
+     573,
+     1189,
+     1512
+    ],
+    "full": "assets/full/DSC_2106.jpg",
+    "full_w": 800,
+    "full_h": 1200
+   },
+   "color": {
+    "water_threshold": 99.2,
+    "water_baseline_p25": 73.5,
+    "water_frac": 0.3341,
+    "tissue_frac": 0.6659,
+    "pigment_frac": 0.0078,
+    "tissue_rgb": [
+     150,
+     148,
+     154
+    ],
+    "tissue_bright_p90": 181.1,
+    "pigment": {
+     "rgb": null,
+     "hue_median": null,
+     "of_tissue": 0.0117,
+     "detected": false,
+     "note": "色素占组织比 < 2%，不足以支撑一个色值，如实报未检出"
+    }
+   },
+   "color_label": "浅灰组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:07:35",
+    "DateTimeOriginal": "2019:12:25 14:14:22",
+    "DateTimeDigitized": "2019:12:25 14:14:22",
+    "ApertureValue": "9.715962",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "800",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "DSC_2193",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/DSC_2193.jpg",
+    "orig_w": 6618,
+    "orig_h": 4412,
+    "orig_bytes": 6286266,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/DSC_2193.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/DSC_2193.jpg",
+    "detail_w": 1200,
+    "detail_h": 684,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.0887,
+     0.1765,
+     0.8602,
+     0.8335
+    ],
+    "box_px": [
+     0,
+     431,
+     6305,
+     4025
+    ],
+    "full": "assets/full/DSC_2193.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 0.0,
+    "water_frac": 0.7655,
+    "tissue_frac": 0.2345,
+    "pigment_frac": 0.0004,
+    "tissue_rgb": [
+     41,
+     55,
+     70
+    ],
+    "tissue_bright_p90": 45.2,
+    "pigment": {
+     "rgb": null,
+     "hue_median": null,
+     "of_tissue": 0.0019,
+     "detected": false,
+     "note": "色素占组织比 < 2%，不足以支撑一个色值，如实报未检出"
+    }
+   },
+   "color_label": "暗组织",
+   "exif": {
+    "Make": "NIKON CORPORATION",
+    "Model": "NIKON Z 7",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:13 14:07:51",
+    "DateTimeOriginal": "2019:12:25 15:16:47",
+    "DateTimeDigitized": "2019:12:25 15:16:47",
+    "ApertureValue": "9.287712",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "800",
+    "FocalLength35mm": "60"
+   }
+  },
+  {
+   "id": "_Y3A0408",
+   "source": {
+    "path": "/Volumes/T7/Qwen_Homoplankton/PlanktonTest/_Y3A0408.jpg",
+    "orig_w": 4975,
+    "orig_h": 3317,
+    "orig_bytes": 3664451,
+    "aspect": 1.5
+   },
+   "asset": {
+    "thumb": "assets/thumb/_Y3A0408.jpg",
+    "thumb_w": 400,
+    "thumb_h": 267,
+    "detail": "assets/detail/_Y3A0408.jpg",
+    "detail_w": 1200,
+    "detail_h": 492,
+    "crop_method": "subject_box",
+    "box_norm": [
+     0.1766,
+     0.2828,
+     0.7296,
+     0.6232
+    ],
+    "box_px": [
+     548,
+     803,
+     3960,
+     2203
+    ],
+    "full": "assets/full/_Y3A0408.jpg",
+    "full_w": 1200,
+    "full_h": 800
+   },
+   "color": {
+    "water_threshold": 16,
+    "water_baseline_p25": 1.3,
+    "water_frac": 0.586,
+    "tissue_frac": 0.414,
+    "pigment_frac": 0.0732,
+    "tissue_rgb": [
+     109,
+     110,
+     124
+    ],
+    "tissue_bright_p90": 151.0,
+    "pigment": {
+     "rgb": [
+      176,
+      129,
+      99
+     ],
+     "hue_median": 24,
+     "of_tissue": 0.1769,
+     "detected": true
+    }
+   },
+   "color_label": "橙红色素18% · 暗组织",
+   "exif": {
+    "Make": "Canon",
+    "Model": "Canon EOS 5D Mark IV",
+    "Software": "Adobe Photoshop Lightroom Classic 12.5 (Macintosh)",
+    "DateTime": "2023:10:04 16:39:53",
+    "Artist": "FAN ZHANG",
+    "Copyright": "FAN ZHANG",
+    "DateTimeOriginal": "2019:01:05 00:11:33",
+    "DateTimeDigitized": "2019:01:05 00:11:33",
+    "ApertureValue": "8.33985",
+    "ExposureTime": "0.005",
+    "ISOSpeedRatings": "400"
+   }
+  }
+ ]
+}

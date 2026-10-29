@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Homoplankton — Blackwater Archive</title>
+<script src="assets/data.js"></script>
+<style>
+/* SECTION: base */
+*{margin:0;padding:0;box-sizing:border-box}
+html{background:#000}
+body{background:#000;overflow-x:hidden;overscroll-behavior:none}
+#snow{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:1;opacity:.5}
+#field{position:relative;z-index:2;opacity:0;transition:opacity 1s ease;
+  animation:settle 2.4s cubic-bezier(.16,.84,.44,1) both}
+#field.revealed{opacity:1}
+/* 开场向下落位：一次性滚动暗示，不产生持续运动 */
+@keyframes settle{from{transform:translateY(-42px)}to{transform:translateY(0)}}
+@media (prefers-reduced-motion: reduce){#field{animation:none}}
+/* SECTION: tiles — 常驻显示；羽化边缘让矩形图框消隐进纯黑 */
+.tile{position:absolute;left:0;top:0;will-change:transform;cursor:pointer}
+.tile .body{position:relative;width:100%;height:100%;overflow:hidden;
+  transition:transform .5s cubic-bezier(.2,.9,.25,1);
+  -webkit-mask-image:radial-gradient(128% 128% at 50% 50%, #000 76%, transparent 100%);
+  mask-image:radial-gradient(128% 128% at 50% 50%, #000 76%, transparent 100%)}
+.tile img{display:block;width:100%;height:100%;object-fit:fill}  /* 原始比例，无裁切 */
+.tile .body.dead{background:radial-gradient(circle at 50% 50%, #0a141c 0%, transparent 72%)}
+.tile:hover{z-index:60}
+.tile:hover .body{transform:scale(1.1)}
+/* SECTION: lightbox */
+#lb{position:fixed;inset:0;z-index:70;display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.92);opacity:0;pointer-events:none;transition:opacity .4s ease}
+#lb.open{opacity:1;pointer-events:auto}
+#lb .frame{max-width:min(96vw,1400px);text-align:center}
+#lb img{max-width:100%;max-height:92vh;width:auto;
+  box-shadow:0 30px 90px rgba(0,0,0,.9)}
+#lb .spin{position:absolute;top:50%;left:50%;width:26px;height:26px;margin:-13px;
+  border:2px solid rgba(130,210,255,.25);border-top-color:#8fd8ff;border-radius:50%;
+  opacity:0;transition:opacity .2s}
+#lb.loading .spin{opacity:1}
+</style>
+</head>
+<body>
+<canvas id="snow"></canvas>
+<div id="field" aria-hidden="true"></div>
+<div id="lb" role="dialog" aria-modal="true">
+  <div class="spin"></div>
+  <div class="frame"><img id="lb-img" alt=""></div>
+</div>
+<script>
+"use strict";
+/* SECTION: free scatter engine — 泊松式自由放置：随机落点 + 间距拒收，
+   数学上保证矩形永不相交；聚集与留白自然涌现，无网格无行列 */
+const DATA = window.BW_DATA || [];
+const FIELD = document.getElementById("field");
+const MOBILE = innerWidth < 720;
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const rnd = (a,b)=>a+Math.random()*(b-a);
+/* 洋流：全体共享的刚体漂移。所有图同速同向平移，相对间距恒定，
+   数学上不可能因此相触；个体晃动仍受 0.45×间隙的独立预算约束 */
+const CUR = { ax: innerWidth < 720 ? 58 : 70,      // 横向漂流幅度 px
+              ay: innerWidth < 720 ? 44 : 52,      // 纵向
+              wx: 0.021, wy: 0.016 };              // 一圈 ≈ 300–400 秒：极慢
+/* hero 锚点已移除：全卷统一尺度，大小参差只由主体校正决定 */
+/* 视觉尺寸多样化：主体占画面比例小的图放大更多 */
+function screenScale(d){
+  if(!d.box) return 0.62;
+  const f = Math.max(d.box[2]-d.box[0], (d.box[3]-d.box[1])*0.75);
+  return Math.min(1.15, Math.max(0.55, 0.6 / Math.max(f, 0.18)));
+}
+const tiles = DATA.map((d,i)=>{
+  const el = document.createElement("figure");
+  el.className = "tile";
+  el.innerHTML = `<div class="body"><img data-image="${d.u}" alt="${d.id}"></div>`;
+  const img = el.querySelector("img");
+  img.addEventListener("load", () => settleIn(d.id));
+  img.addEventListener("error", () => { img.remove(); el.querySelector(".body").classList.add("dead"); settleIn(d.id); });
+  img.src = img.dataset.image;                          // 全部立即加载
+  el.addEventListener("click", () => openLB(d));
+  FIELD.appendChild(el);
+  const hash = Math.abs(Math.sin(i * 12.9898) % 1);
+  return { el, d, i, hash,
+    ax: 0, ay: 0,                                    // 漫游半径在布局后按实测空档分配
+    wx: MOBILE ? rnd(0.05, 0.10) : rnd(0.07, 0.16),  // 一圈约 40–90 秒（速度不变）
+    wy: MOBILE ? rnd(0.04, 0.09) : rnd(0.06, 0.14),
+    phx: rnd(0, 6.28), phy: rnd(0, 6.28),
+    rot: rnd(-5, 5), rw: rnd(0.03, 0.07), rph: rnd(0, 6.28),
+    w: 0, h: 0, x: 0, y: 0 };
+});
+function layout(){
+  const W = innerWidth, VH = innerHeight;
+  /* 1. 定尺寸：随机落在固定带宽内（桌面 9.4%–14.3% 视口宽 ≈ 135–206px；
+     手机 19%–26% ≈ 74–101px），主体校正只做带内微调，两端硬性钳制 */
+  const loF = MOBILE ? 0.19 : 0.094, hiF = MOBILE ? 0.26 : 0.143;
+  for (const t of tiles) {
+    const ratio = (t.d.h || 3) / (t.d.w || 4);
+    let w = Math.round(W * (loF + (hiF - loF) * t.hash) * (0.82 + 0.36 * (screenScale(t.d) - 0.55)));
+    w = Math.min(Math.max(w, Math.round(W * loF)), Math.round(W * hiF));   // 带宽钳制
+    let h = Math.round(w * ratio);
+    const hCap = Math.round(VH * 0.42);
+    if (h > hCap) { h = hCap; w = Math.max(1, Math.round(h / ratio)); }
+    t.w = w; t.h = h;
+    t.gap = 6 + Math.round(t.hash * 8);                 // 呼吸间距：6–14px
+    t.el.style.width = w + "px"; t.el.style.height = h + "px";
+  }
+  /* 2. 画布高度 = 占位面积 × 空隙率（桌面 1.12 / 手机 0.8）——先紧密放置，
+     漫游范围在第 4 步按放置后的实测空档分配：空档大=漂得远，不再预留整条跑道 */
+  let area = 0;
+  for (const t of tiles) area += (t.w + t.gap + 6) * (t.h + t.gap + 6);
+  let H = Math.max(VH * 1.2, Math.min(VH * 6.5, area * (MOBILE ? 0.85 : 1.25) / W));
+  const placed = [];
+  const E = MOBILE ? 3 : 5;                              // 画布边缘安全距
+  const MX = CUR.ax + E, MY = CUR.ay + E;                // 含洋流的内缩边距
+  const fits = (x, y, t) => {
+    if (x < MX || y < MY || x + t.w > W - MX || y + t.h > H - MY) return false;
+    for (const p of placed) {
+      const bx = (t.gap + p.gap) / 2 + E, by = (t.gap + p.gap) / 2 + E;
+      if (x - bx < p.x + p.w && p.x - bx < x + t.w &&
+          y - by < p.y + p.h && p.y - by < y + t.h) return false;
+    }
+    return true;
+  };
+  /* 3. 大 → 小放置；横向带轮转；60% 贴邻聚簇 */
+  const order = tiles.slice().sort((a, b) => (b.w * b.h) - (a.w * a.h));
+  const BANDS = Math.max(8, Math.round(H / VH * 3));
+  let rowX = 20, rowY = H + 60;                          // 兜底扫描游标
+  order.forEach((t, oi) => {
+    let ok = false;
+    const band = oi % BANDS;
+    for (let round = 0; round < 6 && !ok; round++) {
+      const pad = t.gap / 2 + E;
+      const bandH = H / BANDS;
+      let yA = Math.max(pad, band * bandH - bandH * 0.45);
+      let yB = Math.min(H - t.h - pad, (band + 1) * bandH + bandH * 0.45);
+      if (yA > yB) { const s = yA; yA = yB; yB = s; }
+      for (let k = 0; k < 420 && !ok; k++) {
+        let x, y;
+        if (placed.length && Math.random() < 0.6) {
+          const p = placed[(Math.random() * placed.length) | 0];
+          x = p.x + p.w / 2 + rnd(-1.4, 1.4) * (p.w / 2 + t.w / 2 + p.gap) - t.w / 2 + rnd(-40, 40);
+          y = p.y + p.h / 2 + rnd(-1.2, 1.2) * (p.h / 2 + t.h / 2 + p.gap) - t.h / 2 + rnd(-40, 40);
+        } else {
+          x = rnd(pad, W - t.w - pad);
+          y = rnd(yA, Math.max(yA + 1, yB));
+        }
+        x = Math.min(Math.max(MX, x), Math.max(MX, W - t.w - MX));
+        y = Math.max(MY, y);
+        if (fits(x, y, t)) {
+          t.x = Math.round(x); t.y = Math.round(y);
+          placed.push(t); ok = true;
+        }
+      }
+      if (!ok) H = Math.min(H + VH * 0.25, VH * 10);
+    }
+    if (!ok) {                                          // 兜底：底缘扫描，仍过 fits
+      let fx = MX, fy = rowY, guard = 0;
+      while (guard++ < 3000 && !fits(fx, fy, t)) {
+        fx += Math.max(24, Math.round(t.w * 0.6));
+        if (fx + t.w > W - MX) { fx = MX; fy += 26; }
+      }
+      t.x = fx; t.y = fy; rowY = fy;
+      placed.push(t);
+      H = Math.max(H, fy + t.h + 40);
+    }
+  });
+  let finalH = 0;
+  for (const t of tiles) finalH = Math.max(finalH, t.y + t.h);
+  FIELD.style.height = Math.round(finalH + Math.min(130, VH * 0.12)) + "px";
+  /* 4. 非对称漫游：每图向四个方向各算额度（邻居净间隙对半分配 0.45，
+     朝向画布边缘/大空档的一侧可漂得更远）。航迹 = 椭圆弧线，范围 [-L, +R]。
+     双方各取 0.45×间隙 → 对向位移之和 ≤0.9×间隙 < 间隙 → 任意帧零相触 */
+  const CAP = MOBILE ? 48 : 80, SHARE = 0.45;
+  const dirs = tiles.map(()=>({l:Infinity,r:Infinity,u:Infinity,d:Infinity}));
+  for (let i=0;i<tiles.length;i++) for (let j=i+1;j<tiles.length;j++){
+    const a=tiles[i], b=tiles[j];
+    const gx = b.x >= a.x+a.w ? b.x-(a.x+a.w) : (a.x >= b.x+b.w ? a.x-(b.x+b.w) : null);
+    const gy = b.y >= a.y+a.h ? b.y-(a.y+a.h) : (a.y >= b.y+b.h ? b.y-(a.y+b.h) : null);
+    if (gx !== null){
+      const q = Math.min(gx*SHARE, CAP*2);
+      if (b.x > a.x){ dirs[i].r=Math.min(dirs[i].r,q); dirs[j].l=Math.min(dirs[j].l,q); }
+      else { dirs[i].l=Math.min(dirs[i].l,q); dirs[j].r=Math.min(dirs[j].r,q); }
+    }
+    if (gy !== null){
+      const q = Math.min(gy*SHARE, CAP*2);
+      if (b.y > a.y){ dirs[i].d=Math.min(dirs[i].d,q); dirs[j].u=Math.min(dirs[j].u,q); }
+      else { dirs[i].u=Math.min(dirs[i].u,q); dirs[j].d=Math.min(dirs[j].d,q); }
+    }
+  }
+  tiles.forEach((t,i)=>{
+    const D = dirs[i], fin = parseFloat(FIELD.style.height);
+    t.Lx = Math.floor(Math.max(4, Math.min(D.l===Infinity ? t.x-MX : D.l, CAP, t.x-MX)));
+    t.Rx = Math.floor(Math.max(4, Math.min(D.r===Infinity ? W-(t.x+t.w)-MX : D.r, CAP, W-(t.x+t.w)-MX)));
+    t.Uy = Math.floor(Math.max(4, Math.min(D.u===Infinity ? t.y-MY : D.u, CAP, t.y-MY)));
+    t.Dy = Math.floor(Math.max(4, Math.min(D.d===Infinity ? fin-(t.y+t.h)-MY : D.d, CAP, fin-(t.y+t.h)-MY)));
+  });
+  /* 大图为背景层，小图浮前 */
+  for (const t of tiles) t.el.style.zIndex = String(1000 - t.w);
+  foldIds = tiles.filter(t => t.y < VH * 1.25).map(t => t.d.id);
+  return placed;
+}
+let foldIds = [];
+layout();
+/* SECTION: one-shot reveal — 首屏集齐后整层一次浮现，之后常驻 */
+let revealed = false;
+const need = { s: null };
+function settleIn(id){
+  if (!need.s || revealed) return;
+  need.s.delete(id);
+  if (need.s.size === 0) reveal();
+}
+function reveal(){ if (revealed) return; revealed = true; FIELD.classList.add("revealed"); }
+function armReveal(){ need.s = new Set(foldIds); settleIn("__probe__"); }
+armReveal();
+setTimeout(reveal, 5000);                                // 兜底：5秒必显
+/* SECTION: marine snow */
+const cv = document.getElementById("snow"), ctx = cv.getContext("2d");
+let flakes = [];
+function seedSnow(){ cv.width = innerWidth; cv.height = innerHeight;
+  const N = MOBILE ? 110 : 280;
+  flakes = Array.from({length: N}, () => ({x: rnd(0, cv.width), y: rnd(0, cv.height),
+    r: rnd(.4, 1.9), vy: rnd(2, 8), vx: rnd(-2, 2), o: rnd(.05, .4)})); }
+seedSnow();
+function drawSnow(dt){ ctx.clearRect(0, 0, cv.width, cv.height);
+  for (const f of flakes) { f.y -= f.vy * dt; f.x += Math.sin(f.y * 0.003) * 0.12 + f.vx * dt * 0.08;
+    if (f.y < -4) { f.y = cv.height + 4; f.x = rnd(0, cv.width); }
+    ctx.beginPath(); ctx.arc(f.x, f.y, f.r, 0, 6.283);
+    ctx.fillStyle = `rgba(190,225,255,${f.o})`; ctx.fill(); } }
+/* SECTION: micro-drift loop — 常驻显示，位置微动 */
+let last = 0, raf = null;
+function tick(ts){ const dt = Math.min(.05, (ts - last) / 1000) || 0.016; last = ts;
+  const s = ts / 1000;
+  for (const t of tiles) {
+    const gx = Math.sin(s * CUR.wx) * CUR.ax, gy = Math.sin(s * CUR.wy + 1.1) * CUR.ay;
+    const sx = Math.sin(s * t.wx + t.phx), sy = Math.sin(s * t.wy + t.phy);
+    const x = t.x + gx + (sx >= 0 ? t.Rx : t.Lx) * sx;   // 非对称航迹：精确在 [x-Lx, x+Rx]
+    const y = t.y + gy + (sy >= 0 ? t.Dy : t.Uy) * sy;
+    const r = t.rot + Math.sin(s * t.rw + t.rph) * 2.8;
+    t.el.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0) rotate(${r.toFixed(2)}deg)`; }
+  drawSnow(dt);
+  raf = requestAnimationFrame(tick); }
+if (reduced) { for (const t of tiles)
+    t.el.style.transform = `translate3d(${t.x + t.Rx / 2 - t.Lx / 2}px,${t.y + t.Dy / 2 - t.Uy / 2}px,0) rotate(${t.rot}deg)`;
+} else { raf = requestAnimationFrame(t => { last = t; tick(t); }); }
+let rzT = null;
+addEventListener("resize", () => { clearTimeout(rzT); rzT = setTimeout(() => { layout(); seedSnow(); }, 150); });
+/* SECTION: lightbox — 点击加载完整原图 */
+const lb = document.getElementById("lb"), lbImg = document.getElementById("lb-img");
+function openLB(d){
+  lbImg.alt = d.id;
+  lbImg.src = d.u;
+  if (d.fu) { lb.classList.add("open", "loading");
+    const hi = new Image();
+    hi.onload = () => { lbImg.src = d.fu; lb.classList.remove("loading"); };
+    hi.onerror = () => lb.classList.remove("loading");
+    hi.src = d.fu; }
+  else lb.classList.add("open"); }
+lb.addEventListener("click", () => { lb.classList.remove("open", "loading"); });
+addEventListener("keydown", e => { if (e.key === "Escape") lb.classList.remove("open", "loading"); });
+</script>
+</body>
+</html>

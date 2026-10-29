@@ -1,0 +1,221 @@
+{
+ "schema": "plankton-workbench/review-groups/v1",
+ "wide_thr": 0.42,
+ "k_neighbors": 8,
+ "note": "每张表：★为主图，其后为该图的最近邻及距离；Δ标出主要差异特征。这些是候选，不是结论；结论由人工核验写入 kinship.json。",
+ "components": [
+  {
+   "n": 91,
+   "members": [
+    "DSC_0077",
+    "DSC_0214",
+    "DSC_0242",
+    "DSC_0361",
+    "DSC_0388",
+    "DSC_0860-Edit",
+    "DSC_0863",
+    "DSC_0878-Edit",
+    "DSC_0880",
+    "DSC_1010",
+    "DSC_1011",
+    "DSC_1048_2019-December-Fish",
+    "DSC_1060",
+    "DSC_1062",
+    "DSC_1079-Edit1",
+    "DSC_1106",
+    "DSC_1125",
+    "DSC_1202",
+    "DSC_1226",
+    "DSC_1238",
+    "DSC_1268",
+    "DSC_1273",
+    "DSC_1278_2019-September-Cephalopoda",
+    "DSC_1296",
+    "DSC_1297",
+    "DSC_1329",
+    "DSC_1332",
+    "DSC_1340",
+    "DSC_1341",
+    "DSC_1342_2019-December-Spincula",
+    "DSC_1343-Edit",
+    "DSC_1346",
+    "DSC_1389",
+    "DSC_1396",
+    "DSC_1439",
+    "DSC_1540",
+    "DSC_1555",
+    "DSC_1586",
+    "DSC_1621-Edit",
+    "DSC_1694",
+    "DSC_1722",
+    "DSC_1760",
+    "DSC_1764",
+    "DSC_1779",
+    "DSC_1821",
+    "DSC_1853",
+    "DSC_1912",
+    "DSC_2011",
+    "DSC_2052",
+    "DSC_2071",
+    "DSC_2087",
+    "DSC_2096",
+    "DSC_2102",
+    "DSC_2193",
+    "DSC_2355",
+    "DSC_2370",
+    "DSC_2430",
+    "DSC_2511",
+    "DSC_25112020",
+    "DSC_25802020",
+    "DSC_26982020",
+    "DSC_27172020",
+    "DSC_2795",
+    "DSC_2846_2020-January-Polychaeta",
+    "DSC_30352020",
+    "DSC_3058",
+    "DSC_3185",
+    "DSC_3227",
+    "DSC_3233",
+    "DSC_34042020",
+    "DSC_34192020",
+    "DSC_34212020",
+    "DSC_3441",
+    "DSC_3593",
+    "DSC_40982020",
+    "_Y3A0034",
+    "_Y3A0037",
+    "_Y3A0098",
+    "_Y3A0102",
+    "_Y3A0153",
+    "_Y3A0165",
+    "_Y3A0193",
+    "_Y3A0208",
+    "_Y3A0257",
+    "_Y3A0272",
+    "_Y3A0374",
+    "_Y3A0408",
+    "_Y3A0409",
+    "_Y3A0445-Edit",
+    "_Y3A0662-Edit",
+    "_Y3A0915"
+   ]
+  },
+  {
+   "n": 2,
+   "members": [
+    "DSC_1746-Edit",
+    "DSC_2999"
+   ]
+  },
+  {
+   "n": 1,
+   "members": [
+    "DSC_0913"
+   ]
+  },
+  {
+   "n": 1,
+   "members": [
+    "DSC_0933"
+   ]
+  },
+  {
+   "n": 1,
+   "members": [
+    "DSC_1189"
+   ]
+  },
+  {
+   "n": 1,
+   "members": [
+    "DSC_1519"
+   ]
+  },
+  {
+   "n": 1,
+   "members": [
+    "DSC_1575"
+   ]
+  },
+  {
+   "n": 1,
+   "members": [
+    "DSC_1835"
+   ]
+  },
+  {
+   "n": 1,
+   "members": [
+    "DSC_2106"
+   ]
+  },
+  {
+   "n": 1,
+   "members": [
+    "DSC_2132"
+   ]
+  },
+  {
+   "n": 1,
+   "members": [
+    "DSC_2158"
+   ]
+  },
+  {
+   "n": 1,
+   "members": [
+    "DSC_3113"
+   ]
+  },
+  {
+   "n": 1,
+   "members": [
+    "DSC_34952020"
+   ]
+  },
+  {
+   "n": 1,
+   "members": [
+    "_Y3A0081"
+   ]
+  },
+  {
+   "n": 1,
+   "members": [
+    "_Y3A0085"
+   ]
+  },
+  {
+   "n": 1,
+   "members": [
+    "_Y3A0091"
+   ]
+  },
+  {
+   "n": 1,
+   "members": [
+    "_Y3A0097"
+   ]
+  }
+ ],
+ "sheets": [
+  "review_01.jpg",
+  "review_02.jpg",
+  "review_03.jpg",
+  "review_04.jpg",
+  "review_05.jpg",
+  "review_06.jpg",
+  "review_07.jpg",
+  "review_08.jpg",
+  "review_09.jpg",
+  "review_10.jpg",
+  "review_11.jpg",
+  "review_12.jpg",
+  "review_13.jpg",
+  "review_14.jpg",
+  "review_15.jpg",
+  "review_16.jpg",
+  "review_17.jpg",
+  "review_18.jpg"
+ ]
+}
